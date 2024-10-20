@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\Coffee_Shop\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{04473980-9CB2-4F63-BC86-53346D572108}|Coffee_Shop.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_coffeshop\\coffee_shop\\models\\coffeeshopcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{04473980-9CB2-4F63-BC86-53346D572108}|Coffee_Shop.csproj|solutionrelative:models\\coffeeshopcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,28 +9,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": -1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CoffeeShopContext.cs",
-              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\Coffee_Shop\\Models\\CoffeeShopContext.cs",
-              "RelativeDocumentMoniker": "Models\\CoffeeShopContext.cs",
-              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\Coffee_Shop\\Models\\CoffeeShopContext.cs",
-              "RelativeToolTip": "Models\\CoffeeShopContext.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwAoAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T08:44:02.585Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:21:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:20:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+              "Name": "ST:20:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
             }
           ]
         }

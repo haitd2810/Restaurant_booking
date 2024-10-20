@@ -928,6 +928,21 @@
             "rid": "win"
           }
         }
+      },
+      "DataLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.35",
+          "Microsoft.Extensions.Configuration": "6.0.1",
+          "Microsoft.Extensions.Configuration.Json": "6.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DataLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataLibrary.dll": {}
+        }
       }
     }
   },
@@ -2333,10 +2348,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "DataLibrary/1.0.0": {
+      "type": "project",
+      "path": "../DataLibrary/DataLibrary.csproj",
+      "msbuildProject": "../DataLibrary/DataLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
+      "DataLibrary >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 6.0.35",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.35",
       "Microsoft.Extensions.Configuration >= 6.0.1",
@@ -2375,7 +2396,11 @@
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\DataLibrary\\DataLibrary.csproj": {
+              "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\DataLibrary\\DataLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

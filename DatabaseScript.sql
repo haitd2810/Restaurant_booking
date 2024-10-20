@@ -64,6 +64,18 @@ CREATE TABLE BillInfor (
     FOREIGN KEY (menuID) REFERENCES Menu(id)
 );
 
+CREATE TABLE Booking (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    tableID INT,
+    startDate DATETIME,
+    Status VARCHAR(255),
+    updateAt DATETIME,
+    email VARCHAR(255),
+    phone VARCHAR(255),
+    fullName VARCHAR(255),
+    FOREIGN KEY (tableID) REFERENCES [Table](id)
+);
+
 insert into Role (name) values ('staff'), ('admin');
 
 insert into Account (username, password, roleID, isActive) values 

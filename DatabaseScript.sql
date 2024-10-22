@@ -1,7 +1,7 @@
-﻿use master
-create database CoffeeShop
+
+create database Restaurant
 go
-use CoffeeShop
+use Restaurant
 go
 CREATE TABLE Role (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -16,6 +16,14 @@ CREATE TABLE Account (
     roleID INT,
     isActive BIT,
     FOREIGN KEY (roleID) REFERENCES Role(id)
+);
+
+CREATE TABLE Token(
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    token VARCHAR(30),
+    date DATETIME,
+    accountId INT,
+    FOREIGN KEY (accountId) REFERENCES Account(id)
 );
 
 CREATE TABLE [Table] (

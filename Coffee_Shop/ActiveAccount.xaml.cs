@@ -20,7 +20,6 @@ namespace Coffee_Shop
     /// </summary>
     public partial class ActiveAccount : Window
     {
-        public string token { get; internal set; }
         public Account acc { get; internal set; }
 
         public ActiveAccount()
@@ -35,25 +34,30 @@ namespace Coffee_Shop
 
         private void btnActive_Click(object sender, RoutedEventArgs e)
         {
-            //string code =txtCode.Text;
-            //string email=txtEmail.Text;
-            //var a = CoffeeShopContext.Ins.Accounts.Where(x => x.Username.Equals(email)).FirstOrDefault();
-            //if(a == null)
-            //{
-            //    MessageBox.Show("Account not exist");
-            //    return;
-            //}
-            //if(code != token)
-            //{
-            //    MessageBox.Show("Code not correct");
-            //    return;
-            //}
-            //a.IsActive = true;
-            //CoffeeShopContext.Ins.Accounts.Update(a);
-            //CoffeeShopContext.Ins.SaveChanges();
-            //MainWindow mainWindow = new MainWindow();
-            //mainWindow.Show();
-            //this.Hide();
+            string code = txtCode.Text;
+            string email = txtEmail.Text;
+            var a = RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(email)).FirstOrDefault();
+            if (a == null)
+            {
+                MessageBox.Show("Account not exist", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            var token = RestaurantContext.Ins.Tokens
+                .Where(x => x.Account.Id == a.Id)
+                .OrderByDescending(x => x.Date) 
+                .FirstOrDefault();
+            if (code != token.Token1)
+            {
+                MessageBox.Show("Code not correct", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            a.IsActive = true;
+            RestaurantContext.Ins.Accounts.Update(a);
+            RestaurantContext.Ins.SaveChanges();
+            MessageBox.Show("Active account successfully", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Hide();
         }
     }
 }

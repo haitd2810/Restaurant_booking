@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace Coffee_Shop
 {
@@ -37,15 +38,20 @@ namespace Coffee_Shop
             string comfirm = txtComfirm.Password;
             if(string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Username and password null");
+                MessageBox.Show("Username and password null", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(!Regex.IsMatch(user, "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$\r\n"))
+            {
+                MessageBox.Show("Invalid email", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if (!password.Equals(comfirm))
             {
-                MessageBox.Show("Comfirm password is not correct");
+                MessageBox.Show("Comfirm password is not correct", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            var accs = CoffeeShopContext.Ins.Accounts.Where(x => x.Username.Equals(user)).FirstOrDefault();
+            var accs = RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(user)).FirstOrDefault();
             if(accs != null)
             {
                 MessageBox.Show("Username existed");
@@ -57,18 +63,18 @@ namespace Coffee_Shop
                 Username = user,
                 Password = hashpass,
                 RoleId = 1,
-                IsActive = true
+                IsActive = false
             };
-            CoffeeShopContext.Ins.Accounts.Add(acc);
-            CoffeeShopContext.Ins.SaveChanges();
-            //SendConfirmationEmail(user);
-            MessageBox.Show("Sign up successfully");
-            //ActiveAccount activeAccount = new ActiveAccount()
-            //{
-            //    acc= acc
-            //};
-            MainWindow mainWindow =new MainWindow();
-            mainWindow.Show();
+            RestaurantContext.Ins.Accounts.Add(acc);
+            RestaurantContext.Ins.SaveChanges();
+            SendConfirmationEmail(user);
+            MessageBox.Show($"Registered successfully. Please go to {user} to activate your account", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            ActiveAccount activeAccount = new ActiveAccount()
+            {
+                acc = acc
+            };
+            //MainWindow mainWindow =new MainWindow();
+            activeAccount.Show();
             this.Hide();
         }
 
@@ -84,24 +90,38 @@ namespace Coffee_Shop
             this.Hide();
         }
 
-        //private void SendConfirmationEmail(string email)
-        //{
-        //    string token = GenerateToken(email);
-        //    // Store the token in the database
-        //    string mail = "phanquan2092003@gmail.com";
-        //    string password = "pndc pnkc egon mxpe";
-        //    // Configure SMTP client
-        //    SmtpClient smtpClient = new SmtpClient("smtp.gmail.com",587)
-        //    {
-        //        Credentials = new NetworkCredential(mail, password),
-        //        EnableSsl = true
-        //    };
-        //    string Subject = "Account Activation";
-        //    string Body = $"Hello {email},\n\nYour activation code is: {token}. Please enter this code in the application to activate your account.\n\nBest regards,\nYour Company";
+        private void SendConfirmationEmail(string email)
+        {
+            Random random = new Random();
+            string randomNumbers = "";
 
-        //    // Send the email
-        //    smtpClient.Send(mail,email, Subject,Body);
-        //}
+            for (int i = 0; i < 6; i++)
+            {
+                int num = random.Next(0, 10); 
+                randomNumbers += num.ToString();
+            }
+            string token = randomNumbers;
+            var acc = RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(email)).FirstOrDefault();
+            Token t = new Token()
+            {
+                Token1 = token,
+                Date = DateTime.Now,
+                AccountId=acc.Id
+            };
+            RestaurantContext.Ins.Tokens.Add(t);
+            RestaurantContext.Ins.SaveChanges();
+            string mail = "phanquan2092003@gmail.com";
+            string password = "pndc pnkc egon mxpe";
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(mail, password),
+                EnableSsl = true
+            };
+            string Subject = "Account Activation";
+            string Body = $"Hello {email},\n\nYour activation code is: {token}. Please enter this code in the application to activate your account";
+
+            smtpClient.Send(mail, email, Subject, Body);
+        }
 
         //private bool ValidateToken(string email, string token)
         //{
@@ -130,11 +150,11 @@ namespace Coffee_Shop
         //    if (ValidateToken(email, token))
         //    {
         //        // Nếu token hợp lệ, kích hoạt tài khoản
-        //        var acc = CoffeeShopContext.Ins.Accounts.FirstOrDefault(x => x.Username == email);
+        //        var acc = RestaurantContext.Ins.Accounts.FirstOrDefault(x => x.Username == email);
         //        if (acc != null)
         //        {
         //            acc.IsActive = true;
-        //            CoffeeShopContext.Ins.SaveChanges();
+        //            RestaurantContext.Ins.SaveChanges();
 
         //            MessageBox.Show("Account successfully activated!");
         //        }

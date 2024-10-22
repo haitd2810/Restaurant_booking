@@ -5,6 +5,11 @@ namespace DataLibrary.Models
 {
     public partial class Account
     {
+        public Account()
+        {
+            Tokens = new HashSet<Token>();
+        }
+
         public int Id { get; set; }
         public string? Username { get; set; }
         public string? Password { get; set; }
@@ -12,5 +17,6 @@ namespace DataLibrary.Models
         public bool? IsActive { get; set; }
 
         public virtual Role? Role { get; set; }
+        public virtual ICollection<Token> Tokens { get; set; }
     }
 }

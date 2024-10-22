@@ -2365,23 +2365,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hi\\.nuget\\packages\\": {},
+    "C:\\Users\\admin\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\Coffee_Shop\\Coffee_Shop.csproj",
+      "projectUniqueName": "C:\\Users\\admin\\Desktop\\goc\\Coffee_Shop\\Coffee_Shop.csproj",
       "projectName": "Coffee_Shop",
-      "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\Coffee_Shop\\Coffee_Shop.csproj",
-      "packagesPath": "C:\\Users\\Hi\\.nuget\\packages\\",
-      "outputPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\Coffee_Shop\\obj\\",
+      "projectPath": "C:\\Users\\admin\\Desktop\\goc\\Coffee_Shop\\Coffee_Shop.csproj",
+      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\admin\\Desktop\\goc\\Coffee_Shop\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Hi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2397,8 +2397,8 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\DataLibrary\\DataLibrary.csproj": {
-              "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\DataLibrary\\DataLibrary.csproj"
+            "C:\\Users\\admin\\Desktop\\goc\\DataLibrary\\DataLibrary.csproj": {
+              "projectPath": "C:\\Users\\admin\\Desktop\\goc\\DataLibrary\\DataLibrary.csproj"
             }
           }
         }
@@ -2407,11 +2407,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2456,7 +2451,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

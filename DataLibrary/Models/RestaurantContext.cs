@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace DataLibrary.Models
 {
-    public partial class CoffeeShopContext : DbContext
-    {
-        public CoffeeShopContext()
+    public partial class RestaurantContext : DbContext
+    {   
+        public static RestaurantContext Ins=new RestaurantContext();
+        public RestaurantContext()
         {
+            if (Ins == null)
+            {
+                Ins = this;
+            }
         }
 
-        public CoffeeShopContext(DbContextOptions<CoffeeShopContext> options)
+        public RestaurantContext(DbContextOptions<RestaurantContext> options)
             : base(options)
         {
         }
@@ -24,14 +30,13 @@ namespace DataLibrary.Models
         public virtual DbSet<Menu> Menus { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Table> Tables { get; set; } = null!;
+        public virtual DbSet<Token> Tokens { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=CoffeeShop;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true");
-            }
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+            if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer(config.GetConnectionString("value")); }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,7 +45,7 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5720D9DBF12")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57296CB4519")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -86,7 +91,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Bill__tableID__31EC6D26");
+                    .HasConstraintName("FK__Bill__tableID__34C8D9D1");
             });
 
             modelBuilder.Entity<BillInfor>(entity =>
@@ -108,12 +113,12 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Bill)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.BillId)
-                    .HasConstraintName("FK__BillInfor__billI__34C8D9D1");
+                    .HasConstraintName("FK__BillInfor__billI__37A5467C");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.MenuId)
-                    .HasConstraintName("FK__BillInfor__menuI__35BCFE0A");
+                    .HasConstraintName("FK__BillInfor__menuI__38996AB5");
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -154,7 +159,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Booking__tableID__38996AB5");
+                    .HasConstraintName("FK__Booking__tableID__3B75D760");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -197,7 +202,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Cate)
                     .WithMany(p => p.Menus)
                     .HasForeignKey(d => d.CateId)
-                    .HasConstraintName("FK__Menu__cateID__2F10007B");
+                    .HasConstraintName("FK__Menu__cateID__31EC6D26");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -230,6 +235,29 @@ namespace DataLibrary.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Status).HasColumnName("status");
+            });
+
+            modelBuilder.Entity<Token>(entity =>
+            {
+                entity.ToTable("Token");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AccountId).HasColumnName("accountId");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.Token1)
+                    .HasMaxLength(30)
+                    .IsUnicode(false)
+                    .HasColumnName("token");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.Tokens)
+                    .HasForeignKey(d => d.AccountId)
+                    .HasConstraintName("FK__Token__accountId__2B3F6F97");
             });
 
             OnModelCreatingPartial(modelBuilder);

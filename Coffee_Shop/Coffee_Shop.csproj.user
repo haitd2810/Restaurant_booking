@@ -7,7 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="ActiveAccount.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SignUp.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ActiveAccount.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SignUp.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

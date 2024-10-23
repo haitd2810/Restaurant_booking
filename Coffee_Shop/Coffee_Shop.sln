@@ -5,9 +5,9 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coffee_Shop", "Coffee_Shop.csproj", "{04473980-9CB2-4F63-BC86-53346D572108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLibrary", "..\DataLibrary\DataLibrary.csproj", "{BCF63761-9D86-4EF3-BD76-FF9C19E4198B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLibrary", "..\DataLibrary\DataLibrary.csproj", "{BCF63761-9D86-4EF3-BD76-FF9C19E4198B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeShopCustomer", "..\CoffeeShopCustomer\CoffeeShopCustomer.csproj", "{FD605067-874C-4C5B-A830-98ED9D4A04A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeShopCustomer", "..\CoffeeShopCustomer\CoffeeShopCustomer.csproj", "{FD605067-874C-4C5B-A830-98ED9D4A04A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

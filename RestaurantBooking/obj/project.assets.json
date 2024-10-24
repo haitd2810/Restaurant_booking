@@ -2303,11 +2303,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\RestaurantBooking\\RestaurantBooking.csproj",
+      "projectUniqueName": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\RestaurantBooking.csproj",
       "projectName": "RestaurantBooking",
-      "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\RestaurantBooking\\RestaurantBooking.csproj",
+      "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\RestaurantBooking.csproj",
       "packagesPath": "C:\\Users\\Hi\\.nuget\\packages\\",
-      "outputPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\RestaurantBooking\\obj\\",
+      "outputPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2329,8 +2329,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\DataLibrary\\DataLibrary.csproj": {
-              "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_CoffeShop\\DataLibrary\\DataLibrary.csproj"
+            "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\DataLibrary\\DataLibrary.csproj": {
+              "projectPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\DataLibrary\\DataLibrary.csproj"
             }
           }
         }

@@ -132,3 +132,8 @@ VALUES
 (N'Bánh mì nướng', N'Bánh mì nướng với bơ và mật ong', 15000, 'toast.jpg', 5, 1),
 (N'Khoai tây chiên', N'Khoai tây chiên giòn', 20000, 'fries.jpg', 5, 1);
 
+UPDATE Menu
+SET img = CONCAT('/assets/img/', img);
+
+ALTER TABLE [Table]
+ADD forBooking Bit default 0;

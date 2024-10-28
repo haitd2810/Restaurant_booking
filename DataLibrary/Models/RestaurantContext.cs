@@ -7,14 +7,14 @@ using Microsoft.Extensions.Configuration;
 namespace DataLibrary.Models
 {
     public partial class RestaurantContext : DbContext
-    {   
+    {
         public static RestaurantContext Ins=new RestaurantContext();
         public RestaurantContext()
         {
             if (Ins == null)
             {
                 Ins = this;
-            }
+        }
         }
 
         public RestaurantContext(DbContextOptions<RestaurantContext> options)
@@ -34,9 +34,11 @@ namespace DataLibrary.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-            if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer(config.GetConnectionString("value")); }
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=Restaurant;Trusted_Connection=SSPI;Encrypt=false;TrustServerCertificate=true");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,7 +47,7 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57296CB4519")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5729E9C6CD9")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -226,6 +228,10 @@ namespace DataLibrary.Models
                 entity.ToTable("Table");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ForBooking)
+                    .HasColumnName("forBooking")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsOrder).HasColumnName("isOrder");
 

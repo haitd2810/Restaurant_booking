@@ -1,0 +1,55 @@
+body[b-42vgywanrl] {
+}
+#about[b-42vgywanrl] {
+    padding: 2em 0 0 0;
+}
+
+.quantity-control[b-42vgywanrl] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity-control .btn[b-42vgywanrl] {
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 10px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.quantity-control .btn:hover[b-42vgywanrl] {
+    background-color: #6462624d;
+}
+
+.quantity-control .quantity[b-42vgywanrl] {
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+.btns[b-42vgywanrl] {
+    margin-top: 2em;
+}
+
+.btns .add-order[b-42vgywanrl] {
+    background-color: #ffffff00;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: 0.3s;
+    line-height: 1;
+    color: white;
+    border: 2px solid #cda45e;
+}
+
+.btns .add-order:hover[b-42vgywanrl] {
+    background-color: #cda45e;
+}

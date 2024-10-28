@@ -9,35 +9,18 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Bill Manage</h6>
         </div>
-        @*<div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
             <form style="margin: 20px 0 0 20px; display: flex; align-items: center;" method="get">
-                <label style="margin-right: 10px;">Category</label>
-                <select name="category" style="margin-right: 20px; padding: 5px;">
-                    <option value="0">All</option>
-                    @foreach (var c in Model.categories)
-                    {
-                        <option value="@c.Id">@c.Name</option>
-                    }
-                </select>
-
-                <label style="margin-right: 10px;">Price:</label>
-                <label style="margin-right: 5px;">From</label>
-                <input type="number" name="min" style="width:100px; padding: 5px; margin-right: 20px;"
-                       value="@Model.MinPrice" min="0" max="100000000" />
-                <label style="margin-right: 5px;">To</label>
-                <input type="number" name="max" style="width:120px; padding: 5px; margin-right: 20px;"
-                       value="@Model.MaxPrice" min="0" max="100000000" />
-
                 <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
-                    <input type="text" class="form-control bg-light border-0 small"
+                    <input type="number" class="form-control bg-light border-0 small"
                            value="@Model.Search" placeholder="Search for..."
                            aria-label="Search" aria-describedby="basic-addon2" name="search"
-                           style="width: 100%; padding: 5px;">
+                           style="width: 100%; padding: 5px;" min="1">
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
             </form>
-        </div>*@
+        </div>
 
         <div class="card-body">
             <div class="table-responsive">
@@ -75,6 +58,7 @@
                     <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
                         <a class="page-link" asp-page="billManage"
                            asp-route-pageIndex="@(Model.CurrentPage - 1)"
+                           asp-route-search="@Model.Search"
                         >Previous</a>
                     </li>
 
@@ -83,6 +67,7 @@
                     {
                         <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
                             <a class="page-link" asp-page="billManage"
+                           asp-route-search="@Model.Search"
                            asp-route-pageIndex="@(i)
                          ">@i</a>
                         </li>
@@ -91,7 +76,8 @@
                     <!-- Nút Next -->
                     <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
                         <a class="page-link" asp-page="billManage"
-                           asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                           asp-route-pageIndex="@(Model.CurrentPage + 1)"
+                           asp-route-search="@Model.Search">Next</a>
                     </li>
                 </ul>
 

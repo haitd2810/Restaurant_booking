@@ -10,10 +10,16 @@ namespace RestaurantBooking.Pages.Admin.bill
         public List<Bill> Bills { get; set; }= new List<Bill>();
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
-        public void OnGet(int pageIndex = 1, int pageSize = 5)
+        public string Search { get; set; }
+        public void OnGet(string search, int pageIndex = 1, int pageSize = 5)
         {
             CurrentPage = pageIndex;
+            Search = search;
             var query = RestaurantContext.Ins.Bills.AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+            {   
+                query = query.Where(x => x.Id == int.Parse(search));
+            }
             int totalItems = query.Count();
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             Bills = query.Include(x => x.Table)

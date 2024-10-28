@@ -1,0 +1,190 @@
+﻿@page
+@model RestaurantBooking.Pages.Admin.category.cateManageModel
+@{
+    Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
+}
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom:10px;">
+    <a class="btn btn-primary addButton" id="addButton">Add</a>
+@*    <div style="display: flex;">
+        <a class="btn btn-primary" style="margin-right:10px;" asp-page-handler="DownloadExcel">Download template</a>
+        <form style="padding-top:5px" method="post" enctype="multipart/form-data" asp-page-handler="UploadExcel">
+            <input type="file" accept=".xlsx" required name="excel" />
+            <button>Add</button>
+        </form>
+    </div>*@
+</div>
+<div class="container-fluid" style="padding:0;">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bill Manage</h6>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <form style="margin: 20px 0 0 20px; display: flex; align-items: center;" method="get">
+                <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
+                    <input type="text" class="form-control bg-light border-0 small"
+                           value="@Model.Search" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2" name="search"
+                           style="width: 100%; padding: 5px;" min="1">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.categories)
+                        {
+                            <tr>
+                                <td>@i.Id</td>
+                                <td>@i.Name</td>
+                                <td>
+                                    <a class="btn btn-primary" style="background-color:darkolivegreen" onclick="openUpdateCate(@i.Id, '@i.Name')">Update</a>
+                                    @if (i.IsActive == true)
+                                    {
+                                        <a class="btn btn-primary bg-danger delete" data-id="@i.Id">Delete</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-primary bg-success active" data-id="@i.Id">Active</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+                        <a class="page-link" asp-page="cateManage"
+                           asp-route-pageIndex="@(Model.CurrentPage - 1)"
+                           asp-route-search="@Model.Search">Previous</a>
+                    </li>
+
+                    <!-- Tạo danh sách số trang -->
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" asp-page="cateManage"
+                           asp-route-search="@Model.Search"
+                           asp-route-pageIndex="@(i)
+                         ">@i</a>
+                        </li>
+                    }
+
+                    <!-- Nút Next -->
+                    <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-page="cateManage"
+                           asp-route-pageIndex="@(Model.CurrentPage + 1)"
+                           asp-route-search="@Model.Search">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*modal add*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Add New Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page-handler="Add" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div>
+                        Name <input name="name" style="width:100%" type="text" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@*modal delete *@
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page-handler="Delete">
+                <input type="hidden" name="itemId" id="itemId" />
+                <p style="margin-left:20px; margin-top:20px;">Do you want to delete item?</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Modal active*@
+<div class="modal fade" id="active" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Active</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page-handler="Active">
+                <input type="hidden" name="itemId" id="itemIda" />
+                <p style="margin-left:20px; margin-top:20px;">Do you want to active item?</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Active</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Modal update*@
+<div class="modal fade" id="updateCate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Update Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page-handler="Update">
+                <input type="hidden" name="itemId" id="Idupdate" />
+                <div class="modal-body">
+                    <div>
+                        Name <input name="name" id="itemName" style="width:100%" type="text" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

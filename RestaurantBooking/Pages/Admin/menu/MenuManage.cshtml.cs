@@ -77,7 +77,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 int cateId = int.Parse(Request.Form["cate"]);
                 var existingMenu = RestaurantContext.Ins.Menus.FirstOrDefault(x => x.Name.Equals(name));
                 if (existingMenu != null)
-                {
+                {   
                     ViewData["error"] = "Name is exist";
                     return RedirectToPage("/Admin/menu/MenuManage");
                 }

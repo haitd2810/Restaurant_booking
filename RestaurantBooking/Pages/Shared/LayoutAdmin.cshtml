@@ -18,6 +18,7 @@
 
     <!-- Custom styles for this template-->
     <link href="~/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 <body id="page-top">
@@ -57,6 +58,18 @@
                 <a class="nav-link" asp-page="/Admin/bill/billManage">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Bill Manage</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-page="/Admin/booking/bookingManage">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Booking Manage</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-page="/Admin/category/cateManage">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Category Manage</span>
                 </a>
             </li>
         </ul>
@@ -329,10 +342,12 @@
 
     <!-- Page level plugins -->
     <script src="~/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="~/admin/js/demo/chart-area-demo.js"></script>
     <script src="~/admin/js/demo/chart-pie-demo.js"></script>
+    <script src="~/admin/js/demo/datatables-demo.js"></script>
     <script>
         $('.addButton').click(function () {
             $('#myModal').modal('show');
@@ -360,6 +375,14 @@
             $('#itemCategory').val(cateId);
 
             $('#modalUpdate').modal('show');
+            console.log(id);
+        }
+
+        function openUpdateCate(id, name) {
+            $('#Idupdate').val(id);
+            $('#itemName').val(name);
+
+            $('#updateCate').modal('show');
             console.log(id);
         }
 

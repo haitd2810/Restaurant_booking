@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataLibrary.Models
 {
@@ -11,6 +12,8 @@ namespace DataLibrary.Models
         }
 
         public int Id { get; set; }
+        [Required]
+        [RegularExpression(@"@""^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$""")]
         public string? Username { get; set; }
         public string? Password { get; set; }
         public int? RoleId { get; set; }

@@ -15,6 +15,7 @@ namespace DataLibrary.Models
         public string? Name { get; set; }
         public bool? IsOrder { get; set; }
         public bool? Status { get; set; }
+        public bool? ForBooking { get; set; }
 
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }

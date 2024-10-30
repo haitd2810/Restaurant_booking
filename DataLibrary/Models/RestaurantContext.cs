@@ -7,8 +7,8 @@ using Microsoft.Extensions.Configuration;
 namespace DataLibrary.Models
 {
     public partial class RestaurantContext : DbContext
-    {   
-        public static RestaurantContext Ins=new RestaurantContext();
+    {
+        public static RestaurantContext Ins = new RestaurantContext();
         public RestaurantContext()
         {
             if (Ins == null)
@@ -37,6 +37,7 @@ namespace DataLibrary.Models
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer(config.GetConnectionString("value")); }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -226,6 +227,10 @@ namespace DataLibrary.Models
                 entity.ToTable("Table");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ForBooking)
+                    .HasColumnName("forBooking")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsOrder).HasColumnName("isOrder");
 

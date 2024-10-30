@@ -1,4 +1,3 @@
-
 create database Restaurant
 go
 use Restaurant

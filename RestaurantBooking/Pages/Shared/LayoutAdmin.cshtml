@@ -72,6 +72,12 @@
                     <span>Category Manage</span>
                 </a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" asp-page="/Admin/table/tableManage">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Table Manage</span>
+                </a>
+            </li>
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
@@ -387,7 +393,7 @@
         }
 
     </script>
-    @if (ViewData["error"] != null)
+    @if (ViewData["success"] != null)
     {
         <script>
             $(document).ready(function () {
@@ -395,5 +401,33 @@
             });
         </script>
     }
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            //document.getElementById("nameError").innerText = "";
+            //document.getElementById("descriptionError").innerText = "";
+            //document.getElementById("priceError").innerText = "";
+            //document.getElementById("imageError").innerText = "";
+            //document.getElementById("cateError").innerText = "";
+            //const price = document.getElementById("price").value;
+            if (!price || price <= 0) {
+                document.getElementById("priceError").innerText = "Price must be greater than 0.";
+                isValid = false;
+            }
+            const image = document.getElementById("image").files[0];
+            if (!image) {
+                document.getElementById("imageError").innerText = "Image is required.";
+                isValid = false;
+            } else {
+                const fileType = image.type.toLowerCase();
+                if (fileType !== "image/png" && fileType !== "image/jpeg") {
+                    document.getElementById("imageError").innerText = "Only .png and .jpg files are allowed.";
+                    isValid = false;
+                }
+            }
+            return isValid;
+        }
+    </script>
 </body>
 </html>

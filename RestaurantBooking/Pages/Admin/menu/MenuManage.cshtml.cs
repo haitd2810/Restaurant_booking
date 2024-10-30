@@ -93,8 +93,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                 if (image != null && image.Length > 0)
                 {   
                     var path= Path.GetExtension(image.FileName).ToLower();
-                    if(path != ".png" || path != ".jpg")
-                    {   
+                    if (path != ".png" && path != ".jpg")
+                    {
                         return RedirectToPage("/Admin/menu/MenuManage");
                     }
                     fileName = Path.GetFileName(image.FileName);
@@ -111,7 +111,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                     Name = name,
                     Detail = description,
                     Price = price,
-                    Img = fileName, 
+                    Img = "/assets/img/"+fileName, 
                     IsSell = false,
                     CateId = cateId
                 };
@@ -155,14 +155,37 @@ namespace RestaurantBooking.Pages.Admin.Member
             return RedirectToPage("/Admin/menu/MenuManage");
         }
 
-        public IActionResult OnPostUpdate()
+        public IActionResult OnPostUpdate(IFormFile image)
         {
             string id = Request.Form["itemId"];
             string name = Request.Form["name"];
             string description = Request.Form["description"];
             string price = Request.Form["price"];
-            string image = Request.Form["image"];
             string cate = Request.Form["cate"];
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "assets", "img");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            string fileName = null;
+
+            if (image != null && image.Length > 0)
+            {
+                var path = Path.GetExtension(image.FileName).ToLower();
+                if (path != ".png" && path != ".jpg")
+                {
+                    return RedirectToPage("/Admin/menu/MenuManage");
+                }
+                fileName = Path.GetFileName(image.FileName);
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+            }
             var me = RestaurantContext.Ins.Menus.Find(int.Parse(id));
             if (me != null)
             {
@@ -170,67 +193,12 @@ namespace RestaurantBooking.Pages.Admin.Member
                 me.Detail = description;
                 me.Price = float.Parse(price);
                 me.CateId = int.Parse(cate);
-                me.Img = image;
+                me.Img = "/assets/img/" + fileName;
                 RestaurantContext.Ins.Menus.Update(me);
                 RestaurantContext.Ins.SaveChanges();
             }
             return RedirectToPage("/Admin/menu/MenuManage");
         }
-
-        //public IActionResult OnPostFilter()
-        //{
-        //    int cate = int.Parse(Request.Form["category"]);
-        //    int minprice = int.Parse(Request.Form["minprice"]);
-        //    int maxprice = int.Parse(Request.Form["maxprice"]);
-        //    categories = RestaurantContext.Ins.Categories.ToList();
-        //    if (cate == 0 )
-        //    {
-        //        menu = RestaurantContext.Ins.Menus.Where(x => minprice <= x.Price && x.Price <= maxprice).OrderByDescending(x=>x.Id).ToList();
-        //    }
-        //    else if (cate != 0)
-        //    {
-        //        menu = RestaurantContext.Ins.Menus.Where(x => x.CateId == cate && minprice <= x.Price && x.Price <= maxprice).ToList();
-        //    }
-        //    return Page();
-        //}
-
-        //public IActionResult OnPostSearch()
-        //{
-        //    string search = Request.Form["search"];
-        //    categories = RestaurantContext.Ins.Categories.ToList();
-        //    if (search == null)
-        //    {
-        //        menu = RestaurantContext.Ins.Menus.ToList();
-        //    }
-        //    else
-        //    {
-        //        menu = RestaurantContext.Ins.Menus.Where(x => x.Name.Contains(search)).ToList();
-        //    }
-        //    return Page();
-        //}
-
-        //public IActionResult OnGetDownloadExcel()
-        //{
-        //    var excelFileName = "Product.xlsx";
-        //    var memoryStream = new MemoryStream();
-
-        //    using (var package = new ExcelPackage(memoryStream))
-        //    {
-        //        var worksheet = package.Workbook.Worksheets.Add("Sheet1");
-
-        //        worksheet.Cells[1, 1].Value = "Name";
-        //        worksheet.Cells[1, 2].Value = "Detail";
-        //        worksheet.Cells[1, 3].Value = "Price";
-        //        worksheet.Cells[1, 4].Value = "Image";
-        //        worksheet.Cells[1, 5].Value = "Category";
-
-        //        package.Save();
-        //    }
-
-        //    memoryStream.Position = 0;
-
-        //    return File(memoryStream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelFileName);
-        //}
 
         public IActionResult OnGetDownloadExcel()
         {

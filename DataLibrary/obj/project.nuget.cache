@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "mUJ3YFi8nY6sS2IvJDGft7ly8chtAuOQixOLBv8/D9X7qaoSdT1SJ+6dlYWxNlnt3xC/Tn4f9utwFFCNMcCh/A==",
+  "dgSpecHash": "zWJ1pbGrMQ9ZHaBKILsd7LgdybMKe0LpxAVIGO7ASLco9sN2HqOIyzj3Ks6wcxbAF0bEtIJ8O3b4kKbAqBJ2tw==",
   "success": true,
   "projectFilePath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\admin\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus\\6.2.19\\epplus.6.2.19.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus.system.drawing\\6.1.1\\epplus.system.drawing.6.1.1.nupkg.sha512",

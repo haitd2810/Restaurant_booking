@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EjGCYB/uK4Zu00vhB/VlCLh/wdgCQ2pNUpNFPqHFJma35nosLfrgj8uN6/skWqtmW/sLdvPHsmfmgqpJFmEJew==",
+  "dgSpecHash": "tWdr4+14h33TSGfFTGlDOOt322ZFMr6OUmddtJIUgZtdACUK34agx9/wIQ+xtpjA/dRO4BHj/Bv518wk5EvB7g==",
   "success": true,
   "projectFilePath": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\admin\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus\\6.2.19\\epplus.6.2.19.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus.system.drawing\\6.1.1\\epplus.system.drawing.6.1.1.nupkg.sha512",

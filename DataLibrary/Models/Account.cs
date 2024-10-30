@@ -12,10 +12,10 @@ namespace DataLibrary.Models
         }
 
         public int Id { get; set; }
-        [Required]
-        [RegularExpression(@"@""^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$""")]
+        [Required(ErrorMessage ="Username is require")]
         public string? Username { get; set; }
-        public string? Password { get; set; }
+		[Required(ErrorMessage = "Password is require")]
+		public string? Password { get; set; }
         public int? RoleId { get; set; }
         public bool? IsActive { get; set; }
 

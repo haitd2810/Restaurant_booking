@@ -326,3 +326,4 @@ C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\Microsoft.IO.Re
 C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\BCrypt.Net-Next.dll

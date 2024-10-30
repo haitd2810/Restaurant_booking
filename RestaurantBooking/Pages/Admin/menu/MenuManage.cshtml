@@ -73,7 +73,7 @@
                                 <td>@i.Name</td>
                                 <td>@i.Detail</td>
                                 <td>@i.Price</td>
-                                <td style="width:50px;"><img style="width:50px; object-fit:cover" src="~/assets/img/@i.Img" /></td>
+                                <td style="width:50px;"><img style="width:50px; object-fit:cover" src="@i.Img" /></td>
                                 <td>@i.Cate.Name</td>
                                 <td>
 
@@ -142,28 +142,33 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" asp-page-handler="Add" enctype="multipart/form-data">
+            <form id="addItemForm" method="post" asp-page-handler="Add" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <div class="modal-body">
                     <div>
-                        Name <input name="name" style="width:100%" type="text" required />
+                        Name <input id="name" name="name" style="width:100%" type="text" required />
+                        <span id="nameError" class="text-danger"></span>
                     </div>
                     <div class="mt-3">
-                        Detail <textarea name="description" style="width:100%" required></textarea>
+                        Detail <textarea id="description" name="description" style="width:100%" required></textarea>
+                        <span id="descriptionError" class="text-danger"></span>
                     </div>
                     <div class="mt-3">
-                        Price <input name="price" style="width:100%" type="number" required min="1" max="2147483647" />
+                        Price <input id="price" name="price" style="width:100%" type="number" required min="1" max="2147483647" />
+                        <span id="priceError" class="text-danger"></span>
                     </div>
                     <div class="mt-3">
-                        Image <input name="image" style="width:100%" type="file" required accept=".png, .jpg" />
+                        Image <input id="image" name="image" style="width:100%" type="file" required accept=".png, .jpg" />
+                        <span id="imageError" class="text-danger"></span>
                     </div>
                     <div class="mt-3">
                         Category
-                        <select name="cate" required>
+                        <select id="cate" name="cate" required>
                             @foreach (var c in Model.categories)
                             {
                                 <option value="@c.Id">@c.Name</option>
                             }
                         </select>
+                        <span id="cateError" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -229,7 +234,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" asp-page-handler="Update">
+            <form method="post" asp-page-handler="Update" enctype="multipart/form-data" >
                 <input type="hidden" name="itemId" id="Idupdate" />
                 <div class="modal-body">
                     <div>
@@ -242,8 +247,9 @@
                         Price <input name="price" id="itemPrice" style="width:100%" type="number" required min="1" max="2147483647" />
                     </div>
                     <div class="mt-3">
-                        Image <input name="image" id="itemImage" style="width:100%" type="text" />
-                        @*Image <input name="image" style="width:100%" type="file" required accept=".png, .jpg" />*@
+                        @*Image <input name="image" id="itemImage" style="width:100%" type="text" />*@
+                        Image <input name="image" style="width:100%" type="file" required accept=".png, .jpg" />
+                        <span id="imageError" class="text-danger"></span>
                     </div>
                     <div class="mt-3">
                         Category
@@ -263,9 +269,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 @*modal error*@
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">

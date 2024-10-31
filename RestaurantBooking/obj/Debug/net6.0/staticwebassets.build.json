@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "B+ykA5mm5yesYlztVd51dYTjuYjEk8KKXvUGMcq9RHE=",
+  "Hash": "eh/VYvAT9OViXTB7gIaQuxnxly5Npbbs0bnZuvTRs78=",
   "Source": "RestaurantBooking",
   "BasePath": "_content/RestaurantBooking",
   "Mode": "Default",
@@ -72,6 +72,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "Pages\\OrderMeal\\Details.cshtml.js"
+    },
+    {
+      "Identity": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\Pages\\Revenue\\Index.cshtml.js",
+      "SourceId": "RestaurantBooking",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\",
+      "BasePath": "_content/RestaurantBooking",
+      "RelativePath": "Pages/Revenue/Index.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\Revenue\\Index.cshtml.js"
     },
     {
       "Identity": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\assets\\css\\style.css",
@@ -1269,6 +1288,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\watermelon_juice.jpg"
+    },
+    {
+      "Identity": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\assets\\js\\jquery.min.js",
+      "SourceId": "RestaurantBooking",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\",
+      "BasePath": "_content/RestaurantBooking",
+      "RelativePath": "assets/js/jquery.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\js\\jquery.min.js"
     },
     {
       "Identity": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\assets\\js\\main.js",

@@ -34,8 +34,8 @@ namespace RestaurantBooking.Pages.OrderMeal
                 Bill bill = new Bill();
                 bill.TableId = int.Parse(tableId);
                 bill.Payed = false;
-                bill.CreateDate = DateTime.Now;
-                bill.UpdateDate = DateTime.Now;
+                bill.CreateAt = DateTime.Now;
+                bill.UpdateAt = DateTime.Now;
                 bill.Status = true;
                 try
                 {
@@ -72,7 +72,6 @@ namespace RestaurantBooking.Pages.OrderMeal
                         billInfor.Quantity = quantity;
                         billInfor.MenuId = menuID;
                         billInfor.Price = menu.Price * quantity;
-                        billInfor.Status = true;
                         _context.BillInfors.Add(billInfor);
                         await _context.SaveChangesAsync();
                     }

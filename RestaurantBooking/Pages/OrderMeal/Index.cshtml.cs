@@ -17,7 +17,7 @@ namespace RestaurantBooking.Pages.OrderMeal
         }
         public async Task OnGetAsync()
         {
-            tableList = await _context.Tables.Where(t => t.Status == true)
+            tableList = await _context.Tables.Where(t => t.DeleteFlag == false)
                 .Include(t => t.Bills.Where(b => b.Status == true)).ThenInclude(t => t.BillInfors)
                 .ToListAsync();
         }

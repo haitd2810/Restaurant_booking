@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Pages\\OrderMeal\\Details.cshtml.js"
     },
     {
+      "Id": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\Pages\\Revenue\\Index.cshtml.js",
+      "PackagePath": "staticwebassets\\Pages\\Revenue\\Index.cshtml.js"
+    },
+    {
       "Id": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\RestaurantBooking.bundle.scp.css",
       "PackagePath": "staticwebassets\\RestaurantBooking.bundle.scp.css"
     },
@@ -259,6 +263,10 @@
     {
       "Id": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\assets\\img\\watermelon_juice.jpg",
       "PackagePath": "staticwebassets\\assets\\img\\watermelon_juice.jpg"
+    },
+    {
+      "Id": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\assets\\js\\jquery.min.js",
+      "PackagePath": "staticwebassets\\assets\\js\\jquery.min.js"
     },
     {
       "Id": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\RestaurantBooking\\wwwroot\\assets\\js\\main.js",

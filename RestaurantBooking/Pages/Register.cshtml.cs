@@ -62,7 +62,7 @@ namespace RestaurantBooking.Pages
 			Token t = new Token()
 			{
 				Token1 = token,
-				Date = DateTime.Now,
+				CreateAt = DateTime.Now,
 				AccountId = acc.Id
 			};
 			RestaurantContext.Ins.Tokens.Add(t);

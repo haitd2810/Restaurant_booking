@@ -49,7 +49,7 @@
                                 <td>@i.Name</td>
                                 <td>
                                     <a class="btn btn-primary" style="background-color:darkolivegreen" onclick="openUpdateCate(@i.Id, '@i.Name')">Update</a>
-                                    @if (i.IsActive == true)
+                                    @if (i.DeleteFlag == false)
                                     {
                                         <a class="btn btn-primary bg-danger delete" data-id="@i.Id">Delete</a>
                                     }

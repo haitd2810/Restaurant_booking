@@ -42,7 +42,8 @@ namespace RestaurantBooking.Pages.Admin.category
                 Category c = new Category
                 {
                     Name = name,
-                    IsActive = false
+                    CreateAt=DateTime.Now,
+                    DeleteFlag = true
                 };
                 RestaurantContext.Ins.Categories.Add(c);
                 RestaurantContext.Ins.SaveChanges();
@@ -56,7 +57,8 @@ namespace RestaurantBooking.Pages.Admin.category
             var cate = RestaurantContext.Ins.Categories.Find(int.Parse(id));
             if (cate != null)
             {
-                cate.IsActive = false;
+                cate.DeleteFlag = true;
+                cate.DeleteAt= DateTime.Now;
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
@@ -68,7 +70,9 @@ namespace RestaurantBooking.Pages.Admin.category
             var cate = RestaurantContext.Ins.Categories.Find(int.Parse(id));
             if (cate != null)
             {
-                cate.IsActive = true;
+                cate.DeleteFlag = false;
+                cate.UpdateAt= DateTime.Now;
+                cate.DeleteAt = null;
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
@@ -83,6 +87,8 @@ namespace RestaurantBooking.Pages.Admin.category
             if (cate != null)
             {
                 cate.Name=name;
+                cate.UpdateAt = DateTime.Now;
+                cate.DeleteAt=null;
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }

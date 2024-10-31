@@ -327,3 +327,14 @@ C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\runtimes\win\li
 C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.csproj.AssemblyReference.cache
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.AssemblyInfoInputs.cache
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.AssemblyInfo.cs
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.RazorAssemblyInfo.cache
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.RazorAssemblyInfo.cs
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.dll
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\refint\RestaurantBooking.dll
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.pdb

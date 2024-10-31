@@ -78,7 +78,7 @@
                                 <td>
 
                                     <a class="btn btn-primary" style="background-color:darkolivegreen" onclick="openUpdateModal(@i.Id, '@i.Name', '@i.Detail', @i.Price, '@i.Img', @i.CateId)">Update</a>
-                                    @if (i.IsSell == true)
+                                    @if (i.DeleteFlag == false)
                                     {
                                         <a class="btn btn-primary bg-danger delete" data-id="@i.Id">Delete</a>
                                     }

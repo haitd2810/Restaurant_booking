@@ -74,10 +74,8 @@ namespace RestaurantBooking.Pages.Admin.Member
 
         public IActionResult OnPostAdd(IFormFile image, string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
-            
             try
             {
-                
                 categories = RestaurantContext.Ins.Categories.ToList();
 
                 string name = Request.Form["name"];
@@ -122,7 +120,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                     Detail = description,
                     Price = price,
                     Img = "/assets/img/"+fileName, 
-                    IsSell = false,
+                    DeleteFlag = true,
+                    CreateAt=DateTime.Now,
                     CateId = cateId
                 };
                 RestaurantContext.Ins.Menus.Add(mnu);
@@ -145,7 +144,8 @@ namespace RestaurantBooking.Pages.Admin.Member
             var me = RestaurantContext.Ins.Menus.Find(int.Parse(id));
             if (me != null)
             {
-                me.IsSell = false;
+                me.DeleteFlag = true;
+                me.DeleteAt = DateTime.Now ;
             }
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
@@ -161,7 +161,9 @@ namespace RestaurantBooking.Pages.Admin.Member
             var me = RestaurantContext.Ins.Menus.Find(int.Parse(id));
             if (me != null)
             {
-                me.IsSell = true;
+                me.DeleteFlag = false;
+                me.DeleteAt = null;
+                me.UpdateAt = DateTime.Now ;
             }
             load(search, category, min, max, pageIndex, pageSize);
             RestaurantContext.Ins.Menus.Update(me);
@@ -210,6 +212,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 me.Price = float.Parse(price);
                 me.CateId = int.Parse(cate);
                 me.Img = "/assets/img/" + fileName;
+                me.UpdateAt = DateTime.Now;
                 RestaurantContext.Ins.Menus.Update(me);
                 RestaurantContext.Ins.SaveChanges();
             }
@@ -315,7 +318,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                             Price = (float)price,
                             Img = img,
                             CateId = category.Id,
-                            IsSell = false
+                            DeleteFlag = true,
+                            CreateAt=DateTime.Now
                         };
 
                         RestaurantContext.Ins.Menus.Add(product);

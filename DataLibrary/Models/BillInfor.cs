@@ -10,7 +10,8 @@ namespace DataLibrary.Models
         public int? MenuId { get; set; }
         public int? Quantity { get; set; }
         public double? Price { get; set; }
-        public bool? Status { get; set; }
+        public DateTime? CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         public virtual Bill? Bill { get; set; }
         public virtual Menu? Menu { get; set; }

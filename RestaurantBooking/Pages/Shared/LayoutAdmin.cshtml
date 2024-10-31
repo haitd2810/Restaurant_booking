@@ -393,11 +393,19 @@
         }
 
     </script>
-    @if (ViewData["success"] != null)
+    @if (ViewData["error"] != null)
     {
         <script>
             $(document).ready(function () {
                 $('#errorModal').modal('show');
+            });
+        </script>
+    }
+    @if (ViewData["success"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                $('#successModal').modal('show');
             });
         </script>
     }

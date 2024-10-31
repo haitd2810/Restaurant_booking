@@ -7433,6 +7433,10 @@
       "PackagePath": "staticwebassets\\assets\\img\\Coffee-Shop.jpg"
     },
     {
+      "Id": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\Ground.png",
+      "PackagePath": "staticwebassets\\assets\\img\\Ground.png"
+    },
+    {
       "Id": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\Product.xlsx",
       "PackagePath": "staticwebassets\\assets\\img\\Product.xlsx"
     },
@@ -7523,6 +7527,10 @@
     {
       "Id": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\lifeboat.png",
       "PackagePath": "staticwebassets\\assets\\img\\lifeboat.png"
+    },
+    {
+      "Id": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\matsauthesv.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\matsauthesv.jpg"
     },
     {
       "Id": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\menu\\bread-barrel.jpg",

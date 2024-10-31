@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YIRlQkL6HBFwa7AfP4a1DHmXcGOIuu5Fu1x5FSQAUfg=",
+  "Hash": "Z+stuSORN3RM5nLKG/ThfSSDWMcC52up3KSPCpIU2Pc=",
   "Source": "RestaurantBooking",
   "BasePath": "_content/RestaurantBooking",
   "Mode": "Default",
@@ -31960,6 +31960,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\img\\gallery\\gallery-8.jpg"
     },
     {
+      "Identity": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\Ground.png",
+      "SourceId": "RestaurantBooking",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\",
+      "BasePath": "_content/RestaurantBooking",
+      "RelativePath": "assets/img/Ground.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\Ground.png"
+    },
+    {
       "Identity": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\hero-bg.jpg",
       "SourceId": "RestaurantBooking",
       "SourceType": "Discovered",
@@ -31992,6 +32009,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\lifeboat.png"
+    },
+    {
+      "Identity": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\matsauthesv.jpg",
+      "SourceId": "RestaurantBooking",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\",
+      "BasePath": "_content/RestaurantBooking",
+      "RelativePath": "assets/img/matsauthesv.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\matsauthesv.jpg"
     },
     {
       "Identity": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\wwwroot\\assets\\img\\menu\\bread-barrel.jpg",

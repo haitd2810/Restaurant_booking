@@ -1,9 +1,11 @@
 ﻿using DataLibrary.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Numerics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Net.Mime.MediaTypeNames;
@@ -25,8 +27,7 @@ namespace RestaurantBooking.Pages.Admin.Member
         public int? Category { get; set; }
         public List<Menu> menu { get; set; } = new List<Menu>();
         public List<Category> categories { get; set; } = new List<Category>();
-
-        public void OnGet(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
+        private IActionResult load(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
             Search = search;
             CurrentPage = pageIndex;
@@ -58,17 +59,25 @@ namespace RestaurantBooking.Pages.Admin.Member
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
             menu = query
-                        .OrderByDescending(i => i.Id)
-                        .Skip((pageIndex - 1) * pageSize)
+            .OrderByDescending(i => i.Id)
+            .Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize)
                         .ToList();
+            return Page();
+        }
+
+        public void OnGet(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
+        {
+            load(search, category, min, max, pageIndex, pageSize);
         }
 
 
-        public IActionResult OnPostAdd(IFormFile image)
+        public IActionResult OnPostAdd(IFormFile image, string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
+            
             try
             {
+                
                 categories = RestaurantContext.Ins.Categories.ToList();
 
                 string name = Request.Form["name"];
@@ -79,7 +88,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                 if (existingMenu != null)
                 {   
                     ViewData["error"] = "Name is exist";
-                    return RedirectToPage("/Admin/menu/MenuManage");
+                    load(search, category, min, max, pageIndex, pageSize);
+                    return Page();
                 }
 
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "assets","img");
@@ -115,11 +125,11 @@ namespace RestaurantBooking.Pages.Admin.Member
                     IsSell = false,
                     CateId = cateId
                 };
-
                 RestaurantContext.Ins.Menus.Add(mnu);
                 RestaurantContext.Ins.SaveChanges();
-
-                return RedirectToPage("/Admin/menu/MenuManage");
+                ViewData["success"] = "Add Menu successful";
+                load(search, category, min, max, pageIndex, pageSize);
+                return Page();
             }
             catch (Exception ex)
             {
@@ -129,7 +139,7 @@ namespace RestaurantBooking.Pages.Admin.Member
         }
 
 
-        public IActionResult OnPostDelete()
+        public IActionResult OnPostDelete(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
             string id = Request.Form["itemId"];
             var me = RestaurantContext.Ins.Menus.Find(int.Parse(id));
@@ -139,10 +149,13 @@ namespace RestaurantBooking.Pages.Admin.Member
             }
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
-            return RedirectToPage("/Admin/menu/MenuManage");
+            //return RedirectToPage("/Admin/menu/MenuManage");
+            ViewData["error"] = "Name is exist";
+            load(search, category, min, max, pageIndex, pageSize);
+            return Page();
         }
 
-        public IActionResult OnPostActive()
+        public IActionResult OnPostActive(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
             string id = Request.Form["itemId"];
             var me = RestaurantContext.Ins.Menus.Find(int.Parse(id));
@@ -150,13 +163,16 @@ namespace RestaurantBooking.Pages.Admin.Member
             {
                 me.IsSell = true;
             }
+            load(search, category, min, max, pageIndex, pageSize);
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
-            return RedirectToPage("/Admin/menu/MenuManage");
+            return Page();
         }
 
-        public IActionResult OnPostUpdate(IFormFile image)
+        public IActionResult OnPostUpdate(IFormFile image, string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
+            load(search, category, min, max, pageIndex, pageSize);
+
             string id = Request.Form["itemId"];
             string name = Request.Form["name"];
             string description = Request.Form["description"];
@@ -197,7 +213,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 RestaurantContext.Ins.Menus.Update(me);
                 RestaurantContext.Ins.SaveChanges();
             }
-            return RedirectToPage("/Admin/menu/MenuManage");
+            return Page();
         }
 
         public IActionResult OnGetDownloadExcel()
@@ -214,7 +230,6 @@ namespace RestaurantBooking.Pages.Admin.Member
                 worksheet.Cells[1, 3].Value = "Price";
                 worksheet.Cells[1, 4].Value = "Image";
                 worksheet.Cells[1, 5].Value = "Category";
-
 
                 var categories = RestaurantContext.Ins.Categories.ToList();
                 for (int i = 0; i < categories.Count(); i++)
@@ -309,7 +324,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 }
             }
             TempData["Message"] = "Products added to the database successfully.";
-            return RedirectToPage("/Admin/menu/MenuManage");
+            return Page();
         }
 
     }

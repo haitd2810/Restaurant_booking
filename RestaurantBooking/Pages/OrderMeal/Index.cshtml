@@ -1,0 +1,75 @@
+﻿@page
+@model RestaurantBooking.Pages.OrderMeal.IndexModel
+@{
+    Layout = "~/Pages/Shared/_Header.cshtml";
+}
+<main id="main" style="margin-top: 5em;">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about why-us">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title row">
+                <div class="col-lg-8 col-md-6">
+                    <h2>Table</h2>
+                </div>
+            </div>
+            <div class="row">
+                @if (Model.tableList != null)
+                {
+                    @foreach (var table in Model.tableList)
+                    {
+                        @if (table.ForBooking == false)
+                        {
+                            <div class="col-lg-2 mt-4">
+                                <div style="height: 10rem; overflow: hidden;border-radius: 10%;" class="box aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+                                    <a href="/OrderMeal/Details?id=@table.Id">
+                                        @if (table.Bills.Count != 0)
+                                        {
+                                            <span>Ordering</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@table.Name</span>
+                                        }
+                                        @* <p style="@(table.Bills)">Ulamco laboris nisi ut aliquip ex. Et consectetur ducimus vero placeat</p> *@
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="row section-title row" style="padding-top: 40px;">
+                <div class="col-lg-8 col-md-6">
+                    <h2>Table For Booking</h2>
+                </div>
+            </div>
+            <div class="row">
+                @if (Model.tableList != null)
+                {
+                    @foreach (var table in Model.tableList)
+                    {
+                        @if (table.ForBooking == true)
+                        {
+                            <div class="col-lg-2 mt-4">
+                                <div style="height: 10rem; overflow: hidden;border-radius: 10%;" class="box aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+                                    <a href="/OrderMeal/Details?id=@table.Id">
+                                        @if (table.Bills.Count != 0)
+                                        {
+                                            <span>Ordering</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@table.Name</span>
+                                        }
+                                        @* <p style="@(table.Bills)">Ulamco laboris nisi ut aliquip ex. Et consectetur ducimus vero placeat</p> *@
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </section><!-- End About Section -->
+</main><!-- End #main -->

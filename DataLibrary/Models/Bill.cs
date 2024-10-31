@@ -13,8 +13,10 @@ namespace DataLibrary.Models
         public int Id { get; set; }
         public int? TableId { get; set; }
         public bool? Payed { get; set; }
-        public DateTime? CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime? CreateAt { get; set; }
+        public int? CreateBy { get; set; }
+        public DateTime? UpdateAt { get; set; }
+        public int? UpdateBy { get; set; }
         public bool? Status { get; set; }
 
         public virtual Table? Table { get; set; }

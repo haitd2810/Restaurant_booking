@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tWdr4+14h33TSGfFTGlDOOt322ZFMr6OUmddtJIUgZtdACUK34agx9/wIQ+xtpjA/dRO4BHj/Bv518wk5EvB7g==",
+  "dgSpecHash": "edMwVh6/ikvXCSKPpCw5r487CH93dcKDFLiWEYKMczE3iAVw+hdKky5v7ND0hfkoottcWxIJvk4UI71YbLFqhw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj",
+  "projectFilePath": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\RestaurantBooking.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\epplus\\6.2.19\\epplus.6.2.19.nupkg.sha512",
@@ -226,5 +226,12 @@
     "C:\\Users\\admin\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

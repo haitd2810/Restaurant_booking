@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj": {}
+    "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj": {
+    "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj",
         "projectName": "DataLibrary",
-        "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
+        "projectPath": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

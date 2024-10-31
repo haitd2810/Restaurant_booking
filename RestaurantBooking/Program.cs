@@ -1,14 +1,23 @@
+using DataLibrary.Models;
+using RestaurantBooking.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//connect database in razor page need add this line
+builder.Services.AddDbContext<RestaurantContext>();
+builder.Services.AddSignalR();
+
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromSeconds(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,10 +36,15 @@ app.UseSession();
 
 app.UseAuthorization();
 
+app.UseSession();
+
 app.MapRazorPages();
 app.MapGet("/", context =>
 {
     context.Response.Redirect("/Restaurant");
     return Task.CompletedTask;
 });
+
+app.MapHub<HubServer>("/hub");
+
 app.Run();

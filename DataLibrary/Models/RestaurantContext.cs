@@ -46,10 +46,18 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57296CB4519")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5725F552CBA")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.DeleteAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("deleteAt");
 
                 entity.Property(e => e.IsActive).HasColumnName("isActive");
 
@@ -59,6 +67,10 @@ namespace DataLibrary.Models
                     .HasColumnName("password");
 
                 entity.Property(e => e.RoleId).HasColumnName("roleID");
+
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(255)
@@ -77,22 +89,28 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CreateDate)
+                entity.Property(e => e.CreateAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("createDate");
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.CreateBy).HasColumnName("createBy");
 
                 entity.Property(e => e.Payed).HasColumnName("payed");
 
+                entity.Property(e => e.Status).HasColumnName("status");
+
                 entity.Property(e => e.TableId).HasColumnName("tableID");
 
-                entity.Property(e => e.UpdateDate)
+                entity.Property(e => e.UpdateAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("updateDate");
+                    .HasColumnName("updateAt");
+
+                entity.Property(e => e.UpdateBy).HasColumnName("updateBy");
 
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Bill__tableID__34C8D9D1");
+                    .HasConstraintName("FK__Bill__tableID__38996AB5");
             });
 
             modelBuilder.Entity<BillInfor>(entity =>
@@ -103,23 +121,29 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.BillId).HasColumnName("billID");
 
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
                 entity.Property(e => e.MenuId).HasColumnName("menuID");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-                entity.Property(e => e.Status).HasColumnName("status");
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
 
                 entity.HasOne(d => d.Bill)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.BillId)
-                    .HasConstraintName("FK__BillInfor__billI__37A5467C");
+                    .HasConstraintName("FK__BillInfor__billI__3B75D760");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.MenuId)
-                    .HasConstraintName("FK__BillInfor__menuI__38996AB5");
+                    .HasConstraintName("FK__BillInfor__menuI__3C69FB99");
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -128,6 +152,10 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)
                     .IsUnicode(false)
@@ -135,7 +163,6 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.FullName)
                     .HasMaxLength(255)
-                    .IsUnicode(false)
                     .HasColumnName("fullName");
 
                 entity.Property(e => e.Phone)
@@ -149,18 +176,15 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(255)
-                    .IsUnicode(false);
+                    .IsUnicode(false)
+                    .HasColumnName("status");
 
                 entity.Property(e => e.TableId).HasColumnName("tableID");
-
-                entity.Property(e => e.UpdateAt)
-                    .HasColumnType("datetime")
-                    .HasColumnName("updateAt");
 
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Booking__tableID__3B75D760");
+                    .HasConstraintName("FK__Booking__tableID__3F466844");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -169,11 +193,25 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.IsActive).HasColumnName("isActive");
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.DeleteAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("deleteAt");
+
+                entity.Property(e => e.DeleteFlag)
+                    .HasColumnName("deleteFlag")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .HasColumnName("name");
+
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
             });
 
             modelBuilder.Entity<Menu>(entity =>
@@ -184,6 +222,18 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.CateId).HasColumnName("cateID");
 
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.DeleteAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("deleteAt");
+
+                entity.Property(e => e.DeleteFlag)
+                    .HasColumnName("deleteFlag")
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Detail)
                     .HasMaxLength(255)
                     .HasColumnName("detail");
@@ -192,18 +242,20 @@ namespace DataLibrary.Models
                     .HasMaxLength(255)
                     .HasColumnName("img");
 
-                entity.Property(e => e.IsSell).HasColumnName("isSell");
-
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .HasColumnName("name");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
+
                 entity.HasOne(d => d.Cate)
                     .WithMany(p => p.Menus)
                     .HasForeignKey(d => d.CateId)
-                    .HasConstraintName("FK__Menu__cateID__31EC6D26");
+                    .HasConstraintName("FK__Menu__cateID__35BCFE0A");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -212,14 +264,26 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.DeleteAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("deleteAt");
+
+                entity.Property(e => e.DeleteFlag)
+                    .HasColumnName("deleteFlag")
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("name");
 
-                entity.Property(e => e.Status)
-                    .HasColumnName("status")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
             });
 
             modelBuilder.Entity<Table>(entity =>
@@ -228,18 +292,27 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.DeleteAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("deleteAt");
+
+                entity.Property(e => e.DeleteFlag)
+                    .HasColumnName("deleteFlag")
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.ForBooking)
                     .HasColumnName("forBooking")
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsOrder).HasColumnName("isOrder");
 
-                entity.Property(e => e.Name)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("name");
-
-                entity.Property(e => e.Status).HasColumnName("status");
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
             });
 
             modelBuilder.Entity<Token>(entity =>
@@ -250,12 +323,12 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.AccountId).HasColumnName("accountId");
 
-                entity.Property(e => e.Date)
+                entity.Property(e => e.CreateAt)
                     .HasColumnType("datetime")
-                    .HasColumnName("date");
+                    .HasColumnName("createAt");
 
                 entity.Property(e => e.Token1)
-                    .HasMaxLength(30)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("token");
 

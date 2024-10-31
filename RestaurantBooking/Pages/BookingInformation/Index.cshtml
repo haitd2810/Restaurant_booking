@@ -12,14 +12,44 @@
         background-color: #cda45e00;
     }
 
-        .page-link:hover {
-            color: #cda45e;
-            background-color: #fff;
-        }
+    .page-link:hover {
+        color: #cda45e;
+        background-color: #fff;
+    }
 
     .active-page {
         color: #cda45e;
         background-color: #fff;
+    }
+    .close-btn {
+        background-color: #ffffff00;
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: 10px;
+        transition: 0.3s;
+        line-height: 1;
+        color: white;
+        border: 2px solid #cda45e !important;
+        transition: 0.3s;
+        font-style: normal !important;
+    }
+
+    .close-btn:hover {
+        color: white !important;
+        background-color: #cda45e !important;
+    }
+    .select-box{
+        margin-left: 1rem;
+        background: #3b414600;
+        color: white;
+        border: 2px solid #cda45e;
+        border-radius: 10px;
+        width: 20rem;
+        text-align: center;
     }
 </style>
 <main id="main" style="margin-top: 3em;">
@@ -28,7 +58,7 @@
         <div class="container" data-aos="fade-up">
             <div class="row">
                 <div class="section-title col-lg-8 col-md-6">
-                    <p>Schedule</p>
+                    <p>Booking Information</p>
                 </div>
             </div>
         </div>
@@ -36,38 +66,56 @@
     <!-- ======= Menu Section ======= -->
     <section id="menu" class="menu section-bg">
         <div class="container-fluid" data-aos="fade-up">
+            <form method="get">
+                <input type="hidden" name="page_number" value="1"/>
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-3" style="display: flex;">
+                        <input type="date" value="@Model.date_filter" name="dateFilter" class="form-control" />
+                        <button class="close-btn" style="border-radius: 10px; margin-left: 1rem;">Filter</button>
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5" style="display: flex;">
+                        <input type="text" value="@Model.key" name="keywords" class="form-control" id="name" placeholder="Enter Keywords" data-rule="minlen:4">
+                        <select name="searchBy" class="form-control select-box" style="margin-left: 1rem;">
+                            <option value="name" selected="@(Model.search_by == "name")">By Name</option>
+                            <option value="email" selected="@(Model.search_by == "email")">By Email</option>
+                            <option value="phone" selected="@(Model.search_by == "phone")">By Phone</option>
+                        </select>
+                        <button class="close-btn" style="border-radius: 10px; margin-left: 1rem;">Search</button>
+                    </div>
+                    <div class="col-lg-2"></div>
+                </div>
+            </form>
             <div id="menu-container" class="row menu-container" data-aos="fade-up" data-aos-delay="200">
                 <div class="col-lg-12 menu-item meal-item filter-starters">
                     <table class="table text-light">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">
+                                <th scope="col" class="text-center">
                                     Full Name
                                     <span class="sort" data-sort="name">▲</span>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="text-center">
                                     Email
                                     <span class="sort" data-sort="email">▲</span>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="text-center">
                                     Phone
                                     <span class="sort" data-sort="phone">▲</span>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="text-center">
                                     Date Time
                                     <span class="sort" data-sort="date">▲</span>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="text-center">
                                     Table
                                     <span class="sort" data-sort="table">▲</span>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="text-center">
                                     Status
                                     <span class="sort" data-sort="status">▲</span>
-                                </th>
-                                <th scope="col">
-                                    Confirm
                                 </th>
                             </tr>
                         </thead>
@@ -77,20 +125,13 @@
                                 foreach(var book in Model.book_infor)
                                 {
                                     <tr>
-                                        <td>@book.Id</td>
-                                        <td>@book.FullName</td>
-                                        <td>@book.Email</td>
-                                        <td>@book.Phone</td>
-                                        <td>@book.StartDate</td>
-                                        <td>@book.Table.Name</td>
-                                        <td>@book.Status</td>
-                                        <td>
-                                            <form>
-                                                <button class="btn btn-warning" style="color: white;">
-                                                    Close
-                                                </button>
-                                            </form>
-                                        </td>
+                                        <td class="text-center">@book.Id</td>
+                                        <td class="text-center">@book.FullName</td>
+                                        <td class="text-center">@book.Email</td>
+                                        <td class="text-center">@book.Phone</td>
+                                        <td class="text-center">@book.StartDate</td>
+                                        <td class="text-center">@book.Table.Id</td>
+                                        <td class="text-center">@book.Status</td>
                                     </tr>
                                 }
                             }
@@ -100,7 +141,7 @@
                         <ul class="pagination"> 
                             @for (int i = Model.page_previous; i <= Model.max_page; i++){
                                 <li class="page-item">
-                                    <a href="/BookingInformation?page_number=@i" class="page-link @(Model.page_current == i ? "active-page" : "")">@i</a>
+                                    <a href="/BookingInformation?page_number=@i&dateFilter=@Model.date_filter&keywords=@Model.key&searchBy=@Model.search_by" class="page-link @(Model.page_current == i ? "active-page" : "")">@i</a>
                                 </li>
                             }
                         </ul>
@@ -131,14 +172,19 @@
                     .sort(comparer(Array.from(header.parentNode.parentNode.children).indexOf(header.parentNode), header.textContent === '▲'))
                     .forEach(tr => tbody.appendChild(tr));
 
-                // Toggle sorting direction
                 header.textContent = header.textContent === '▲' ? '▼' : '▲';
             });
         });
     });
 
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
     $('#btnClick').click(function (e) {
         var name = document.getElementById('search-by-name').value;

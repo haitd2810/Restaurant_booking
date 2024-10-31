@@ -44,10 +44,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cdGFibGVcdGFibGVNYW5hZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/admin/Desktop/merge/RestaurantBooking/Pages/BookingInformation/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm9va2luZ0luZm9ybWF0aW9uXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/admin/Desktop/merge/RestaurantBooking/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -100,9 +96,17 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/admin/Desktop/merge/RestaurantBooking/Pages/BookingInformation/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQm9va2luZ0luZm9ybWF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-52fhw9nzu8
+
 [C:/Users/admin/Desktop/merge/RestaurantBooking/Pages/OrderMeal/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JkZXJNZWFsXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-42vgywanrl
+
+[C:/Users/admin/Desktop/merge/RestaurantBooking/Pages/Revenue/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmV2ZW51ZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-ee2voj3g06
 
 [C:/Users/admin/Desktop/merge/RestaurantBooking/Pages/Shared/LayoutAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXExheW91dEFkbWluLmNzaHRtbA==

@@ -28,8 +28,8 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
         }
         public async Task OnGetAsync()
         {
-            category_list = await _context.Categories.Where(ct => ct.IsActive == true).ToListAsync();
-            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.IsSell == true).ToListAsync();
+            category_list = await _context.Categories.Where(ct => ct.DeleteFlag == false).ToListAsync();
+            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -47,7 +47,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             string time = Request.Form["time"];
             DateTime startDate = DateTime.Parse($"{date} {time}");
             if (startDate.CompareTo(DateTime.Now.AddDays(1)) > 0
-                || startDate.CompareTo(DateTime.Now) <= 0)
+                || startDate.CompareTo(DateTime.Now.AddHours(1)) <= 0)
             {
                 HttpContext.Session.SetString("Booking_Failed", "Invalid Date Time Request");
                 return Redirect("/Restaurant");
@@ -57,12 +57,13 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             List<Booking> booked_List = await _context.Bookings
                 .Where(b => b.Status == "booked"
                 &&  b.StartDate <= startDate.AddHours(1)
-                && b.StartDate >= startDate.AddHours(-1) )
+                && b.StartDate >= startDate.AddHours(-1)
+                && b.StartDate.Value.AddMinutes(15).CompareTo(DateTime.Now) > 0)
                 .ToListAsync();
             var bookedTableIds = booked_List.Select(b => b.TableId).ToList();
             //check if there are any table is free
             List<Table> table_List = await _context.Tables
-                .Where(t => t.Status == true && !bookedTableIds.Contains(t.Id) && t.ForBooking == true)
+                .Where(t => t.DeleteFlag == false && !bookedTableIds.Contains(t.Id) && t.ForBooking == true)
                 .ToListAsync();
             if (table_List.Count == 0)
             {
@@ -96,7 +97,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             await _context.SaveChangesAsync();
 
             //send mail confirm user
-            SendMail(name, email, phone, date, time, table_List[0].Name?? String.Empty);
+            SendMail(name, email, phone, date, time, table_List[0].Id.ToString()?? String.Empty);
 
             //real time
             _hub.Clients.All.SendAsync("LoadAll");

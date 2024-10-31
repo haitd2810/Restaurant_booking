@@ -30,10 +30,10 @@ namespace RestaurantBooking.Pages.OrderMeal
             billTable = await _context.Bills.Where(b => b.TableId == int.Parse(id))
                 .Where(b => b.Status == true)
                 .FirstOrDefaultAsync();
-            if (billTable != null) billDetail = await _context.BillInfors.Where(bi => bi.BillId == billTable.Id && bi.Status == true)
+            if (billTable != null) billDetail = await _context.BillInfors.Where(bi => bi.BillId == billTable.Id)
                     .Include(bd => bd.Menu).Include(bd => bd.Bill).ToListAsync();
-            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.IsSell == true).ToListAsync();
-            category_list = await _context.Categories.Where(ct => ct.IsActive == true).ToListAsync();
+            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
+            category_list = await _context.Categories.Where(ct => ct.DeleteFlag == false).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync(string billId, string tableId)
@@ -47,6 +47,7 @@ namespace RestaurantBooking.Pages.OrderMeal
                 {
                     billTable.Status = false;
                     billTable.Payed = true;
+                    billTable.UpdateAt = DateTime.Now;
                     _context.Bills.Update(billTable);
                     await _context.SaveChangesAsync();
                 }

@@ -38,6 +38,9 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
+                            <th>CreateAt</th>
+                            <th>UpdateAt</th>
+                            <th>DeleteAt</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -47,6 +50,9 @@
                             <tr>
                                 <td>@i.Id</td>
                                 <td>@i.Name</td>
+                                <td>@i.CreateAt</td>
+                                <td>@i.UpdateAt</td>
+                                <td>@i.DeleteAt</td>
                                 <td>
                                     <a class="btn btn-primary" style="background-color:darkolivegreen" onclick="openUpdateCate(@i.Id, '@i.Name')">Update</a>
                                     @if (i.DeleteFlag == false)

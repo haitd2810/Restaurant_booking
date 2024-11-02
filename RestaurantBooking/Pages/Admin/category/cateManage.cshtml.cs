@@ -11,7 +11,7 @@ namespace RestaurantBooking.Pages.Admin.category
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
         public string Search { get; set; }
-        public void OnGet(string search, int pageIndex = 1, int pageSize = 5)
+        private void load(string search, int pageIndex = 1, int pageSize = 5)
         {
             CurrentPage = pageIndex;
             Search = search;
@@ -28,13 +28,19 @@ namespace RestaurantBooking.Pages.Admin.category
                         .Take(pageSize)
                         .ToList();
         }
+        public void OnGet(string search, int pageIndex = 1, int pageSize = 5)
+        {
+            load(search, pageIndex, pageSize);
+        }
 
-        public IActionResult OnPostAdd()
+        public IActionResult OnPostAdd(string search, int pageIndex = 1, int pageSize = 5)
         {
             string name = Request.Form["name"];
             var cate = RestaurantContext.Ins.Categories.Where(x => x.Name.Equals(name)).FirstOrDefault();
             if (cate != null)
             {
+                ViewData["error"] = "Category Name existed";
+                load(search, pageIndex, pageSize);
                 return Page();
             }
             else
@@ -47,11 +53,13 @@ namespace RestaurantBooking.Pages.Admin.category
                 };
                 RestaurantContext.Ins.Categories.Add(c);
                 RestaurantContext.Ins.SaveChanges();
-                return RedirectToPage("/Admin/category/cateManage");
+                ViewData["success"] = "Add successfull";
+                load(search, pageIndex, pageSize);
+                return Page();
             }
         }
 
-        public IActionResult OnPostDelete()
+        public IActionResult OnPostDelete(string search, int pageIndex = 1, int pageSize = 5)
         {   
             string id = Request.Form["itemId"];
             var cate = RestaurantContext.Ins.Categories.Find(int.Parse(id));
@@ -62,9 +70,11 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            return RedirectToPage("/Admin/category/cateManage");
+            ViewData["success"] = "Delete success";
+            load(search, pageIndex, pageSize);
+            return Page();
         }
-        public IActionResult OnPostActive()
+        public IActionResult OnPostActive(string search, int pageIndex = 1, int pageSize = 5)
         {
             string id = Request.Form["itemId"];
             var cate = RestaurantContext.Ins.Categories.Find(int.Parse(id));
@@ -76,14 +86,22 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            return RedirectToPage("/Admin/category/cateManage");
+            ViewData["success"] = "Delete success";
+            load(search, pageIndex, pageSize);
+            return Page();
         }
 
-        public IActionResult OnPostUpdate()
+        public IActionResult OnPostUpdate(string search, int pageIndex = 1, int pageSize = 5)
         {
             string id = Request.Form["itemId"];
             string name = Request.Form["name"];
             var cate = RestaurantContext.Ins.Categories.Find(int.Parse(id));
+            var c = RestaurantContext.Ins.Categories.Where(x => x.Name.Equals(name)).FirstOrDefault();
+            if(c != null)
+            {
+                ViewData["error"] = "Category Name existed";
+                return Page();
+            }
             if (cate != null)
             {
                 cate.Name=name;
@@ -92,7 +110,9 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            return RedirectToPage("/Admin/category/cateManage");
+            ViewData["success"] = "Delete success";
+            load(search, pageIndex, pageSize);
+            return Page(); ;
         }
     }
 }

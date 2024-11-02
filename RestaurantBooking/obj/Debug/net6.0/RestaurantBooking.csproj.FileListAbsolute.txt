@@ -589,3 +589,7 @@ C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\projec
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.csproj.CopyComplete
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.genruntimeconfig.cache
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\ref\RestaurantBooking.dll
+C:\Users\admin\Desktop\PRN221\RestaurantBooking\bin\Debug\net6.0\libman.json
+C:\Users\admin\Desktop\PRN221\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\BookingInformation\Index.cshtml.rz.scp.css
+C:\Users\admin\Desktop\PRN221\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\OrderMeal\Details.cshtml.rz.scp.css
+C:\Users\admin\Desktop\PRN221\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Revenue\Index.cshtml.rz.scp.css

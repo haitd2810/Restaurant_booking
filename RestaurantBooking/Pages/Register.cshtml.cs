@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Mail;
 using System.Net;
+using RestaurantBooking.Common;
 
 namespace RestaurantBooking.Pages
 {
@@ -14,8 +15,10 @@ namespace RestaurantBooking.Pages
         }
 
         public IActionResult OnPost()
-        {   
-            string name= Request.Form["name"];
+        {
+           
+            //RestaurantContext.Ins.Tokens.Add(token);
+            string name = Request.Form["name"];
             string password = Request.Form["password"];
             string comfirm = Request.Form["comfirm"];
             if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
@@ -40,45 +43,40 @@ namespace RestaurantBooking.Pages
                 Username = name,
                 Password = hash,
                 RoleId = 1,
-                IsActive = false
+                CreateAt=DateTime.Now,
+                IsActive = true
             };
             RestaurantContext.Ins.Accounts.Add(account);
             RestaurantContext.Ins.SaveChanges();
+            var a = RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(name)).FirstOrDefault();
+            if(a == null)
+            {
+                return Page();
+            }
+            string token = Guid.NewGuid().ToString();
+            Token to = new Token
+            {
+                Token1 = token,
+                AccountId = a.Id,
+                CreateAt = DateTime.Now
+            };
+            HttpContext.Session.SetInt32("accId", a.Id);
+            RestaurantContext.Ins.Tokens.Add(to);
+            RestaurantContext.Ins.SaveChanges();
+            SendMail(name,token);
             return Page();
         }
-
-		private void SendConfirmationEmail(string email)
-		{
-			Random random = new Random();
-			string randomNumbers = "";
-
-			for (int i = 0; i < 6; i++)
-			{
-				int num = random.Next(0, 10);
-				randomNumbers += num.ToString();
-			}
-			string token = randomNumbers;
-			var acc = RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(email)).FirstOrDefault();
-			Token t = new Token()
-			{
-				Token1 = token,
-				CreateAt = DateTime.Now,
-				AccountId = acc.Id
-			};
-			RestaurantContext.Ins.Tokens.Add(t);
-			RestaurantContext.Ins.SaveChanges();
-			string mail = "phanquan2092003@gmail.com";
-			string password = "pndc pnkc egon mxpe";
-			SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
-			{
-				Credentials = new NetworkCredential(mail, password),
-				EnableSsl = true
-			};
-			string Subject = "Account Activation";
-			string Body = $"Hello {email},\n\nYour activation code is: {token}. Please enter this code in the application to activate your account";
-
-			smtpClient.Send(mail, email, Subject, Body);
-		}
-
+        private static void SendMail(string email, string token)
+        {
+            string url = $"https://localhost:7144/active?token={token}";
+            string body = $"Hello {email},\n\nYour activation {url}. Please enter this code in the application to activate your account";
+            IConfiguration config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+            string emailFrom = config["InforMail:email"];
+            string passFrom = config["InforMail:password"];
+            Mail.instance.sendMail(emailFrom, passFrom, email, body, "Acrive Account");
+        }
 	}
 }

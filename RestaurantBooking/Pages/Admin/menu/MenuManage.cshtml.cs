@@ -96,6 +96,12 @@ namespace RestaurantBooking.Pages.Admin.Member
                     Directory.CreateDirectory(uploadsFolder);
                 }
 
+                if(price<0 || price > int.MaxValue)
+                {
+                    load(search, category, min, max, pageIndex, pageSize);
+                    return Page();
+                }
+
                 string fileName = null;
 
                 if (image != null && image.Length > 0)
@@ -103,7 +109,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                     var path= Path.GetExtension(image.FileName).ToLower();
                     if (path != ".png" && path != ".jpg")
                     {
-                        return RedirectToPage("/Admin/menu/MenuManage");
+                        load(search, category, min, max, pageIndex, pageSize);
+                        return Page();
                     }
                     fileName = Path.GetFileName(image.FileName);
                     var filePath = Path.Combine(uploadsFolder, fileName);
@@ -150,7 +157,7 @@ namespace RestaurantBooking.Pages.Admin.Member
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
             //return RedirectToPage("/Admin/menu/MenuManage");
-            ViewData["error"] = "Name is exist";
+            ViewData["success"] = "Delete successful";
             load(search, category, min, max, pageIndex, pageSize);
             return Page();
         }
@@ -165,6 +172,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 me.DeleteAt = null;
                 me.UpdateAt = DateTime.Now ;
             }
+            ViewData["success"] = "Active successful";
             load(search, category, min, max, pageIndex, pageSize);
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
@@ -186,7 +194,11 @@ namespace RestaurantBooking.Pages.Admin.Member
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
-
+            if(float.Parse(price )< 0 || float.Parse(price) > int.MaxValue)
+            {
+                load(search, category, min, max, pageIndex, pageSize);
+                return Page();
+            }
             string fileName = null;
 
             if (image != null && image.Length > 0)
@@ -194,7 +206,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                 var path = Path.GetExtension(image.FileName).ToLower();
                 if (path != ".png" && path != ".jpg")
                 {
-                    return RedirectToPage("/Admin/menu/MenuManage");
+                    load(search, category, min, max, pageIndex, pageSize);
+                    return Page();
                 }
                 fileName = Path.GetFileName(image.FileName);
                 var filePath = Path.Combine(uploadsFolder, fileName);
@@ -216,6 +229,8 @@ namespace RestaurantBooking.Pages.Admin.Member
                 RestaurantContext.Ins.Menus.Update(me);
                 RestaurantContext.Ins.SaveChanges();
             }
+            ViewData["success"] = "Update successful";
+            load(search, category, min, max, pageIndex, pageSize);
             return Page();
         }
 

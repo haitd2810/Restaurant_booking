@@ -4,6 +4,8 @@
     Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
 }
 
+@*filter theo ngày, status*@
+
 <div class="container-fluid" style="padding:0;">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -17,7 +19,19 @@
                            aria-label="Search" aria-describedby="basic-addon2" name="search"
                            style="width: 100%; padding: 5px;" min="1">
                 </div>
-
+                <div style="margin-right: 20px;">
+                    <select name="status">
+                        <option value="All">All</option>
+                        <option value="true">Paid</option>
+                        <option value="false">Not Paid</option>
+                    </select>
+                </div>
+             @*   <div style="margin-right:20px;">
+                    <input type="date" name="from" value="@Model.From.ToString("dd/MM/yyyy")" />
+                </div>
+                <div style="margin-right:20px;">
+                    <input type="datetime" name="to" value="@Model.To"  />
+                </div>*@
                 <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
             </form>
         </div>
@@ -44,7 +58,8 @@
                                 <td>@i.Table.Id</td>
                                 <td>@i.Payed</td>
                                 <td>@i.CreateAt</td>
-                                <td>@i.Status</td>
+                                <td>@i.UpdateAt</td>
+                                <td>@(i.Status==true?"Paid":"Not Paid")</td>
                                 <td>
                                     <a class="nav-link text-dark" asp-page="/Admin/bill/Detail" asp-route-id="@(i.Id)">Detail</a>
                                 </td>
@@ -57,6 +72,7 @@
                     <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
                         <a class="page-link" asp-page="billManage"
                            asp-route-pageIndex="@(Model.CurrentPage - 1)"
+                           asp-route-status="@Model.Status"
                            asp-route-search="@Model.Search"
                         >Previous</a>
                     </li>
@@ -67,6 +83,7 @@
                         <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
                             <a class="page-link" asp-page="billManage"
                            asp-route-search="@Model.Search"
+                           asp-route-status="@Model.Status"
                            asp-route-pageIndex="@(i)
                          ">@i</a>
                         </li>
@@ -76,6 +93,7 @@
                     <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
                         <a class="page-link" asp-page="billManage"
                            asp-route-pageIndex="@(Model.CurrentPage + 1)"
+                           asp-route-status="@Model.Status"
                            asp-route-search="@Model.Search">Next</a>
                     </li>
                 </ul>

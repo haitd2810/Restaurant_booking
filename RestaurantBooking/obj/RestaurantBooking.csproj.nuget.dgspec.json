@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\RestaurantBooking.csproj": {}
+    "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj": {
+    "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
         "projectName": "DataLibrary",
-        "projectPath": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj",
+        "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -92,14 +92,14 @@
         }
       }
     },
-    "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\RestaurantBooking.csproj": {
+    "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\RestaurantBooking.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj",
         "projectName": "RestaurantBooking",
-        "projectPath": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\RestaurantBooking.csproj",
+        "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\obj\\",
+        "outputPath": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -121,8 +121,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj": {
-                "projectPath": "C:\\Users\\admin\\Desktop\\merge\\DataLibrary\\DataLibrary.csproj"
+              "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj": {
+                "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj"
               }
             }
           }

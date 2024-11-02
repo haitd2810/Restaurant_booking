@@ -11,22 +11,45 @@ namespace RestaurantBooking.Pages.Admin.bill
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
         public string Search { get; set; }
-        public void OnGet(string search, int pageIndex = 1, int pageSize = 5)
+        public string Status { get; set; }
+        public DateTime To { get; set; }
+        public DateTime From { get; set; }
+        //, DateTime? to, DateTime? from
+        public void OnGet(string search, string status, int pageIndex = 1, int pageSize = 5)
         {
             CurrentPage = pageIndex;
             Search = search;
+            //To = to ?? DateTime.Now ;
+            //From = from ?? DateTime.Now ;
+            Status = status;
             var query = RestaurantContext.Ins.Bills.AsQueryable();
             if (!string.IsNullOrEmpty(search))
-            {   
-                query = query.Where(x => x.Id == int.Parse(search));
+            {
+                if (int.TryParse(search, out int searchId))
+                {
+                    query = query.Where(x => x.Id == searchId);
+                }
+            }
+            //if (from.HasValue && to.HasValue)
+            //{
+            //    query = query.Where(x => (x.CreateAt >= from && x.CreateAt <= to) );
+            //}
+
+            if (!string.IsNullOrEmpty(status) && !status.Equals("All"))
+            {
+                if (bool.TryParse(status, out bool statusValue))
+                {
+                    query = query.Where(x => x.Status == statusValue);
+                }
             }
             int totalItems = query.Count();
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             Bills = query.Include(x => x.Table)
-                        .OrderByDescending(i => i.Id)
-                        .Skip((pageIndex - 1) * pageSize)
-                        .Take(pageSize)
-                        .ToList();
+                         .OrderByDescending(i => i.Id)
+                         .Skip((pageIndex - 1) * pageSize)
+                         .Take(pageSize)
+                         .ToList();
         }
+
     }
 }

@@ -1,6 +1,13 @@
 body[b-ee2voj3g06] {
 }
 <style >
+#chart[b-ee2voj3g06] {
+    width: 100% !important;
+    height: 100% !important;
+}
+.box-booking[b-ee2voj3g06]{
+    border: 2px solid white !important;
+}
 /*-------------------------------------------------------------------
 [1. Header]
 *------------------------------------------------------------------*/

@@ -47,7 +47,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             string time = Request.Form["time"];
             DateTime startDate = DateTime.Parse($"{date} {time}");
             if (startDate.CompareTo(DateTime.Now.AddDays(1)) > 0
-                || startDate.CompareTo(DateTime.Now.AddHours(1)) <= 0)
+                || startDate.CompareTo(DateTime.Now.AddMinutes(30)) <= 0)
             {
                 HttpContext.Session.SetString("Booking_Failed", "Invalid Date Time Request");
                 return Redirect("/Restaurant");

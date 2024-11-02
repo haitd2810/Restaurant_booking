@@ -1,6 +1,13 @@
 ﻿body {
 }
 <style >
+#chart {
+    width: 100% !important;
+    height: 100% !important;
+}
+.box-booking{
+    border: 2px solid white !important;
+}
 /*-------------------------------------------------------------------
 [1. Header]
 *------------------------------------------------------------------*/

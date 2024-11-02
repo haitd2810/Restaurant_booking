@@ -25,10 +25,12 @@ namespace RestaurantBooking.Pages.BookingInformation
         public List<Booking> book_infor {  get; set; }
         public async Task OnGetAsync(string page_number, string dateFilter, string keywords, string searchBy)
         {
+            if (page_number == null) page_number = "1";
             book_infor = await _context.Bookings.Include(b => b.Table)
                 .ToListAsync();
-
-            if (dateFilter != null) book_infor = book_infor.Where(b => b.StartDate.Value.Date.CompareTo(DateTime.Parse(dateFilter).Date) == 0).ToList();
+            date_filter = dateFilter ?? DateTime.Now.Date.ToString("yyyy-MM-dd");
+            if (date_filter != null) Console.WriteLine(date_filter);
+            if (date_filter != null) book_infor = book_infor.Where(b => b.StartDate.Value.Date.CompareTo(DateTime.Parse(date_filter).Date) == 0).ToList();
             
             if(searchBy != null && searchBy.Length != 0)
             {
@@ -37,7 +39,6 @@ namespace RestaurantBooking.Pages.BookingInformation
                 if (searchBy == "phone") book_infor = book_infor.Where(b => keywords == null ? true : b.Phone.Contains(keywords)).ToList();
 
             }
-            date_filter = dateFilter ?? DateTime.Now.Date.ToString("yyyy-MM-dd");
             search_by = searchBy;
             key = keywords;
 

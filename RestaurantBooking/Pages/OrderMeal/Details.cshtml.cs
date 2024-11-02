@@ -48,8 +48,12 @@ namespace RestaurantBooking.Pages.OrderMeal
                     billTable.Status = false;
                     billTable.Payed = true;
                     billTable.UpdateAt = DateTime.Now;
-                    _context.Bills.Update(billTable);
-                    await _context.SaveChangesAsync();
+                    if (HttpContext.Session.GetInt32("acc") != null)
+                    {
+                        billTable.UpdateBy = HttpContext.Session.GetInt32("acc");
+                        _context.Bills.Update(billTable);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
             _hub.Clients.All.SendAsync("LoadAll");

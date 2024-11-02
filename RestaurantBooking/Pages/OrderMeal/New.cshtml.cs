@@ -25,6 +25,7 @@ namespace RestaurantBooking.Pages.OrderMeal
 
         public async Task<IActionResult> OnPostAsync(List<string> MenuId, string tableId)
         {
+            if (HttpContext.Session.GetInt32("acc") != null) return Redirect("/OrderMeal/Details?id=" + tableId);
             int billId = 0;
             billTable = await _context.Bills.Where(b => b.TableId == int.Parse(tableId))
                 .Where(b => b.Status == true)
@@ -36,6 +37,8 @@ namespace RestaurantBooking.Pages.OrderMeal
                 bill.Payed = false;
                 bill.CreateAt = DateTime.Now;
                 bill.Status = true;
+                if (HttpContext.Session.GetInt32("acc") != null) bill.CreateBy = HttpContext.Session.GetInt32("acc");
+                
                 try
                 {
                     _context.Bills.Add(bill);

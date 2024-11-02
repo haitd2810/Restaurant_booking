@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj": {}
+    "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\RestaurantBooking\\RestaurantBooking.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj": {
+    "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\DataLibrary\\DataLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
+        "projectUniqueName": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\DataLibrary\\DataLibrary.csproj",
         "projectName": "DataLibrary",
-        "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\obj\\",
+        "projectPath": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\DataLibrary\\DataLibrary.csproj",
+        "packagesPath": "C:\\Users\\Hi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\DataLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -88,24 +93,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj": {
+    "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\RestaurantBooking\\RestaurantBooking.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj",
+        "projectUniqueName": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\RestaurantBooking\\RestaurantBooking.csproj",
         "projectName": "RestaurantBooking",
-        "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\RestaurantBooking.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\PRN221\\RestaurantBooking\\obj\\",
+        "projectPath": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\RestaurantBooking\\RestaurantBooking.csproj",
+        "packagesPath": "C:\\Users\\Hi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\RestaurantBooking\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -121,8 +126,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj": {
-                "projectPath": "C:\\Users\\admin\\Desktop\\PRN221\\DataLibrary\\DataLibrary.csproj"
+              "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\DataLibrary\\DataLibrary.csproj": {
+                "projectPath": "C:\\Users\\Hi\\OneDrive - Đại học FPT- FPT University\\Desktop\\Project_PRN221\\Restaurant_booking\\DataLibrary\\DataLibrary.csproj"
               }
             }
           }
@@ -131,6 +136,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -179,7 +189,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

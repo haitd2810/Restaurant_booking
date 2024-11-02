@@ -26,7 +26,7 @@ namespace RestaurantBooking.Pages.OrderMeal
             for(int i = 0; i < items_id.Count; i++)
             {
                 BillInfor bill_infor = await _context.BillInfors
-                    .Where(bi => bi.Id.ToString() == items_id[i]).FirstOrDefaultAsync();
+                    .Where(bi => bi.Id.ToString() == items_id[i]).Include(bi => bi.Menu).FirstOrDefaultAsync();
                 if (bill_infor == null) continue;
                 else
                 {
@@ -52,9 +52,7 @@ namespace RestaurantBooking.Pages.OrderMeal
             if(billInf == null || billInf.Count == 0)
             {
                 Bill bill = await _context.Bills.Where(b => b.Id.ToString() == billId).FirstAsync();
-                bill.Status = false;
-                bill.UpdateAt = DateTime.Now;
-                _context.Bills.Update(bill);
+                _context.Bills.Remove(bill);
                 await _context.SaveChangesAsync();
             }
             _hub.Clients.All.SendAsync("LoadAll");

@@ -579,9 +579,6 @@ C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\staticwebassets\
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\staticwebassets.pack.json
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\staticwebassets.development.json
-C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\BookingInformation\Index.cshtml.rz.scp.css
-C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\OrderMeal\Details.cshtml.rz.scp.css
-C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Revenue\Index.cshtml.rz.scp.css
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Shared\LayoutAdmin.cshtml.rz.scp.css
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\bundle\RestaurantBooking.styles.css
@@ -856,3 +853,6 @@ C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\R
 C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\Restaurant_booking\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.pdb
 C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\Restaurant_booking\RestaurantBooking\obj\Debug\net6.0\RestaurantBooking.genruntimeconfig.cache
 C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\Restaurant_booking\RestaurantBooking\obj\Debug\net6.0\ref\RestaurantBooking.dll
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Staff\BookingInformation\Index.cshtml.rz.scp.css
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Staff\OrderMeal\Details.cshtml.rz.scp.css
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Staff\Revenue\Index.cshtml.rz.scp.css

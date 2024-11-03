@@ -110,7 +110,7 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            ViewData["success"] = "Delete success";
+            ViewData["success"] = "Update success";
             load(search, pageIndex, pageSize);
             return Page(); ;
         }

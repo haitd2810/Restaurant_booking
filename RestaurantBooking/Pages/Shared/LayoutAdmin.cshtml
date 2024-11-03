@@ -47,7 +47,12 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-
+            <li class="nav-item active">
+                <a class="nav-link" asp-page="/Admin/accounts/accountmanage">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Account Manage</span>
+                </a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" asp-page="/Admin/menu/MenuManage">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -410,6 +415,12 @@
             $('#itemIda').val(itemId);
         });
 
+        $('.reset').click(function () {
+            $('#reset').modal('show');
+            var itemId = $(this).data('id');
+            $('#itemIdR').val(itemId);
+        });
+
         function openUpdateModal(id, name, detail, price, img, cateId) {
             $('#Idupdate').val(id);
             $('#itemName').val(name);
@@ -427,6 +438,16 @@
             $('#itemName').val(name);
 
             $('#updateCate').modal('show');
+            console.log(id);
+        }
+
+        function openUpdatetable(id, bookingString) {
+            $('#Idupdate').val(id);
+
+            let booking = (bookingString === 'true');
+            $('#forBooking').prop('checked', booking);
+
+            $('#updatetbale').modal('show');
             console.log(id);
         }
 

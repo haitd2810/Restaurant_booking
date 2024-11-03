@@ -12,8 +12,19 @@ namespace RestaurantBooking.Pages
 
         public IActionResult OnPost()
         {
-            string name = Request.Form["name"];
+			IConfiguration config = new ConfigurationBuilder()
+				.SetBasePath(Directory.GetCurrentDirectory())
+				.AddJsonFile("appsettings.json", true, true)
+				.Build();
+			string accAdmin = config["Admin:username"];
+			string passFrom = config["Admin:password"];
+            string role = config["Admin:Role"];
+			string name = Request.Form["name"];
             string password = Request.Form["password"]; 
+            if(name.Equals(accAdmin) && passFrom.Equals(passFrom))
+            {
+				return Redirect("Admin/Index");
+			}
             var acc =RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(name)).FirstOrDefault();
             if(acc == null)
             {
@@ -33,7 +44,7 @@ namespace RestaurantBooking.Pages
             }
             HttpContext.Session.SetInt32("acc", acc.Id);
 
-			return Redirect("Admin/Index");
+			return Redirect("Restaurant/Index");
         }
     }
 }

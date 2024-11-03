@@ -58,7 +58,7 @@ namespace RestaurantBooking.Pages.Admin.Member
             int totalItems = query.Count();
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-            menu = query
+            menu = query.Include(x => x.Cate)
             .OrderByDescending(i => i.Id)
             .Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize)

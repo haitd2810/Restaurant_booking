@@ -3,6 +3,12 @@
 @{
     Layout = null;
 }
+@if (TempData["Message"] != null)
+{
+	<div class="alert alert-success">
+		@TempData["Message"]
+	</div>
+}
 <!doctype html>
 <html lang="en">
 <head>

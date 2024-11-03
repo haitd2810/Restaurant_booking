@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\Pages\\Admin\\Index.cshtml.js",
+      "PackagePath": "staticwebassets\\Pages\\Admin\\Index.cshtml.js"
+    },
+    {
       "Id": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml.js",
       "PackagePath": "staticwebassets\\Pages\\Staff\\OrderMeal\\Details.cshtml.js"
     },

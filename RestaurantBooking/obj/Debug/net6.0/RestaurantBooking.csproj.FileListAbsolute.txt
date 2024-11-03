@@ -856,3 +856,4 @@ C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\R
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Staff\BookingInformation\Index.cshtml.rz.scp.css
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Staff\OrderMeal\Details.cshtml.rz.scp.css
 C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Staff\Revenue\Index.cshtml.rz.scp.css
+C:\Users\admin\Desktop\merge\RestaurantBooking\obj\Debug\net6.0\scopedcss\Pages\Admin\Index.cshtml.rz.scp.css

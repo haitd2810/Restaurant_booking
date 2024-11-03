@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "48e1Ba/MU8isF5/mf2eUgppaNtqTs8osdjTurzPf198=",
+  "Hash": "IiRWS/CH5CUh13VhxH7tQetRRtwCARx7fG8OGRWtYSs=",
   "Source": "RestaurantBooking",
   "BasePath": "_content/RestaurantBooking",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\RestaurantBooking.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\Pages\\Admin\\Index.cshtml.js",
+      "SourceId": "RestaurantBooking",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\",
+      "BasePath": "_content/RestaurantBooking",
+      "RelativePath": "Pages/Admin/Index.cshtml.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "Pages\\Admin\\Index.cshtml.js"
     },
     {
       "Identity": "C:\\Users\\admin\\Desktop\\merge\\RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml.js",

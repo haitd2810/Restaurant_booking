@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestaurantBooking.Hubs;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace RestaurantBooking.Pages.OrderMeal
 {
@@ -40,7 +41,7 @@ namespace RestaurantBooking.Pages.OrderMeal
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string billId, string tableId)
+        public async Task<IActionResult> OnPostCloseBillAsync(string billId, string tableId)
         {
             if (HttpContext.Session.GetString("role") == null ||
                 HttpContext.Session.GetString("role") != "staff") return Redirect("/Restaurant");
@@ -48,7 +49,7 @@ namespace RestaurantBooking.Pages.OrderMeal
             if (billId != null && tableId != null)
             {
                 billTable = await _context.Bills.Where(b => b.Id == int.Parse(billId))
-                .Where(b => b.Status == true)
+                .Where(b => b.Status == true).Include(b => b.BillInfors).ThenInclude(b => b.Menu)
                 .FirstOrDefaultAsync();
                 if (billTable != null)
                 {
@@ -64,7 +65,40 @@ namespace RestaurantBooking.Pages.OrderMeal
                 }
             }
             _hub.Clients.All.SendAsync("LoadAll");
-            return Redirect("/Staff/OrderMeal");
+            return Redirect("/Staff/OrderMeal/Details?id=" + tableId);
+        }
+
+        public async Task<IActionResult> OnPostExportBillAsync(string billId, string tableId)
+        {
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "staff") return Redirect("/Restaurant");
+
+            if (billId != null && tableId != null)
+            {
+                billTable = await _context.Bills.Where(b => b.Id == int.Parse(billId))
+                .Where(b => b.Status == true).Include(b => b.BillInfors).ThenInclude(b => b.Menu)
+                .FirstOrDefaultAsync();
+                if (billTable != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine($"Bill ID: {billTable.Id}");
+                    sb.AppendLine($"Order At: {billTable.CreateAt}");
+                    sb.AppendLine("Meals:");
+                    double? total = 0;
+                    foreach (var bi in billTable.BillInfors)
+                    {
+                        sb.AppendLine($"- {bi.Menu.Name}: {bi.Quantity} x {bi.Menu.Price} = {bi.Price}");
+                        total += bi.Price;
+                    }
+                    sb.AppendLine("-------------------------------------");
+                    sb.AppendLine($"Total Price: {total}");
+
+                    byte[] txtBytes = Encoding.UTF8.GetBytes(sb.ToString());
+
+                    return File(txtBytes, "text/plain", $"Bill_{billTable.Id}.txt");
+                }
+            }
+            return Redirect("/Staff/OrderMeal/Details?id=" + tableId);
         }
     }
 }

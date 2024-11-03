@@ -125,17 +125,23 @@
             {
                 <section>
                     <div class="container" data-aos="fade-up">
-                        <form method="post">
-                            <input type="hidden" name="billId" value="@Model.billTable.Id" />
-                            <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                        
                             <div class="section-title">
                                 <h2>Total</h2><span id="total-price"></span>
-                                <div class="btns">
-                                    <button class="btn-menu animated fadeInUp scrollto close">Close This Order</button>
+                                <div class="btns" style="display: flex">
+                                    <form method="post" asp-page-handler="CloseBill">
+                                        <input type="hidden" name="billId" value="@Model.billTable.Id" />
+                                        <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                                        <button class="btn-menu animated fadeInUp scrollto close">Close This Order</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="ExportBill">
+                                        <input type="hidden" name="billId" value="@Model.billTable.Id" />
+                                        <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                                        <button class="btn-menu animated fadeInUp scrollto close">Export Bill</button>
+                                    </form>
                                 </div>
                                 <hr />
                             </div>
-                        </form>
                     </div>
 
                 </section>

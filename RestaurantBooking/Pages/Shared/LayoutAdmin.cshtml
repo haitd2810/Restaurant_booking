@@ -261,8 +261,6 @@
         $('.addButton').click(function () {
             $('#myModal').modal('show');
         });
-
-
         $('.delete').click(function () {
             $('#delete').modal('show');
             var itemId = $(this).data('id');
@@ -311,14 +309,6 @@
         }
 
     </script>
-    @if (ViewData["error"] != null)
-    {
-        <script>
-            $(document).ready(function () {
-                $('#errorModal').modal('show');
-            });
-        </script>
-    }
     @if (TempData["error"] != null)
     {
         <script>

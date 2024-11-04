@@ -7,11 +7,11 @@ using Microsoft.Extensions.Configuration;
 namespace DataLibrary.Models
 {
     public partial class RestaurantContext : DbContext
-    {
+    {   
         public static RestaurantContext Ins = new RestaurantContext();
         public RestaurantContext()
         {
-            if (Ins == null)
+            if(Ins == null)
             {
                 Ins = this;
             }
@@ -27,6 +27,8 @@ namespace DataLibrary.Models
         public virtual DbSet<BillInfor> BillInfors { get; set; } = null!;
         public virtual DbSet<Booking> Bookings { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<Feedback> Feedbacks { get; set; } = null!;
+        public virtual DbSet<Ingredient> Ingredients { get; set; } = null!;
         public virtual DbSet<Menu> Menus { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
         public virtual DbSet<Table> Tables { get; set; } = null!;
@@ -37,7 +39,6 @@ namespace DataLibrary.Models
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
             if (!optionsBuilder.IsConfigured) { optionsBuilder.UseSqlServer(config.GetConnectionString("value")); }
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,10 +47,15 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5725F552CBA")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57216ABD519")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Code)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("code");
 
                 entity.Property(e => e.CreateAt)
                     .HasColumnType("datetime")
@@ -110,7 +116,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Bill__tableID__38996AB5");
+                    .HasConstraintName("FK__Bill__tableID__3A81B327");
             });
 
             modelBuilder.Entity<BillInfor>(entity =>
@@ -138,12 +144,12 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Bill)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.BillId)
-                    .HasConstraintName("FK__BillInfor__billI__3B75D760");
+                    .HasConstraintName("FK__BillInfor__billI__3D5E1FD2");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.MenuId)
-                    .HasConstraintName("FK__BillInfor__menuI__3C69FB99");
+                    .HasConstraintName("FK__BillInfor__menuI__3E52440B");
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -184,7 +190,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Booking__tableID__3F466844");
+                    .HasConstraintName("FK__Booking__tableID__412EB0B6");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -203,7 +209,7 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.DeleteFlag)
                     .HasColumnName("deleteFlag")
-                    .HasDefaultValueSql("((1))");
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
@@ -212,6 +218,73 @@ namespace DataLibrary.Models
                 entity.Property(e => e.UpdateAt)
                     .HasColumnType("datetime")
                     .HasColumnName("updateAt");
+            });
+
+            modelBuilder.Entity<Feedback>(entity =>
+            {
+                entity.ToTable("feedback");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AccountId).HasColumnName("accountId");
+
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Feedback1)
+                    .HasMaxLength(4000)
+                    .HasColumnName("feedback");
+
+                entity.Property(e => e.MenuId).HasColumnName("menuId");
+
+                entity.Property(e => e.Phone)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("phone");
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("type");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.AccountId)
+                    .HasConstraintName("FK__feedback__accoun__440B1D61");
+
+                entity.HasOne(d => d.Menu)
+                    .WithMany(p => p.Feedbacks)
+                    .HasForeignKey(d => d.MenuId)
+                    .HasConstraintName("FK__feedback__menuId__44FF419A");
+            });
+
+            modelBuilder.Entity<Ingredient>(entity =>
+            {
+                entity.ToTable("Ingredient");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CreateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createAt");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.UpdateAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updateAt");
+
+                entity.Property(e => e.Weight).HasColumnName("weight");
             });
 
             modelBuilder.Entity<Menu>(entity =>
@@ -232,7 +305,7 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.DeleteFlag)
                     .HasColumnName("deleteFlag")
-                    .HasDefaultValueSql("((1))");
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Detail)
                     .HasMaxLength(255)
@@ -247,6 +320,8 @@ namespace DataLibrary.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.Property(e => e.UpdateAt)
                     .HasColumnType("datetime")
@@ -274,7 +349,7 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.DeleteFlag)
                     .HasColumnName("deleteFlag")
-                    .HasDefaultValueSql("((1))");
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
@@ -302,7 +377,7 @@ namespace DataLibrary.Models
 
                 entity.Property(e => e.DeleteFlag)
                     .HasColumnName("deleteFlag")
-                    .HasDefaultValueSql("((1))");
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ForBooking)
                     .HasColumnName("forBooking")

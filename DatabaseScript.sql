@@ -102,7 +102,7 @@ CREATE TABLE Booking (
     FOREIGN KEY (tableID) REFERENCES [Table](id)
 );
 
-insert into Role (name) values ('staff');
+insert into Role (name) values ('staff'),('cooker');
 
 insert into Account (username, password, roleID, isActive, createAt) values 
 ('staff01@gmail.com' , '123456' , 1, 1, GETDATE());

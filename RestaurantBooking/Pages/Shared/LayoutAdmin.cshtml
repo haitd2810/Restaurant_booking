@@ -210,7 +210,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>@ViewData["error"]</p>
+                    <p>@TempData["error"]</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -230,7 +230,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>@ViewData["success"]</p>
+                    <p>@TempData["success"]</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -301,10 +301,9 @@
             console.log(id);
         }
 
-        function openUpdatetable(id, bookingString) {
+        function openUpdatetable(id, booking) {
             $('#Idupdate').val(id);
 
-            let booking = (bookingString === 'true');
             $('#forBooking').prop('checked', booking);
 
             $('#updatetbale').modal('show');
@@ -320,7 +319,15 @@
             });
         </script>
     }
-    @if (ViewData["success"] != null)
+    @if (TempData["error"] != null)
+    {
+        <script>
+            $(document).ready(function () {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    }
+    @if (TempData["success"] != null)
     {
         <script>
             $(document).ready(function () {

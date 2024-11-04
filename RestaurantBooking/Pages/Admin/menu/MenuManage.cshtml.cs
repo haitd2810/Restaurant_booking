@@ -66,9 +66,12 @@ namespace RestaurantBooking.Pages.Admin.Member
             return Page();
         }
 
-        public void OnGet(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
+        public IActionResult OnGet(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
         {
             load(search, category, min, max, pageIndex, pageSize);
+            if (HttpContext.Session.GetString("role") == null ||
+               HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
+            return Page();
         }
 
 
@@ -85,9 +88,9 @@ namespace RestaurantBooking.Pages.Admin.Member
                 var existingMenu = RestaurantContext.Ins.Menus.FirstOrDefault(x => x.Name.Equals(name));
                 if (existingMenu != null)
                 {   
-                    ViewData["error"] = "Name is exist";
+                    TempData["error"] = "Name is exist";
                     load(search, category, min, max, pageIndex, pageSize);
-                    return Page();
+                    return RedirectToPage("/Admin/menu/MenuManage");
                 }
 
                 var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "assets","img");
@@ -99,7 +102,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 if(price<0 || price > int.MaxValue)
                 {
                     load(search, category, min, max, pageIndex, pageSize);
-                    return Page();
+                    return RedirectToPage("/Admin/menu/MenuManage");
                 }
 
                 string fileName = null;
@@ -110,7 +113,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                     if (path != ".png" && path != ".jpg")
                     {
                         load(search, category, min, max, pageIndex, pageSize);
-                        return Page();
+                        return RedirectToPage("/Admin/menu/MenuManage");
                     }
                     fileName = Path.GetFileName(image.FileName);
                     var filePath = Path.Combine(uploadsFolder, fileName);
@@ -133,14 +136,14 @@ namespace RestaurantBooking.Pages.Admin.Member
                 };
                 RestaurantContext.Ins.Menus.Add(mnu);
                 RestaurantContext.Ins.SaveChanges();
-                ViewData["success"] = "Add Menu successful";
+                TempData["success"] = "Add Menu successful";
                 load(search, category, min, max, pageIndex, pageSize);
-                return Page();
+                return RedirectToPage("/Admin/menu/MenuManage");
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError(string.Empty, "An error occurred while adding the menu item.");
-                return Page();
+                return RedirectToPage("/Admin/menu/MenuManage");
             }
         }
 
@@ -157,9 +160,9 @@ namespace RestaurantBooking.Pages.Admin.Member
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
             //return RedirectToPage("/Admin/menu/MenuManage");
-            ViewData["success"] = "Delete successful";
+            TempData["success"] = "Delete successful";
             load(search, category, min, max, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/menu/MenuManage");
         }
 
         public IActionResult OnPostActive(string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
@@ -172,11 +175,11 @@ namespace RestaurantBooking.Pages.Admin.Member
                 me.DeleteAt = null;
                 me.UpdateAt = DateTime.Now ;
             }
-            ViewData["success"] = "Active successful";
+            TempData["success"] = "Active successful";
             load(search, category, min, max, pageIndex, pageSize);
             RestaurantContext.Ins.Menus.Update(me);
             RestaurantContext.Ins.SaveChanges();
-            return Page();
+            return RedirectToPage("/Admin/menu/MenuManage");
         }
 
         public IActionResult OnPostUpdate(IFormFile image, string search, string category, string min, string max, int pageIndex = 1, int pageSize = 10)
@@ -197,7 +200,7 @@ namespace RestaurantBooking.Pages.Admin.Member
             if(float.Parse(price )< 0 || float.Parse(price) > int.MaxValue)
             {
                 load(search, category, min, max, pageIndex, pageSize);
-                return Page();
+                return RedirectToPage("/Admin/menu/MenuManage");
             }
             string fileName = null;
 
@@ -207,7 +210,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 if (path != ".png" && path != ".jpg")
                 {
                     load(search, category, min, max, pageIndex, pageSize);
-                    return Page();
+                    return RedirectToPage("/Admin/menu/MenuManage");
                 }
                 fileName = Path.GetFileName(image.FileName);
                 var filePath = Path.Combine(uploadsFolder, fileName);
@@ -229,9 +232,9 @@ namespace RestaurantBooking.Pages.Admin.Member
                 RestaurantContext.Ins.Menus.Update(me);
                 RestaurantContext.Ins.SaveChanges();
             }
-            ViewData["success"] = "Update successful";
+            TempData["success"] = "Update successful";
             load(search, category, min, max, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/menu/MenuManage");
         }
 
         public IActionResult OnGetDownloadExcel()
@@ -277,7 +280,7 @@ namespace RestaurantBooking.Pages.Admin.Member
             if (excel == null || excel.Length == 0)
             {
                 ModelState.AddModelError("ExcelFile", "Please upload a valid Excel file.");
-                return Page();
+                return RedirectToPage("/Admin/menu/MenuManage");
             }
 
             using (var stream = new MemoryStream())
@@ -287,6 +290,18 @@ namespace RestaurantBooking.Pages.Admin.Member
                 {
                     var worksheet = package.Workbook.Worksheets[0];
                     int rowCount = worksheet.Dimension.Rows;
+
+                    var expectedHeaders = new[] { "Name", "Detail", "Price", "Image", "Category" };
+
+                    for (int col = 1; col <= expectedHeaders.Length; col++)
+                    {
+                        var headerValue = worksheet.Cells[1, col].Value?.ToString().Trim();
+                        if (headerValue != expectedHeaders[col - 1])
+                        {
+                            TempData["error"] = "Column headers do not match. Please use template.";
+                            return RedirectToPage("/Admin/menu/MenuManage");
+                        }
+                    }
 
                     for (int row = 2; row <= rowCount; row++)
                     {
@@ -343,7 +358,7 @@ namespace RestaurantBooking.Pages.Admin.Member
                 }
             }
             TempData["Message"] = "Products added to the database successfully.";
-            return Page();
+            return RedirectToPage("/Admin/menu/MenuManage");
         }
 
     }

@@ -1,4 +1,4 @@
-using DataLibrary.Models;
+﻿using DataLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -17,14 +17,17 @@ namespace RestaurantBooking.Pages.Admin.table
             int totalItems = query.Count();
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
             tables = query
-                        .OrderByDescending(i => i.Id)
+                        .OrderByDescending(x => x.Id)
                         .Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize)
                         .ToList();
         }
-        public void OnGet( int pageIndex = 1, int pageSize = 5)
-        {
+        public IActionResult OnGet( int pageIndex = 1, int pageSize = 5)
+        {   
            load(pageIndex, pageSize);
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
+            return Page();
         }
 
         public IActionResult OnPostAdd()
@@ -37,7 +40,7 @@ namespace RestaurantBooking.Pages.Admin.table
             table.CreateAt = DateTime.Now;
             RestaurantContext.Ins.Tables.Add(table);
             RestaurantContext.Ins.SaveChanges();
-            ViewData["success"] = "Add Table successfull";
+            TempData["success"] = "Add Table successfull";
             return RedirectToPage("/Admin/table/tableManage");
         }
 
@@ -52,9 +55,9 @@ namespace RestaurantBooking.Pages.Admin.table
             }
             RestaurantContext.Ins.Tables.Update(table);
             RestaurantContext.Ins.SaveChanges();
-            ViewData["success"] = "Delete successfull";
+            TempData["success"] = "Delete successfull";
             load(pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/table/tableManage");
         }
 
         public IActionResult OnPostActive(int pageIndex = 1, int pageSize = 5)
@@ -68,15 +71,16 @@ namespace RestaurantBooking.Pages.Admin.table
             }
             RestaurantContext.Ins.Tables.Update(table);
             RestaurantContext.Ins.SaveChanges();
-            ViewData["success"] = "Active successfull";
+            TempData["success"] = "Active successfull";
             load(pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/table/tableManage");
         }
 
-        public IActionResult OnPostUpdate( int pageIndex = 1, int pageSize = 5)
+        public IActionResult OnPostUpdate(int pageIndex = 1, int pageSize = 5)
         {
             string id = Request.Form["itemId"];
-            bool forBooking = Request.Form["forBooking"] == "true";
+            bool forBooking = Request.Form.ContainsKey("forBooking"); // Sẽ là true nếu checkbox được chọn
+
             var table = RestaurantContext.Ins.Tables.Find(int.Parse(id));
             if (table != null)
             {
@@ -85,9 +89,11 @@ namespace RestaurantBooking.Pages.Admin.table
                 RestaurantContext.Ins.Tables.Update(table);
                 RestaurantContext.Ins.SaveChanges();
             }
-            ViewData["success"] = "Update success";
-            load( pageIndex, pageSize);
-            return Page(); ;
+
+            TempData["success"] = "Update success";
+            load(pageIndex, pageSize);
+            return RedirectToPage("/Admin/table/tableManage");
         }
+
     }
 }

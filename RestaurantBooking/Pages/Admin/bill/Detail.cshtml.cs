@@ -9,8 +9,10 @@ namespace RestaurantBooking.Pages.Admin.bill
     {
         public List<BillInfor> billInfors { get; set; } = new List<BillInfor>();
         public Bill BillDetail { get; set; }
-        public void OnGet(string? id)
+        public IActionResult OnGet(string? id)
         {
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
             if (id != null)
             {
                 BillDetail = RestaurantContext.Ins.Bills.Find(int.Parse(id));
@@ -22,6 +24,7 @@ namespace RestaurantBooking.Pages.Admin.bill
                 }
                 ViewData["total"]=total;
             }
+            return Page();
         }
     }
 }

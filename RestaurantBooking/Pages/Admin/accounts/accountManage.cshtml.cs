@@ -12,7 +12,7 @@ namespace RestaurantBooking.Pages.Admin.accounts
         public int CurrentPage { get; set; }
         public string Search { get; set; }
         public List<Account> acc { get; set; } = new List<Account>();
-        private IActionResult load(string search, int pageIndex = 1, int pageSize = 10)
+        private void load(string search, int pageIndex = 1, int pageSize = 10)
         {
             Search = search;
             CurrentPage = pageIndex;
@@ -31,12 +31,15 @@ namespace RestaurantBooking.Pages.Admin.accounts
             .Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize)
                         .ToList();
-            return Page();
+            
         }
 
-        public void OnGet(string search, int pageIndex = 1, int pageSize = 10)
+        public IActionResult OnGet(string search, int pageIndex = 1, int pageSize = 10)
         {
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
             load(search, pageIndex, pageSize);
+            return Page();
         }
 
         public IActionResult OnPostDelete(string search, int pageIndex = 1, int pageSize = 10)
@@ -50,9 +53,9 @@ namespace RestaurantBooking.Pages.Admin.accounts
             }
             RestaurantContext.Ins.Accounts.Update(me);
             RestaurantContext.Ins.SaveChanges();
-            ViewData["success"] = "Delete successful";
+            TempData["success"] = "Delete successful";
             load(search, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/accounts/accountManage");
         }
         public IActionResult OnPostActive(string search, int pageIndex = 1, int pageSize = 10)
         {
@@ -65,9 +68,9 @@ namespace RestaurantBooking.Pages.Admin.accounts
             }
             RestaurantContext.Ins.Accounts.Update(me);
             RestaurantContext.Ins.SaveChanges();
-            ViewData["success"] = "Delete successful";
+            TempData["success"] = "Delete successful";
             load(search, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/accounts/accountManage");
         }
 
         public IActionResult OnPostReset(string search, int pageIndex = 1, int pageSize = 10)
@@ -85,9 +88,9 @@ namespace RestaurantBooking.Pages.Admin.accounts
             RestaurantContext.Ins.Accounts.Update(me);
             RestaurantContext.Ins.SaveChanges();
             SendMailReset(me.Username, pass);
-            ViewData["success"] = "Reset Password successful! Please check mail";
+            TempData["success"] = "Reset Password successful! Please check mail";
             load(search, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/accounts/accountManage");
         }
 
         private static void SendMailReset(string email, string pass)
@@ -121,16 +124,16 @@ namespace RestaurantBooking.Pages.Admin.accounts
             string pass = GenerateRandomString(6);
             if (string.IsNullOrEmpty(name))
             {
-                ViewData["error"] = "Email and password is not null";
+                TempData["error"] = "Email and password is not null";
                 load(search, pageIndex, pageSize);
-                return Page();
+                return RedirectToPage("/Admin/accounts/accountManage");
             }
             var acc = RestaurantContext.Ins.Accounts.Where(x => x.Username.Equals(name)).FirstOrDefault();
             if (acc != null)
             {
-                ViewData["error"] = "Email existed";
+                TempData["error"] = "Email existed";
                 load(search, pageIndex, pageSize);
-                return Page();
+                return RedirectToPage("/Admin/accounts/accountManage");
             }
             string hash = BCrypt.Net.BCrypt.HashPassword(pass);
             var account = new Account
@@ -147,7 +150,7 @@ namespace RestaurantBooking.Pages.Admin.accounts
             if (a == null)
             {
                 load(search, pageIndex, pageSize);
-                return Page();
+                return RedirectToPage("/Admin/accounts/accountManage");
             }
             string token = Guid.NewGuid().ToString();
             Token to = new Token
@@ -159,10 +162,10 @@ namespace RestaurantBooking.Pages.Admin.accounts
             HttpContext.Session.SetInt32("accId", a.Id);
             RestaurantContext.Ins.Tokens.Add(to);
             RestaurantContext.Ins.SaveChanges();
-            ViewData["success"] = "Add account successful";
+            TempData["success"] = "Add account successful";
             SendMail(name, token,pass);
             load(search, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/accounts/accountManage");
         }
 
         private string GenerateRandomString(int length)

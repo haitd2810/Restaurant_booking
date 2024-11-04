@@ -8,7 +8,7 @@ namespace RestaurantBooking.Pages
     {
         public IActionResult OnGet()
         {
-            if(HttpContext.Session.GetString("acc") != null)
+            if(HttpContext.Session.GetString("role") != null)
             {
                 HttpContext.Session.Remove("acc");
                 HttpContext.Session.Remove("role");

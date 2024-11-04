@@ -21,8 +21,8 @@ namespace RestaurantBooking.Pages.Admin
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            //if (HttpContext.Session.GetString("role") == null ||
-            //    HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
 
             List<Bill> bill_List = await _context.Bills.Where(b => b.Payed == true
                 && b.UpdateAt.Value.Date.CompareTo(DateTime.Now.Date) == 0)

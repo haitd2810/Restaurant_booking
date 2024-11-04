@@ -13,8 +13,10 @@ namespace RestaurantBooking.Pages.Admin.booking
         public int CurrentPage { get; set; }
         public string Search { get; set; }
         public DateTime Date { get;set; } 
-        public void OnGet(string search, DateTime? date ,int pageIndex = 1, int pageSize = 5)
+        public IActionResult OnGet(string search, DateTime? date ,int pageIndex = 1, int pageSize = 5)
         {
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
             CurrentPage = pageIndex;
             Search = search;
             Date = date ?? DateTime.Now;
@@ -41,7 +43,7 @@ namespace RestaurantBooking.Pages.Admin.booking
                             .Take(pageSize)
                             .ToList();
             }
-           
+            return Page();  
         }
     }
 }

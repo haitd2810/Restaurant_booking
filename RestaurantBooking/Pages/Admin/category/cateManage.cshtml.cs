@@ -28,9 +28,12 @@ namespace RestaurantBooking.Pages.Admin.category
                         .Take(pageSize)
                         .ToList();
         }
-        public void OnGet(string search, int pageIndex = 1, int pageSize = 5)
+        public IActionResult OnGet(string search, int pageIndex = 1, int pageSize = 5)
         {
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
             load(search, pageIndex, pageSize);
+            return Page();
         }
 
         public IActionResult OnPostAdd(string search, int pageIndex = 1, int pageSize = 5)
@@ -39,10 +42,10 @@ namespace RestaurantBooking.Pages.Admin.category
             var cate = RestaurantContext.Ins.Categories.Where(x => x.Name.Equals(name)).FirstOrDefault();
             if (cate != null)
             {
-                ViewData["error"] = "Category Name existed";
+                TempData["error"] = "Category Name existed";
                 load(search, pageIndex, pageSize);
-                return Page();
-            }
+				return RedirectToPage("/Admin/category/cateManage");
+			}
             else
             {
                 Category c = new Category
@@ -53,9 +56,9 @@ namespace RestaurantBooking.Pages.Admin.category
                 };
                 RestaurantContext.Ins.Categories.Add(c);
                 RestaurantContext.Ins.SaveChanges();
-                ViewData["success"] = "Add successfull";
+                TempData["success"] = "Add successfull";
                 load(search, pageIndex, pageSize);
-                return Page();
+                return RedirectToPage("/Admin/category/cateManage");
             }
         }
 
@@ -70,9 +73,9 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            ViewData["success"] = "Delete success";
+            TempData["success"] = "Delete success";
             load(search, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/category/cateManage");
         }
         public IActionResult OnPostActive(string search, int pageIndex = 1, int pageSize = 5)
         {
@@ -86,9 +89,9 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            ViewData["success"] = "Delete success";
+            TempData["success"] = "Delete success";
             load(search, pageIndex, pageSize);
-            return Page();
+            return RedirectToPage("/Admin/category/cateManage");
         }
 
         public IActionResult OnPostUpdate(string search, int pageIndex = 1, int pageSize = 5)
@@ -99,8 +102,8 @@ namespace RestaurantBooking.Pages.Admin.category
             var c = RestaurantContext.Ins.Categories.Where(x => x.Name.Equals(name)).FirstOrDefault();
             if(c != null)
             {
-                ViewData["error"] = "Category Name existed";
-                return Page();
+                TempData["error"] = "Category Name existed";
+                return RedirectToPage("/Admin/category/cateManage");
             }
             if (cate != null)
             {
@@ -110,9 +113,9 @@ namespace RestaurantBooking.Pages.Admin.category
                 RestaurantContext.Ins.Categories.Update(cate);
                 RestaurantContext.Ins.SaveChanges();
             }
-            ViewData["success"] = "Update success";
+            TempData["success"] = "Update success";
             load(search, pageIndex, pageSize);
-            return Page(); ;
+            return RedirectToPage("/Admin/category/cateManage"); ;
         }
     }
 }

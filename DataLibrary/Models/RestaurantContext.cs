@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 namespace DataLibrary.Models
 {
     public partial class RestaurantContext : DbContext
-    {
+    {   
         public static RestaurantContext Ins = new RestaurantContext();
         public RestaurantContext()
         {
@@ -47,7 +46,7 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5723CB795D1")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57237E09AAB")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -240,6 +239,12 @@ namespace DataLibrary.Models
                 entity.Property(e => e.Feedback1)
                     .HasMaxLength(4000)
                     .HasColumnName("feedback");
+
+                entity.Property(e => e.FeedbackForDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Img)
+                    .HasMaxLength(255)
+                    .HasColumnName("img");
 
                 entity.Property(e => e.MenuId).HasColumnName("menuId");
 

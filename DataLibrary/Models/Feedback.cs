@@ -9,7 +9,9 @@ namespace DataLibrary.Models
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public string? Feedback1 { get; set; }
+        public string? Img { get; set; }
         public DateTime? CreateAt { get; set; }
+        public DateTime? FeedbackForDate { get; set; }
         public int? AccountId { get; set; }
         public string? Type { get; set; }
         public int? MenuId { get; set; }

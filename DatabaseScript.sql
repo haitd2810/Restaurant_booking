@@ -1,4 +1,4 @@
-drop database Restaurant
+
 create database Restaurant
 go
 use Restaurant
@@ -16,6 +16,7 @@ CREATE TABLE Account (
     id INT IDENTITY(1,1) PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
     password VARCHAR(60),
+	code VARCHAR(20),
     roleID INT,
     isActive BIT,
 	createAt DATETIME,
@@ -57,6 +58,7 @@ CREATE TABLE Menu (
     detail NVARCHAR(255),
     price FLOAT,
     img NVARCHAR(255),
+	quantity Int,
     cateID INT,
     deleteFlag BIT default 0,
 	createAt DATETIME,
@@ -65,6 +67,27 @@ CREATE TABLE Menu (
     FOREIGN KEY (cateID) REFERENCES Category(id)
 );
 
+CREATE TABLE Ingredient(
+id INT IDENTITY(1,1) PRIMARY KEY,
+name NVARCHAR(255),
+weight float,
+price float,
+createAt datetime,
+updateAt datetime,	
+)
+
+CREATE TABLE Feedback(
+id INT IDENTITY(1,1) PRIMARY KEY,
+phone VARCHAR(255),
+email VARCHAR(255),
+feedback nvarchar(4000),
+createAt datetime,
+accountId INT,
+type varchar(255),
+menuId int,
+FOREIGN KEY (accountId) REFERENCES Account(id),
+FOREIGN KEY (menuId) REFERENCES Menu(id)
+)
 
 CREATE TABLE Bill (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -102,7 +125,7 @@ CREATE TABLE Booking (
     FOREIGN KEY (tableID) REFERENCES [Table](id)
 );
 
-insert into Role (name) values ('staff');
+insert into Role (name) values ('staff'),('cooker');
 
 insert into Account (username, password, roleID, isActive, createAt) values 
 ('staff01@gmail.com' , '123456' , 1, 1, GETDATE());
@@ -124,27 +147,27 @@ VALUES
 (N'Đồ uống', 0, GETDATE()),
 (N'Tráng miệng', 0, GETDATE());
 
-INSERT INTO Menu (name, detail, price, img, cateID, deleteFlag, createAt)
+INSERT INTO Menu (name, detail, price, img, cateID, deleteFlag, createAt, quantity)
 VALUES
 -- Mục Khai vị
-(N'Súp bí đỏ', N'Súp bí đỏ kem mịn', 45000, '/assets/img/pumpkin_soup.jpg', 1, 0, GETDATE()),
-(N'Salad Caesar', N'Salad với xà lách Romaine, sốt Caesar, và phô mai Parmesan', 50000, '/assets/img/caesar_salad.jpg', 1, 0, GETDATE()),
-(N'Bánh mì bơ tỏi', N'Bánh mì nướng giòn với bơ và tỏi', 20000, '/assets/img/garlic_bread.jpg', 1, 0, GETDATE()),
+(N'Súp bí đỏ', N'Súp bí đỏ kem mịn', 45000, '/assets/img/pumpkin_soup.jpg', 1, 0, GETDATE(),10),
+(N'Salad Caesar', N'Salad với xà lách Romaine, sốt Caesar, và phô mai Parmesan', 50000, '/assets/img/caesar_salad.jpg', 1, 0, GETDATE(),10),
+(N'Bánh mì bơ tỏi', N'Bánh mì nướng giòn với bơ và tỏi', 20000, '/assets/img/garlic_bread.jpg', 1, 0, GETDATE(),10),
 
 -- Mục Món chính
-(N'Spaghetti bò bằm', N'Mì Ý sốt bò bằm', 80000, '/assets/img/spaghetti.jpg', 2, 0, GETDATE()),
-(N'Cơm gà xối mỡ', N'Cơm trắng với gà chiên giòn xối mỡ', 70000, '/assets/img/fried_chicken_rice.jpg', 2, 0, GETDATE()),
-(N'Phở bò', N'Phở Việt Nam với thịt bò', 60000, '/assets/img/beef_pho.jpg', 2, 0, GETDATE()),
+(N'Spaghetti bò bằm', N'Mì Ý sốt bò bằm', 80000, '/assets/img/spaghetti.jpg', 2, 0, GETDATE(),10),
+(N'Cơm gà xối mỡ', N'Cơm trắng với gà chiên giòn xối mỡ', 70000, '/assets/img/fried_chicken_rice.jpg', 2, 0, GETDATE(),10),
+(N'Phở bò', N'Phở Việt Nam với thịt bò', 60000, '/assets/img/beef_pho.jpg', 2, 0, GETDATE(),10),
 
 -- Mục Đồ uống
-(N'Nước chanh', N'Nước chanh tươi', 20000, '/assets/img/lemonade.jpg', 3, 0, GETDATE()),
-(N'Nước ngọt', N'Nước ngọt đóng chai', 15000, '/assets/img/soft_drink.jpg', 3, 0, GETDATE()),
-(N'Sinh tố bơ', N'Sinh tố bơ tươi', 40000, '/assets/img/avocado_smoothie.jpg', 3, 0, GETDATE()),
+(N'Nước chanh', N'Nước chanh tươi', 20000, '/assets/img/lemonade.jpg', 3, 0, GETDATE(),10),
+(N'Nước ngọt', N'Nước ngọt đóng chai', 15000, '/assets/img/soft_drink.jpg', 3, 0, GETDATE(),10),
+(N'Sinh tố bơ', N'Sinh tố bơ tươi', 40000, '/assets/img/avocado_smoothie.jpg', 3, 0, GETDATE(),10),
 
 -- Mục Tráng miệng
-(N'Bánh flan', N'Bánh flan mềm mịn', 25000, '/assets/img/flan.jpg', 4, 0, GETDATE()),
-(N'Kem dừa', N'Kem tươi vị dừa', 30000, '/assets/img/coconut_icecream.jpg', 4, 0, GETDATE()),
-(N'Chè khúc bạch', N'Chè trái cây với khúc bạch', 35000, '/assets/img/fruit_dessert.jpg', 4, 0, GETDATE());
+(N'Bánh flan', N'Bánh flan mềm mịn', 25000, '/assets/img/flan.jpg', 4, 0, GETDATE(),10),
+(N'Kem dừa', N'Kem tươi vị dừa', 30000, '/assets/img/coconut_icecream.jpg', 4, 0, GETDATE(),10),
+(N'Chè khúc bạch', N'Chè trái cây với khúc bạch', 35000, '/assets/img/fruit_dessert.jpg', 4, 0, GETDATE(),10);
 
 INSERT INTO Bill (tableID, payed, createAt, createBy, updateAt, updateBy, status)
 VALUES

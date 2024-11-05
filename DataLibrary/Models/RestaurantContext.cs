@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 namespace DataLibrary.Models
 {
     public partial class RestaurantContext : DbContext
-    {   
+    {
         public static RestaurantContext Ins = new RestaurantContext();
         public RestaurantContext()
         {
@@ -47,13 +47,13 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57216ABD519")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC5723CB795D1")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Code)
-                    .HasMaxLength(50)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("code");
 
@@ -116,7 +116,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bills)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Bill__tableID__3A81B327");
+                    .HasConstraintName("FK__Bill__tableID__3E52440B");
             });
 
             modelBuilder.Entity<BillInfor>(entity =>
@@ -144,12 +144,12 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Bill)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.BillId)
-                    .HasConstraintName("FK__BillInfor__billI__3D5E1FD2");
+                    .HasConstraintName("FK__BillInfor__billI__412EB0B6");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.BillInfors)
                     .HasForeignKey(d => d.MenuId)
-                    .HasConstraintName("FK__BillInfor__menuI__3E52440B");
+                    .HasConstraintName("FK__BillInfor__menuI__4222D4EF");
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -190,7 +190,7 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Table)
                     .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.TableId)
-                    .HasConstraintName("FK__Booking__tableID__412EB0B6");
+                    .HasConstraintName("FK__Booking__tableID__44FF419A");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -222,7 +222,7 @@ namespace DataLibrary.Models
 
             modelBuilder.Entity<Feedback>(entity =>
             {
-                entity.ToTable("feedback");
+                entity.ToTable("Feedback");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -256,12 +256,12 @@ namespace DataLibrary.Models
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.AccountId)
-                    .HasConstraintName("FK__feedback__accoun__440B1D61");
+                    .HasConstraintName("FK__Feedback__accoun__3A81B327");
 
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.Feedbacks)
                     .HasForeignKey(d => d.MenuId)
-                    .HasConstraintName("FK__feedback__menuId__44FF419A");
+                    .HasConstraintName("FK__Feedback__menuId__3B75D760");
             });
 
             modelBuilder.Entity<Ingredient>(entity =>

@@ -13,6 +13,7 @@ namespace DataLibrary.Models
         public string? Phone { get; set; }
         public string? FullName { get; set; }
         public DateTime? CreateAt { get; set; }
+        public int? NumberOfBooking { get; set; }
 
         public virtual Table? Table { get; set; }
     }

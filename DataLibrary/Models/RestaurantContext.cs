@@ -171,6 +171,8 @@ namespace DataLibrary.Models
                     .HasMaxLength(255)
                     .HasColumnName("fullName");
 
+                entity.Property(e => e.NumberOfBooking).HasColumnName("numberOfBooking");
+
                 entity.Property(e => e.Phone)
                     .HasMaxLength(255)
                     .IsUnicode(false)

@@ -19,7 +19,6 @@ namespace RestaurantBooking.Pages.OrderMeal
             this._hub = _hub;
             _context = context;
         }
-
         public string TableID { get; set; }
         public Bill billTable { get; set; }
         public List<BillInfor> billDetail { get; set; }
@@ -36,7 +35,7 @@ namespace RestaurantBooking.Pages.OrderMeal
                 .FirstOrDefaultAsync();
             if (billTable != null) billDetail = await _context.BillInfors.Where(bi => bi.BillId == billTable.Id)
                     .Include(bd => bd.Menu).Include(bd => bd.Bill).ToListAsync();
-            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
+            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).OrderByDescending(m => m.Quantity).ToListAsync();
             category_list = await _context.Categories.Where(ct => ct.DeleteFlag == false).ToListAsync();
             return Page();
         }
@@ -48,20 +47,26 @@ namespace RestaurantBooking.Pages.OrderMeal
 
             if (billId != null && tableId != null)
             {
-                billTable = await _context.Bills.Where(b => b.Id == int.Parse(billId))
-                .Where(b => b.Status == true).Include(b => b.BillInfors).ThenInclude(b => b.Menu)
-                .FirstOrDefaultAsync();
-                if (billTable != null)
-                {
-                    billTable.Status = false;
-                    billTable.Payed = true;
-                    billTable.UpdateAt = DateTime.Now;
-                    if (HttpContext.Session.GetInt32("acc") != null)
+                Booking booking = await _context.Bookings.Where(b => b.TableId.ToString() == tableId && b.Status == "ordering").FirstOrDefaultAsync();
+                if (booking != null) {
+                    booking.Status = "confirm";
+                    _context.Bookings.Update(booking);
+
+                    billTable = await _context.Bills.Where(b => b.Id == int.Parse(billId))
+                    .Where(b => b.Status == true).Include(b => b.BillInfors).ThenInclude(b => b.Menu)
+                    .FirstOrDefaultAsync();
+                    if (billTable != null)
                     {
-                        billTable.UpdateBy = HttpContext.Session.GetInt32("acc");
+                        billTable.Status = false;
+                        billTable.Payed = true;
+                        billTable.UpdateAt = DateTime.Now;
+                        if (HttpContext.Session.GetInt32("acc") != null)
+                        {
+                            billTable.UpdateBy = HttpContext.Session.GetInt32("acc");
+                        }
+                        _context.Bills.Update(billTable);
+                        await _context.SaveChangesAsync();
                     }
-                    _context.Bills.Update(billTable);
-                    await _context.SaveChangesAsync();
                 }
             }
             _hub.Clients.All.SendAsync("LoadAll");

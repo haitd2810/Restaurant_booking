@@ -75,19 +75,3 @@ C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\R
 C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.pdb
 C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.genruntimeconfig.cache
 C:\Users\Hi\OneDrive - Đại học FPT- FPT University\Desktop\Project_PRN221\Restaurant_booking\DataLibrary\obj\Debug\net6.0\ref\DataLibrary.dll
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.csproj.AssemblyReference.cache
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.GeneratedMSBuildEditorConfig.editorconfig
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.AssemblyInfoInputs.cache
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.AssemblyInfo.cs
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.csproj.CoreCompileInputs.cache
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.sourcelink.json
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.dll
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\refint\DataLibrary.dll
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.pdb
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\bin\Debug\net6.0\appsettings.json
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\bin\Debug\net6.0\DataLibrary.deps.json
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\bin\Debug\net6.0\DataLibrary.runtimeconfig.json
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\bin\Debug\net6.0\DataLibrary.dll
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\bin\Debug\net6.0\DataLibrary.pdb
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\DataLibrary.genruntimeconfig.cache
-E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\obj\Debug\net6.0\ref\DataLibrary.dll

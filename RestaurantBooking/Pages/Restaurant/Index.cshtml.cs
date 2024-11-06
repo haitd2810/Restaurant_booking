@@ -51,7 +51,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             string time = Request.Form["time"];
             DateTime startDate = DateTime.Parse($"{date} {time}");
             if (startDate.CompareTo(DateTime.Now.AddDays(1)) > 0
-                || startDate.CompareTo(DateTime.Now.AddMinutes(30)) <= 0)
+                || startDate.CompareTo(DateTime.Now.AddMinutes(30)) <= 0 || startDate.Hour < 7 || startDate.Hour > 23)
             {
                 HttpContext.Session.SetString("Booking_Failed", "Invalid Date Time Request");
                 return Redirect("/Restaurant");
@@ -84,6 +84,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             //remove session if all condition ok
             HttpContext.Session.Remove("Booking_Failed");
 
+            
             //insert db
             string email = Request.Form["email"];
             string status = "booked";
@@ -97,6 +98,12 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
                 Status = status,
                 TableId = tableId
             };
+            List<Booking> bookList = await _context.Bookings.Where(b => b.Email == email 
+                                                                    && b.Phone == phone 
+                                                                    && b.Status == "confirm"
+                                                                    && b.StartDate.Value.Date.CompareTo(DateTime.Now.Date.AddMonths(-1)) >= 0).ToListAsync();
+            if (bookList.Count == 0) bookInfo.NumberOfBooking = 1;
+            else bookInfo.NumberOfBooking = bookList.Count + 1;
              _context.Bookings.Add(bookInfo);
             await _context.SaveChangesAsync();
 

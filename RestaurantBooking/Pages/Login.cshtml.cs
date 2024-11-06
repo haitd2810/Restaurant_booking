@@ -49,7 +49,7 @@ namespace RestaurantBooking.Pages
             HttpContext.Session.SetString("role", acc.Role.Name);
             HttpContext.Session.SetInt32("acc", acc.Id);
 
-			return Redirect("Staff/OrderMeal");
+			return Redirect("/Staff/BookingInformation?page_number=1");
         }
     }
 }

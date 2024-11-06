@@ -7,7 +7,7 @@
     <div class="container" data-aos="fade-up">
         <div class="section-title" style="padding-bottom: 0;">
             <div class="btns">
-                <a class="btn-menu animated fadeInUp scrollto go-back" href="/Staff/OrderMeal">
+                <a class="btn-menu animated fadeInUp scrollto go-back" href="/Staff/BookingInformation?page_number=1">
                     Go Back
                 </a>
             </div>
@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="section-title col-lg-8 col-md-6">
-                <p>Table Detail</p>
+                <p>Order Detail</p>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input class="form-control" style="width: auto;" type="number" name="quantity" value="@detail.Quantity" />
+                                                    <input class="form-control" style="width: auto;" type="number" name="quantity" value="@detail.Quantity" max="@detail.Menu.Quantity" />
                                                 </div>
                                             </td>
                                             <td>
@@ -213,9 +213,12 @@
                                 <div class="menu-content">
                                     <a href="#">@menu.Name</a><span>@menu.Price VNĐ</span>
                                 </div>
+                                <div class="quantity" style="margin-left: 5rem;">
+                                    <p>x @menu.Quantity</p>
+                                </div>
                                 <div class="menu-ingredients">
                                     <div class="btns" style="margin-top:0;">
-                                        <button id="btnAdd" class="btn-menu animated fadeInUp scrollto add-order">Add</button>
+                                        <button @(menu.Quantity == 0 ? "disabled" : "") id="btnAdd" class="btn-menu animated fadeInUp scrollto add-order">Add</button>
                                     </div>
                                 </div>
 
@@ -285,7 +288,7 @@
                 const menuImg = menuItem.querySelector('img.menu-img').src;
                 const menuName = menuItem.querySelector('.menu-content a').textContent;
                 const menuPrice = menuItem.querySelector('.menu-content span').textContent;
-
+                const number = menuItem.querySelector('.quantity p').textContent.split(' ')[1];
                 let selectedContainer = document.querySelector('.selected-item');
                 let existingItem = selectedContainer.querySelector(`.menu-item[data-id="${menuId}"]`);
 
@@ -293,14 +296,15 @@
                     let quantitySup = existingItem.querySelector('.menu-content a sup');
                     let quantityInput = existingItem.querySelector('.data');
                     let quantity = parseInt(quantitySup ? quantitySup.textContent.slice(1) : '1') + 1;
+                    if (quantity <= parseInt(number)) {
+                        if (quantitySup) {
+                            quantitySup.textContent = `x${quantity}`;
+                        } else {
+                            existingItem.querySelector('.menu-content a').innerHTML += `<sup>x${quantity}</sup>`;
+                        }
 
-                    if (quantitySup) {
-                        quantitySup.textContent = `x${quantity}`;
-                    } else {
-                        existingItem.querySelector('.menu-content a').innerHTML += `<sup>x${quantity}</sup>`;
+                        quantityInput.value = `${menuId}-${quantity}`;
                     }
-
-                    quantityInput.value = `${menuId}-${quantity}`;
                 } else {
                     let quantity = 1;
                     let newItem = document.createElement('div');

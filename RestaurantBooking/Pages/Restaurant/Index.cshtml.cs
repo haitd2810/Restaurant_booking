@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using RestaurantBooking.Common;
 using RestaurantBooking.Hubs;
 using System;
@@ -17,6 +18,8 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
         public List<Menu> menu_list { get; set; }
         public List<Category> category_list { get; set; }
 
+        public List<Account> accounts_list { get; set; }
+
         private Regex regexPhone = new Regex("^[0-9]+$");
         private Regex regexName = new Regex("^[a-zA-Z ]+$");
         private readonly IHubContext<HubServer> _hub;
@@ -30,9 +33,10 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
         {
             category_list = await _context.Categories.Where(ct => ct.DeleteFlag == false).ToListAsync();
             menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
+            accounts_list = await _context.Accounts.Where(a => a.IsActive == true).ToListAsync();
         }
-
-        public async Task<IActionResult> OnPostAsync()
+        public string emailBook { get; set; } = "";
+        public async Task<IActionResult> OnPostBookingAsync()
         {
             //validate phone
             string phone = Request.Form["phone"];
@@ -62,7 +66,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
                 .ToListAsync();
             var bookedTableIds = booked_List.Select(b => b.TableId).ToList();
             //check if there are any table is free
-            List<Table> table_List = await _context.Tables
+            List<DataLibrary.Models.Table> table_List = await _context.Tables
                 .Where(t => t.DeleteFlag == false && !bookedTableIds.Contains(t.Id) && t.ForBooking == true)
                 .ToListAsync();
             if (table_List.Count == 0)
@@ -97,23 +101,88 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             await _context.SaveChangesAsync();
 
             //send mail confirm user
-            SendMail(name, email, phone, date, time, table_List[0].Id.ToString()?? String.Empty);
-
+            string body = BodyCFBooking(name, phone, date, time, table_List[0].Id.ToString() ?? String.Empty);
+            SendMail(body, "Confirm Booking", email);
             //real time
             _hub.Clients.All.SendAsync("LoadAll");
             return Page();
         }
 
-        private static void SendMail(string name, string email, string phone, string date, string time, string tableName)
+        public async Task<IActionResult> OnPostFeedbackAsync(string phone, string email, 
+            string date, IFormFile img, string type, string feedback, string staff, string meal)
         {
-            string body = BodyCFBooking(name, phone, date, time, tableName);
+            if (!regexPhone.IsMatch(phone))
+            {
+                HttpContext.Session.SetString("feedback_Failed", "Invalid Phone Feedback");
+                return Redirect("/Restaurant");
+            }
+            if(DateTime.Parse(date).Date.CompareTo(DateTime.Now.Date) > 0)
+            {
+                HttpContext.Session.SetString("feedback_Failed", "Invalid Date Feedback");
+                return Redirect("/Restaurant");
+            }
+            Booking book = await _context.Bookings.Where(b => b.Email == email
+                                                        && b.Phone == phone
+                                                        && b.Status == "confirm"
+                                                        && b.StartDate.HasValue
+                                                        && b.StartDate.Value.Date.CompareTo(DateTime.Parse(date).Date) == 0).FirstOrDefaultAsync();
+            if (book == null) {
+                HttpContext.Session.SetString("feedback_Failed", "Cannot find your information booking in this system!");
+                return Redirect("/Restaurant");
+            }
+
+            HttpContext.Session.Remove("feedback_Failed");
+            Feedback fb = new Feedback()
+            {
+                Phone = phone,
+                Email = email,
+                Feedback1 = feedback,
+                Img = "wwwroot/assets/img/feedback/" + img.FileName,
+                CreateAt = DateTime.Now,
+                FeedbackForDate = DateTime.Parse(date),
+            };
+            if (type == "account") fb.AccountId = int.Parse(staff);
+            else if (type == "menu") fb.MenuId = int.Parse(meal);
+            else fb.Type = "other";
+
+            _context.Feedbacks.Add(fb);
+            int row = await _context.SaveChangesAsync();
+            if(row > 0)
+            {
+                var permittedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+                var extension = Path.GetExtension(img.FileName).ToLowerInvariant();
+
+                if (string.IsNullOrEmpty(extension) || !permittedExtensions.Contains(extension))
+                {
+                    HttpContext.Session.SetString("feedback_Failed", " file must be an image (.jpg, .jpeg, .png, .gif, .bmp).");
+                    return Page();
+                }
+
+                var filePath = Path.Combine("wwwroot/assets/img/feedback", img.FileName);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await img.CopyToAsync(stream);
+                }
+
+                string body = BodyCFFeedback();
+                SendMail(body, "Confirm Feedback", email);
+            }
+            return Redirect("/Restaurant");
+        }
+
+        private static void SendMail(string body, string title, string mail)
+        {
+            
             IConfiguration config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", true, true)
                 .Build();
             string emailFrom = config["InforMail:email"];
             string passFrom = config["InforMail:password"];
-            Mail.instance.sendMail(emailFrom, passFrom, email, body, "Confirm Booking");
+            Mail.instance.sendMail(emailFrom, passFrom, mail, body, title);
         }
 
         private static string BodyCFBooking(string name, string phone, string date, string time, string tableNumber)
@@ -187,6 +256,84 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
                 "</ul>\r\n" +
                 "<p>Kindly be advised that if you are more than 15 minutes late, your reservation will be canceled. Thank you for your understanding and cooperation.</p>\r\n" +
                 "<p>We look forward to serving you and making your dining experience memorable. If you have any questions or need to make any changes to your booking, please do not hesitate to contact us.</p>\r\n" +
+                "<p>Best regards,</p>\r\n" +
+                "<p>Restaurantly Hari</p>\r\n" +
+                "<a href=\"https://localhost:7148/\">Visit Our Website</a>\r\n" +
+                "</div>\r\n" +
+                "<div class=\"footer\">\r\n" +
+                "<p>&copy; 2024 [Restaurant Name]. All rights reserved.</p>\r\n" +
+                "<p>[Restaurant Address] | [Restaurant Phone Number] | [Restaurant Email]</p>\r\n" +
+                "</div>\r\n" +
+                "</div>\r\n" +
+                "</body>\r\n" +
+                "</html>";
+
+            return body;
+        }
+
+        private static string BodyCFFeedback()
+        {
+            string body = "<!DOCTYPE html>" +
+                "\r\n<html>\r\n" +
+                "<head>\r\n" +
+                "<style>\r\n" +
+                "body {\r\n" +
+                "font-family: Arial, sans-serif;\r\n" +
+                "margin: 0;\r\n" +
+                "padding: 0;\r\n" +
+                "background-color: #f6f6f6;\r\n" +
+                "}\r\n" +
+                ".container {\r\n" +
+                "width: 100%;\r\n" +
+                "padding: 20px;\r\n" +
+                "background-color: #ffffff;\r\n" +
+                "box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\r\n" +
+                "margin: 20px auto;\r\n" +
+                "max-width: 600px;\r\n" +
+                "}\r\n" +
+                ".header {\r\n" +
+                "background-color: #333333;\r\n" +
+                "color: #ffffff;\r\n" +
+                "padding: 10px 20px;\r\n" +
+                "text-align: center;\r\n" +
+                "}\r\n" +
+                ".content {\r\n" +
+                "padding: 20px;\r\n" +
+                "}\r\n" +
+                ".content h2 {\r\n" +
+                "color: #333333;\r\n" +
+                "}\r\n" +
+                ".content p {\r\n" +
+                "line-height: 1.6;\r\n" +
+                "color: #666666;\r\n" +
+                "}\r\n" +
+                ".content a {\r\n" +
+                "display: inline-block;\r\n" +
+                "padding: 10px 20px;\r\n" +
+                "color: #ffffff;\r\n" +
+                "background-color: #007bff;\r\n" +
+                "text-decoration: none;\r\n" +
+                "border-radius: 5px;\r\n" +
+                "}\r\n" +
+                ".footer {\r\n" +
+                "background-color: #f1f1f1;\r\n" +
+                "padding: 10px 20px;\r\n" +
+                "text-align: center;\r\n" +
+                "font-size: 12px;\r\n" +
+                "color: #666666;\r\n" +
+                "}\r\n" +
+                "</style>\r\n" +
+                "</head>\r\n" +
+                "<body>\r\n" +
+                "<div class=\"container\">\r\n" +
+                "<div class=\"header\">\r\n" +
+                "<h1>Restaurantly</h1>\r\n" +
+                "</div>\r\n" +
+                "<div class=\"content\">\r\n" +
+                "<h2>Feedback Confirmation</h2>\r\n" +
+                "<p>Thank you for taking the time to review our restaurant. Your review will be noted and improved by us.</p>\r\n" +
+                "<p>If there are any other problems, do not hesitate to contact us immediately.</p>\r\n" +
+                "<p>Thank you very much</p>\r\n" +
                 "<p>Best regards,</p>\r\n" +
                 "<p>Restaurantly Hari</p>\r\n" +
                 "<a href=\"https://localhost:7148/\">Visit Our Website</a>\r\n" +

@@ -6,11 +6,11 @@
 <section id="about" class="about" style="margin-top: 2rem;">
     <div class="container" data-aos="fade-up">
         <div class="section-title" style="padding-bottom: 0;">
-             <div class="btns">
+            <div class="btns">
                 <a class="btn-menu animated fadeInUp scrollto go-back" href="/Staff/OrderMeal">
                     Go Back
                 </a>
-             </div>
+            </div>
             <hr />
         </div>
         <div class="row">
@@ -31,7 +31,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" asp-page="Edit">
-                <input type="hidden" name="tableId" value="@(Model.TableID?? String.Empty)"/>
+                <input type="hidden" name="tableId" value="@(Model.TableID?? String.Empty)" />
                 <input type="hidden" name="billId" value="@(Model.billTable==null? "" : Model.billTable.Id)" />
                 <div class="modal-body">
                     <div>
@@ -56,7 +56,7 @@
                             <tbody class="table-group-divider">
                                 @if (Model.billDetail != null)
                                 {
-                                    @foreach(var detail in Model.billDetail)
+                                    @foreach (var detail in Model.billDetail)
                                     {
                                         <input type="hidden" name="items_id" value="@detail.Id" />
                                         <tr>
@@ -92,14 +92,15 @@
         </div>
     </div>
 </div>
-@if (Model.billTable != null){
+@if (Model.billTable != null)
+{
     <main id="main">
         <section id="menu" class="menu section-bg">
             <div class="container" data-aos="fade-up">
                 <div id="" class="row" data-aos="fade-up" data-aos-delay="200">
                     @if (Model.billDetail != null)
                     {
-                        @foreach(var detail in Model.billDetail)
+                        @foreach (var detail in Model.billDetail)
                         {
                             <div class="col-lg-3 menu-item">
 
@@ -121,27 +122,36 @@
                     }
                 </div>
             </div>
-            @if(Model.billTable != null)
+            @if (Model.billTable != null)
             {
                 <section>
                     <div class="container" data-aos="fade-up">
-                        
-                            <div class="section-title">
-                                <h2>Total</h2><span id="total-price"></span>
-                                <div class="btns" style="display: flex">
-                                    <form method="post" asp-page-handler="CloseBill">
-                                        <input type="hidden" name="billId" value="@Model.billTable.Id" />
-                                        <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
-                                        <button class="btn-menu animated fadeInUp scrollto close">Close This Order</button>
-                                    </form>
-                                    <form method="post" asp-page-handler="ExportBill">
-                                        <input type="hidden" name="billId" value="@Model.billTable.Id" />
-                                        <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
-                                        <button class="btn-menu animated fadeInUp scrollto close">Export Bill</button>
-                                    </form>
-                                </div>
-                                <hr />
+
+                        <div class="section-title">
+                            <h2>Total</h2><span id="total-price"></span>
+                            <div class="btns" style="display: flex">
+                                <form id="closeBillForm" method="post" asp-page-handler="CloseBill">
+                                    <input type="hidden" name="billId" value="@Model.billTable.Id" />
+                                    <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                                    <button class="btn-menu animated fadeInUp scrollto close">Close This Order</button>
+                                </form>
+                                <form id="exportBillForm" method="post" asp-page-handler="ExportBill" style="margin-left: 1rem;">
+                                    <input type="hidden" name="billId" value="@Model.billTable.Id" />
+                                    <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                                    <button class="btn-menu animated fadeInUp scrollto close" onclick="exportAndCloseBill()">Export Bill</button>
+                                </form>
+                                <script>
+                                    function exportAndCloseBill() {
+                                        document.getElementById('exportBillForm').submit();
+
+                                        setTimeout(function () {
+                                            document.getElementById('closeBillForm').submit();
+                                        }, 2000);
+                                    }
+                                </script>
                             </div>
+                            <hr />
+                        </div>
                     </div>
 
                 </section>
@@ -151,74 +161,72 @@
     </main>
 }
 <div class="row">
-<main id="main" class="col-lg-6" style="margin-top: 1rem;">
-    <!-- ======= About Section ======= -->
-    
-    <!-- ======= Menu Section ======= -->
-    <section id="menu" class="menu section-bg">
-        <div class="container" data-aos="fade-up">
-            <div class="selected-items-box mt-4">
-                <h3>Selected Items:</h3>
-                <div id="selected-items-container" class="row"></div>
-            </div>
-            <form method="post" asp-page="New">
-                <input type="hidden" name="tableId" value="@Model.TableID"/>
-                <div id="" class="row selected-item" data-aos="fade-up" data-aos-delay="200">
-                
-                </div>
-                <hr />
-                <div class="btns">
-                    <input id="btnClick" type="submit" class="btn-menu btn-submit animated fadeInUp scrollto" value="Add Order"/>
-                </div>
-             </form>
-        </div>
-    </section>
-
-</main>
     <main id="main" class="col-lg-6" style="margin-top: 1rem;">
-    <section id="menu" class="menu section-bg">
-        <div class="container" data-aos="fade-up">
-
-            <div class="row" data-aos="fade-up" data-aos-delay="100">
-                <div class="col-lg-12 d-flex justify-content-center">
-                    <ul id="menu-flters">
-                        <li data-filter="*" class="filter-active">All</li>
-                        @if (Model.category_list.Count != 0)
-                        {
-                            @foreach (var cate in Model.category_list)
-                            {
-                                <li data-filter=".filter-@cate.Id">@cate.Name</li>
-                            }
-                        }
-                    </ul>
+        <!-- ======= About Section ======= -->
+        <!-- ======= Menu Section ======= -->
+        <section id="menu" class="menu section-bg">
+            <div class="container" data-aos="fade-up">
+                <div class="selected-items-box mt-4">
+                    <h3>Selected Items:</h3>
+                    <div id="selected-items-container" class="row"></div>
                 </div>
+                <form method="post" asp-page="New">
+                    <input type="hidden" name="tableId" value="@Model.TableID" />
+                    <div id="" class="row selected-item" data-aos="fade-up" data-aos-delay="200">
+                    </div>
+                    <hr />
+                    <div class="btns">
+                        <input id="btnClick" type="submit" class="btn-menu btn-submit animated fadeInUp scrollto" value="Add Order" />
+                    </div>
+                </form>
             </div>
+        </section>
 
-            <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-                @if (Model.menu_list != null)
-                {
-                    @foreach(var menu in Model.menu_list)
+    </main>
+    <main id="main" class="col-lg-6" style="margin-top: 1rem;">
+        <section id="menu" class="menu section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <ul id="menu-flters">
+                            <li data-filter="*" class="filter-active">All</li>
+                            @if (Model.category_list.Count != 0)
+                            {
+                                @foreach (var cate in Model.category_list)
+                                {
+                                    <li data-filter=".filter-@cate.Id">@cate.Name</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                    @if (Model.menu_list != null)
                     {
+                        @foreach (var menu in Model.menu_list)
+                        {
                             <div class="col-lg-6 menu-item filter-@menu.Cate.Id">
                                 <img src="@menu.Img" class="menu-img" alt="">
-                                <input type="hidden" name="MenuId" value="@menu.Id"/>
-                            <div class="menu-content">
+                                <input type="hidden" name="MenuId" value="@menu.Id" />
+                                <div class="menu-content">
                                     <a href="#">@menu.Name</a><span>@menu.Price VNĐ</span>
-                            </div>
-                            <div class="menu-ingredients">
-                                <div class="btns" style="margin-top:0;">
-                                    <button id="btnAdd" class="btn-menu animated fadeInUp scrollto add-order">Add</button>
                                 </div>
-                            </div>
-                            
-                        </div>
-                    }
-                }
-            </div>
+                                <div class="menu-ingredients">
+                                    <div class="btns" style="margin-top:0;">
+                                        <button id="btnAdd" class="btn-menu animated fadeInUp scrollto add-order">Add</button>
+                                    </div>
+                                </div>
 
-        </div>
-    </section>
-</main><!-- End #main -->
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+        </section>
+    </main><!-- End #main -->
     <div id="editModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -233,7 +241,6 @@
                     </tr>
                 </thead>
                 <tbody id="modalTableBody">
-                    
                 </tbody>
             </table>
             <button id="saveChangesButton" class="btn-menu">Save Changes</button>
@@ -341,68 +348,68 @@
 
 </script>
 <style>
-#about {
-    padding: 2em 0 0 0;
-}
+    #about {
+        padding: 2em 0 0 0;
+    }
 
-.quantity-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-}
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
 
-.quantity-control .btn {
-    border: none;
-    color: #ffffff;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 0 10px;
-    border-radius: 3px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: background-color 0.3s ease;
-}
+    .quantity-control .btn {
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        cursor: pointer;
+        padding: 0 10px;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease;
+    }
 
-.quantity-control .btn:hover {
-    background-color: #6462624d;
-}
+    .quantity-control .btn:hover {
+        background-color: #6462624d;
+    }
 
-.quantity-control .quantity {
-    font-size: 16px;
-    padding: 0 10px;
-}
+    .quantity-control .quantity {
+        font-size: 16px;
+        padding: 0 10px;
+    }
 
-.btns {
-    margin-top: 2em;
-}
+    .btns {
+        margin-top: 2em;
+    }
 
-.add-order, .btn-submit, .edit-items, .go-back, .close {
-    background-color: #ffffff00;
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 12px 30px;
-    border-radius: 50px;
-    transition: 0.3s;
-    line-height: 1;
-    color: white;
-    border: 2px solid #cda45e;
-}
+    .add-order, .btn-submit, .edit-items, .go-back, .close {
+        background-color: #ffffff00;
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 12px 30px;
+        border-radius: 50px;
+        transition: 0.3s;
+        line-height: 1;
+        color: white;
+        border: 2px solid #cda45e;
+    }
 
-.btns .add-order:hover {
-    background-color: #cda45e;
-}
+    .btns .add-order:hover {
+        background-color: #cda45e;
+    }
 
-.btn-delete, .edit-items, .go-back, .close {
-    border: 2px solid #cda45e !important;
-    transition: 0.3s;
-    font-style: normal !important;
-}
+    .btn-delete, .edit-items, .go-back, .close {
+        border: 2px solid #cda45e !important;
+        transition: 0.3s;
+        font-style: normal !important;
+    }
 
-.btn-delete:hover, .edit-items:hover, .go-back :hover, .close:hover{
-    color: white !important;
-    background-color: #cda45e !important;
-}
+    .btn-delete:hover, .edit-items:hover, .go-back :hover, .close:hover{
+        color: white !important;
+        background-color: #cda45e !important;
+    }
 </style>

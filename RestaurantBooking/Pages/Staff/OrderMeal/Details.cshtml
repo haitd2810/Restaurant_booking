@@ -30,7 +30,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">List items</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" asp-page="Edit">
+            <form method="post" asp-page="./Edit">
                 <input type="hidden" name="tableId" value="@(Model.TableID?? String.Empty)" />
                 <input type="hidden" name="billId" value="@(Model.billTable==null? "" : Model.billTable.Id)" />
                 <div class="modal-body">

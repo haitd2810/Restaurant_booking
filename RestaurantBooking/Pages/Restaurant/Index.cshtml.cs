@@ -32,7 +32,7 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
         public async Task OnGetAsync()
         {
             category_list = await _context.Categories.Where(ct => ct.DeleteFlag == false).ToListAsync();
-            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
+            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false && m.Quantity > 0).ToListAsync();
             accounts_list = await _context.Accounts.Where(a => a.IsActive == true).ToListAsync();
         }
         public string emailBook { get; set; } = "";

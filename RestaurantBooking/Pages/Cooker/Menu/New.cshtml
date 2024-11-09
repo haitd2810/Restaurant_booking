@@ -1,0 +1,104 @@
+﻿@page
+@model RestaurantBooking.Pages.Cooker.Menu.NewModel
+@{
+    Layout = "~/Pages/Shared/_HeaderCooker.cshtml";
+}
+<main id="main">
+    <section id="about" class="about" style="margin-top: 2rem; padding-bottom: 0;">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title" style="padding-bottom: 0;">
+                <div class="btns">
+                    <a class="btn-menu animated fadeInUp scrollto go-back" href="/Cooker/Menu/Index">
+                        Go Back
+                    </a>
+                </div>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="section-title col-lg-8 col-md-6">
+                    <p>Add New Menu</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ======= About Section ======= -->
+    <section id="feedback" class="feedback contact" style="padding: 0;">
+        <div class="container" data-aos="fade-up">
+
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+
+                    <div class="col-lg-12 mt-5 mt-lg-0">
+
+                        <form enctype="multipart/form-data" method="post" asp-page-handler="AddNew" role="form" class="php-email-form">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input required type="text"  name="name" class="form-control" id="name" placeholder="Enter name" />
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <input required min="0" type="number"  class="form-control" name="price" id="price" placeholder="Enter price" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 form-group mt-3">
+                                    <input required min="0" type="number" class="form-control" name="quantity" id="quantity" placeholder="Enter quantity" />
+                                </div>
+                                <div class="col-lg-4 col-md-4 form-group mt-3" style="position: relative;">
+                                    <!-- Input file -->
+                                    <input required type="file"
+                                           class="form-control form-control-sm"
+                                           name="img"
+                                           id="img"
+                                           style="padding: 10px; position: relative; z-index: 2; opacity: 0;"
+                                           onchange="updateFileLabel(this)" />
+                                    <span id="fileLabel"
+                                          style="position: absolute; top: 10px; left: 15px; color: #aaa; pointer-events: none;">
+                                        Please choose an image
+                                    </span>
+                                </div>
+                                <div id="typeSelectContainer" name="type" class="col-lg-4 col-md-4 form-group mt-3">
+                                    <select name="categoryID" id="feedbackType" class="form-control select-box">
+                                        @if (Model.cateList != null)
+                                        {
+                                            @foreach (var cate in Model.cateList)
+                                            {
+                                                <option value="@cate.Id">@cate.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" name="details" rows="8" placeholder="Details" required></textarea>
+                            </div>
+                            <div class="form-group mt-3">
+                                <div class="validate" style="display: block;">@(TempData["Failed_Add"] != null ? TempData["Failed_Add"] : "")</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Add New</button></div>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</main><!-- End #main -->
+<script>
+    function updateFileLabel(input) {
+        const fileLabel = document.getElementById("fileLabel");
+        if (input.files && input.files.length > 0) {
+            console.log(input.files[0].name);
+            fileLabel.textContent = input.files[0].name;
+            fileLabel.style.color = "#aaa";
+        } else {
+            fileLabel.textContent = "Please choose an image";
+            fileLabel.style.color = "#aaa";
+        }
+    }
+</script>

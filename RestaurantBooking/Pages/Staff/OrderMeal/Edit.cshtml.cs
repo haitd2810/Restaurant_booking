@@ -41,7 +41,12 @@ namespace RestaurantBooking.Pages.OrderMeal
                         Menu menu = await _context.Menus.Where(m => m.Id == bill_infor.MenuId).FirstOrDefaultAsync();
                         if (int.Parse(quantity[i]) <= 0)
                         {
-                            
+                            Booking booking = await _context.Bookings.Where(b => b.TableId.ToString() == tableId && b.Status == "ordering").FirstOrDefaultAsync();
+                            if(booking != null)
+                            {
+                                booking.Status = "booked";
+                                _context.Bookings.Update(booking);
+                            }
                             menu.Quantity += bill_infor.Quantity;
                             _context.BillInfors.Remove(bill_infor);
                         }

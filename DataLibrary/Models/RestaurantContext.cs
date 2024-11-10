@@ -7,11 +7,11 @@ using Microsoft.Extensions.Configuration;
 namespace DataLibrary.Models
 {
     public partial class RestaurantContext : DbContext
-    {   
+    {
         public static RestaurantContext Ins = new RestaurantContext();
         public RestaurantContext()
         {
-            if(Ins == null)
+            if (Ins == null)
             {
                 Ins = this;
             }
@@ -47,7 +47,7 @@ namespace DataLibrary.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57237E09AAB")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC572215FC679")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -170,6 +170,8 @@ namespace DataLibrary.Models
                 entity.Property(e => e.FullName)
                     .HasMaxLength(255)
                     .HasColumnName("fullName");
+
+                entity.Property(e => e.NumberOfBooking).HasColumnName("numberOfBooking");
 
                 entity.Property(e => e.Phone)
                     .HasMaxLength(255)

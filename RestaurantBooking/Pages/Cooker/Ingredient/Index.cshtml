@@ -1,0 +1,196 @@
+﻿@page
+@model RestaurantBooking.Pages.Cooker.Ingredient.IndexModel
+@{
+    Layout = "~/Pages/Shared/_HeaderCooker.cshtml";
+}
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="color: black">
+            <form method="post" asp-page="./Edit">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                
+                        <input type="hidden" name="id" id="modal-id">
+                        <div class="form-group">
+                            <label for="modal-name">Name</label>
+                            <input type="text" name="name" class="form-control" id="modal-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-weight">Weight</label>
+                            <input type="number" min="0" step="0.1" name="weight" class="form-control" id="modal-weight">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-price">Price</label>
+                        <input type="number" min="0" step="0.1" name="price" class="form-control" id="modal-price">
+                        </div>
+               
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary close-modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="color: black">
+            <form method="post" asp-page="./New">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="modal-name">Name</label>
+                        <input type="text" name="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-weight">Weight</label>
+                        <input type="number" min="0" name="weight" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-price">Price</label>
+                        <input type="number" min="0" name="price" class="form-control">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<main id="main" style="margin-top: 5em;">
+    <!-- ======= About Section ======= -->
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title row">
+                <div class="col-lg-8 col-md-6">
+                    <h2>Ingredient</h2>
+                    <div class="row">
+                        <form method="get" class="col-md-5">
+                            <div  style="display: flex;">
+                                <input type="date" name="dateFilter" class="form-control" />
+                                <button class="close-btn" style="border-radius: 10px; margin-left: 1rem;">Filter</button>
+                            </div>
+                        </form>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#add">
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div style="overflow-x: auto;" class="row menu-container" style="height: max-content;" data-aos="fade-up" data-aos-delay="200">
+                <table class="table text-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" class="text-center">
+                                Name
+                            </th>
+                            <th scope="col" class="text-center">
+                                Weight
+                            </th>
+                            <th scope="col" class="text-center">
+                                Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                CreateAt
+                            </th>
+                            <th scope="col" class="text-center">
+                                UpdateAt
+                            </th>
+                            <th scope="col" class="text-center">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.ingredients != null)
+                        {
+                            @foreach(var i in Model.ingredients)
+                            {
+                                <tr>
+                                    <td class="text-center">@i.Id</td>
+                                    <td class="text-center">@i.Name</td>
+                                    <td class="text-center">@i.Weight</td>
+                                    <td class="text-center">@i.Price</td>
+                                    <td class="text-center">@i.CreateAt</td>
+                                    <td class="text-center">@i.UpdateAt</td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-primary edit-button" data-toggle="modal" data-target="#edit" data-id="@i.Id" data-name="@i.Name" data-weight="@i.Weight" data-price="@i.Price">
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <p>Null</p>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section><!-- End About Section -->
+</main><!-- End #main -->
+<style>
+    .menu-container {
+        height: max-content !important;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.edit-button', function () {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open').css('padding-right', '');
+
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            var weight = $(this).data('weight');
+            var price = $(this).data('price');
+
+            $('#exampleModalLabel').text('Edit Ingredient: ' + name);
+            $('#modal-id').val(id);
+            $('#modal-name').val(name);
+            $('#modal-weight').val(weight);
+            $('#modal-price').val(price);
+
+            $('#edit').modal('show');
+        });
+        $(document).on('click', '.close-modal', function () {
+            $('#edit').modal('hide');
+        });
+        $('#edit').on('hidden.bs.modal', function () {
+            $('#exampleModalLabel').text('');
+            $('#modal-id').val('');
+            $('#modal-name').val('');
+            $('#modal-weight').val('');
+            $('#modal-price').val('');
+
+            $('.modal-backdrop').remove();    
+            $('body').removeClass('modal-open'); 
+            $('body').css('padding-right', ''); 
+        });
+    });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

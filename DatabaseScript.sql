@@ -190,3 +190,5 @@ VALUES
 (3, 1, 1, 20000, GETDATE(), GETDATE()),
 (3, 2, 1, 25000, GETDATE(), GETDATE()),
 (3, 3, 2, 30000, GETDATE(), GETDATE());
+
+ALTER TABLE Booking ADD numberOfBooking int;

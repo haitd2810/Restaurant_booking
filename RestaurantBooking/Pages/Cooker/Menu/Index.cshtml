@@ -1,0 +1,198 @@
+﻿@page
+@model RestaurantBooking.Pages.Cooker.Menu.IndexModel
+@{
+    Layout = "~/Pages/Shared/_HeaderCooker.cshtml";
+}
+<main id="main" style="margin-top: 5em;">
+    <!-- ======= About Section ======= -->
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title row">
+                <div class="col-lg-8 col-md-6">
+                    <h2>Menu</h2>
+                </div>
+            </div>
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <div>
+                        <a href="/Cooker/Menu/New" class="btn btn-outline-success" style="color: white;">
+                            Add New
+                        </a>
+                    </div>
+                    <ul id="menu-flters">
+                        <li data-filter="*" class="filter-active">All</li>
+                        @if (Model.category_list != null)
+                        {
+                            @foreach (var cate in Model.category_list)
+                            {
+                                <li data-filter=".filter-@cate.Id">@cate.Name</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div style="overflow-x: auto;" class="row menu-container" style="height: max-content;" data-aos="fade-up" data-aos-delay="200">
+                <table class="table text-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col" class="text-center">
+                                Name
+                            </th>
+                            <th scope="col" class="text-center">
+                                Detail
+                            </th>
+                            <th scope="col" class="text-center">
+                                Price
+                            </th>
+                            <th scope="col" class="text-center">
+                                Image
+                            </th>
+                            <th scope="col" class="text-center">
+                                Quantity
+                            </th>
+                            <th scope="col" class="text-center">
+                                Category
+                            </th>
+                            <th scope="col" class="text-center">
+                                Status
+                            </th>
+                            <th scope="col" class="text-center">
+                                Create At
+                            </th>
+                            <th scope="col" class="text-center">
+                                Update At
+                            </th>
+                            <th scope="col" class="text-center">
+                                Delete At
+                            </th>
+                            <th scope="col" class="text-center">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.menu_list != null)
+                        {
+                            foreach (var menu in Model.menu_list)
+                            {
+                                <tr class="filter-@menu.Cate.Id">
+                                    <td class="text-center">@menu.Id</td>
+                                    <td class="text-center">@menu.Name</td>
+                                    <td class="text-center">@menu.Detail</td>
+                                    <td class="text-center">@menu.Price VNĐ</td>
+                                    <td class="text-center">
+                                        <img class="menu-img" src="@menu.Img" />
+                                    </td>
+                                    <td class="text-center">@menu.Quantity</td>
+                                    <td class="text-center">@menu.Cate.Name</td>
+                                    <td class="text-center">@((menu.DeleteFlag == true) ? "Unactive" : "Active")</td>
+                                    <td class="text-center">@menu.CreateAt</td>
+                                    <td class="text-center">@menu.UpdateAt</td>
+                                    <td class="text-center">@menu.DeleteAt</td>
+                                    <td class="text-center" >
+                                        <a href="/Cooker/Menu/Edit?id=@menu.Id" class="btn btn-outline-secondary" style="color: white;">
+                                            Edit
+                                        </a>
+                                        @if(menu.DeleteFlag == false)
+                                        {
+                                            <a href="/Cooker/Menu/Delete?id=@menu.Id" class="btn btn-outline-danger" style="color: white;">
+                                                UnActive
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Cooker/Menu/Delete?id=@menu.Id" class="btn btn-outline-success" style="color: white;">
+                                                Active
+                                            </a>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section><!-- End About Section -->
+</main><!-- End #main -->
+<style>
+    .menu-img{
+        width: 70px;
+        border-radius: 50%;
+        float: left;
+        border: 5px solid rgba(255, 255, 255, 0.2);
+        object-fit: cover;
+        height: 70px;
+        max-height: 70px;
+        max-width: 70px;
+    }
+
+    .menu-container {
+        height: max-content !important;
+    }
+    .table tbody td .btn {
+        margin: 2px;
+        width: 6rem;
+        text-align: center;
+    }
+
+    .table tbody td.text-center {
+        vertical-align: middle; 
+    }
+
+</style>
+<script>
+    // Define the select function for easier element selection
+    const select = (selector, all = false) => {
+        if (all) {
+            return document.querySelectorAll(selector);
+        } else {
+            return document.querySelector(selector);
+        }
+    };
+
+    window.addEventListener('load', () => {
+        let menuContainer = select('.menu-container');
+        let menuTable = select('.table tbody'); // Select the table body
+
+        if (menuContainer || menuTable) {
+            let menuIsotope = menuContainer ? new Isotope(menuContainer, {
+                itemSelector: '.menu-item',
+                layoutMode: 'fitRows'
+            }) : null;
+
+            let tableItems = menuTable ? menuTable.querySelectorAll('tr') : []; // Get all rows in the table
+
+            let menuFilters = select('#menu-flters li', true);
+
+            menuFilters.forEach(filter => {
+                filter.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    menuFilters.forEach(el => el.classList.remove('filter-active'));
+                    this.classList.add('filter-active');
+
+                    let filterValue = this.getAttribute('data-filter');
+
+                    if (menuIsotope) {
+                        menuIsotope.arrange({ filter: filterValue });
+                    }
+
+                    if (menuTable) {
+                        tableItems.forEach(row => {
+                            row.style.display = row.classList.contains(filterValue.substring(1)) || filterValue === '*' ? '' : 'none';
+                        });
+                    }
+
+                    if (menuIsotope) {
+                        menuIsotope.on('arrangeComplete', function () {
+                            AOS.refresh();
+                        });
+                    }
+                });
+            });
+        }
+    });
+</script>
+

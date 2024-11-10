@@ -20,7 +20,7 @@ namespace RestaurantBooking.Pages.OrderMeal
         {
             if (HttpContext.Session.GetString("role") == null ||
                 HttpContext.Session.GetString("role") != "staff") return Redirect("/Restaurant");
-            return Redirect("/Staff/OrderMeal");
+            return Redirect("/Staff/BookingInformation?page_number=1");
         }
 
         public async Task< IActionResult> OnPostAsync(List<string> items_id, List<string> quantity, string tableId, string billId)
@@ -38,17 +38,28 @@ namespace RestaurantBooking.Pages.OrderMeal
                     if (bill_infor.Quantity.ToString() == quantity[i]) continue;
                     else
                     {
+                        Menu menu = await _context.Menus.Where(m => m.Id == bill_infor.MenuId).FirstOrDefaultAsync();
                         if (int.Parse(quantity[i]) <= 0)
                         {
+                            Booking booking = await _context.Bookings.Where(b => b.TableId.ToString() == tableId && b.Status == "ordering").FirstOrDefaultAsync();
+                            if(booking != null)
+                            {
+                                booking.Status = "booked";
+                                _context.Bookings.Update(booking);
+                            }
+                            menu.Quantity += bill_infor.Quantity;
                             _context.BillInfors.Remove(bill_infor);
                         }
                         else
                         {
+                            int difference =  (int)bill_infor.Quantity - int.Parse(quantity[i]);
+                            menu.Quantity += difference;
                             bill_infor.UpdateAt = DateTime.Now;
                             bill_infor.Quantity = int.Parse(quantity[i]);
                             bill_infor.Price = int.Parse(quantity[i]) * bill_infor.Menu.Price;
                             _context.BillInfors.Update(bill_infor);
                         }
+                        _context.Menus.Update(menu);
                         await _context.SaveChangesAsync();
                     }
                 }

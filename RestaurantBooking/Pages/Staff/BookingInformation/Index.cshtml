@@ -58,7 +58,8 @@
         <div class="container" data-aos="fade-up">
             <div class="row">
                 <div class="section-title col-lg-8 col-md-6">
-                    <p>Booking Information</p>
+                    <p>Reservation Information</p>
+                    <p class="text-light">@(Model.All_booking != null ? Model.All_booking.Count : 0) Reservation</p>
                 </div>
             </div>
         </div>
@@ -114,8 +115,15 @@
                                     <span class="sort" data-sort="table">▲</span>
                                 </th>
                                 <th scope="col" class="text-center">
+                                    The Number of Booking
+                                    <span class="sort" data-sort="NumberOfBooking">▲</span>
+                                </th>
+                                <th scope="col" class="text-center">
                                     Status
                                     <span class="sort" data-sort="status">▲</span>
+                                </th>
+                                <th>
+                                    Action
                                 </th>
                             </tr>
                         </thead>
@@ -131,7 +139,28 @@
                                         <td class="text-center">@book.Phone</td>
                                         <td class="text-center">@book.StartDate</td>
                                         <td class="text-center">@book.Table.Id</td>
+                                        <td class="text-center">@book.NumberOfBooking</td>
                                         <td class="text-center">@book.Status</td>
+                                        @if(book.Status == "booked")
+                                        {
+                                            <td>
+                                                <form method="post" asp-page="Index">
+                                                    <input type="hidden" name="bookID" value="@book.Id"/>
+                                                    <input type="hidden" name="tableID" value="@book.TableId" />
+                                                    <button class="btn btn-outline-secondary" style="color: white;">
+                                                        Order
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        }
+                                        else if (book.Status == "ordering")
+                                        {
+                                            <td>
+                                                <a class="btn btn-outline-success" href="/Staff/OrderMeal/Details?id=@book.TableId" style="color: white;">
+                                                    View Order
+                                                </a>
+                                            </td>
+                                        }
                                     </tr>
                                 }
                             }
@@ -145,6 +174,7 @@
                                 </li>
                             }
                         </ul>
+                        <div class="validate" style="display: block; color: yellow;">@(TempData["Update_Booking_Failed"] != null ? TempData["Update_Booking_Failed"] : "")</div>
                     </nav>
                 </div>
 

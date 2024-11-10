@@ -7,6 +7,8 @@
             const menuImg = menuItem.querySelector('img.menu-img').src;
             const menuName = menuItem.querySelector('.menu-content a').textContent;
             const menuPrice = menuItem.querySelector('.menu-content span').textContent;
+            const number = menuItem.querySelector('.quantity p').textContent;
+            console.log(number);
             const menuIngredients = menuItem.querySelector('.menu-ingredients').textContent.trim();
 
             let selectedContainer = document.querySelector('.selected-item');

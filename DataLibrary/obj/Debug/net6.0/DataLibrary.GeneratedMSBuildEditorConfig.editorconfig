@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DataLibrary
-build_property.ProjectDir = C:\Users\admin\Desktop\merge\DataLibrary\
+build_property.ProjectDir = E:\FPTUniversity\2024\Fall24\PRN221\Project_Restaurant\Restaurant_booking\DataLibrary\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

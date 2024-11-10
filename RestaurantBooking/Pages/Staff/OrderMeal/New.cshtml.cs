@@ -23,7 +23,7 @@ namespace RestaurantBooking.Pages.OrderMeal
             if (HttpContext.Session.GetString("role") == null ||
                 HttpContext.Session.GetString("role") != "staff") return Redirect("/Restaurant");
 
-            return Redirect("/Staff/OrderMeal");
+            return Redirect("/Staff/BookingInformation?page_number=1");
         }
 
         public async Task<IActionResult> OnPostAsync(List<string> MenuId, string tableId)
@@ -66,9 +66,10 @@ namespace RestaurantBooking.Pages.OrderMeal
                     int menuID = int.Parse(item.Split("-")[0]);
                     Menu menu = await _context.Menus.Where(m => m.Id == menuID).FirstOrDefaultAsync();
                     if (menu == null) throw new Exception();
-
+                    
                     int quantity = int.Parse(item.Split("-")[1]);
-
+                    menu.Quantity -= quantity;
+                    _context.Menus.Update(menu);
                     BillInfor billInfor = await _context.BillInfors
                         .Where(m => m.BillId == billId && m.MenuId == menuID).FirstOrDefaultAsync();
 

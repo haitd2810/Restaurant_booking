@@ -3,12 +3,48 @@
   "WorkspaceRootPath": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\staff\\ordermeal\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\staff\\ordermeal\\details.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\cooker\\ingredient\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\cooker\\ingredient\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\staff\\ordermeal\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\staff\\ordermeal\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\admin\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\admin\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\admin\\bill\\detail.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\admin\\bill\\detail.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\shared\\_headercooker.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\shared\\_headercooker.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\cooker\\ingredient\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\cooker\\ingredient\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\staff\\bookinginformation\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\staff\\bookinginformation\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\staff\\bookinginformation\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\staff\\bookinginformation\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\restaurant\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\restaurant\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|e:\\fptuniversity\\2024\\fall24\\prn221\\project_restaurant\\restaurant_booking\\restaurantbooking\\pages\\restaurant\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3C19D401-8B12-4C87-B661-A2740EA8314B}|RestaurantBooking\\RestaurantBooking.csproj|solutionrelative:restaurantbooking\\pages\\restaurant\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,7 +66,7 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             },
             {
               "$type": "Bookmark",
@@ -42,10 +78,6 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:22:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
@@ -54,28 +86,144 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Detail.cshtml.cs",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Admin\\bill\\Detail.cshtml.cs",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Admin\\bill\\Detail.cshtml.cs",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Admin\\bill\\Detail.cshtml.cs",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Admin\\bill\\Detail.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T13:48:18.906Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml",
-              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml",
-              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml",
-              "RelativeToolTip": "RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAAAIkAAABpAAAAAAAAAA==",
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Admin\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Admin\\Index.cshtml.cs",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Admin\\Index.cshtml.cs",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Admin\\Index.cshtml.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAswC0AAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T13:46:01.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\appsettings.json",
+              "RelativeDocumentMoniker": "RestaurantBooking\\appsettings.json",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\appsettings.json",
+              "RelativeToolTip": "RestaurantBooking\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-11-10T13:28:10.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_HeaderCooker.cshtml",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Shared\\_HeaderCooker.cshtml",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Shared\\_HeaderCooker.cshtml",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Shared\\_HeaderCooker.cshtml",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Shared\\_HeaderCooker.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAFsAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-03T16:40:37.788Z"
+              "WhenOpened": "2024-11-10T13:20:05.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml.cs",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml.cs",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T13:09:54.309Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Details.cshtml.cs",
-              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml.cs",
-              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml.cs",
-              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml.cs",
-              "RelativeToolTip": "RestaurantBooking\\Pages\\Staff\\OrderMeal\\Details.cshtml.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAowFQAAAApAAAAAAAAAA==",
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml.cs",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml.cs",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T15:52:23.366Z",
+              "WhenOpened": "2024-11-10T13:08:48.094Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Cooker\\Ingredient\\Index.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAFIAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-10T13:05:34.389Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Staff\\BookingInformation\\Index.cshtml",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAEkAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-09T16:34:49.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "_Header.cshtml",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Shared\\_Header.cshtml",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Shared\\_Header.cshtml",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Shared\\_Header.cshtml",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Shared\\_Header.cshtml",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAD4AAAB7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-09T15:43:44.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Restaurant\\Index.cshtml",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Restaurant\\Index.cshtml",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Restaurant\\Index.cshtml",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Restaurant\\Index.cshtml",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-09T15:24:32.516Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Restaurant\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "RestaurantBooking\\Pages\\Restaurant\\Index.cshtml.cs",
+              "ToolTip": "E:\\FPTUniversity\\2024\\Fall24\\PRN221\\Project_Restaurant\\Restaurant_booking\\RestaurantBooking\\Pages\\Restaurant\\Index.cshtml.cs",
+              "RelativeToolTip": "RestaurantBooking\\Pages\\Restaurant\\Index.cshtml.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAwwGMAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-09T13:33:41.6Z"
             }
           ]
         }

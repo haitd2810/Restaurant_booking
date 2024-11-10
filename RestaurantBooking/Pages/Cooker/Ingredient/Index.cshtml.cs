@@ -11,9 +11,11 @@ namespace RestaurantBooking.Pages.Cooker.Ingredient
     {
         private readonly RestaurantContext _context = new RestaurantContext();
         public List<DataLibrary.Models.Ingredient> ingredients { get; set; }
-        public async Task OnGet()
+        public async Task OnGet(string dateFilter)
         {
+            
             ingredients = await _context.Ingredients.ToListAsync();
+            if (dateFilter != null) ingredients = await _context.Ingredients.Where(i => i.CreateAt.Value.Date.CompareTo(DateTime.Parse(dateFilter).Date) == 0).ToListAsync();
         }
     }
 }

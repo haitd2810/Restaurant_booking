@@ -75,17 +75,11 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
                 return Redirect("/Restaurant");
             }
             
-            //check name is valid in alphabet
-            string name = Request.Form["name"];
-            if (!regexName.IsMatch(name)) {
-                HttpContext.Session.SetString("Booking_Failed", "Invalid Name Request (Name Just contains character in Alphabet)");
-                return Redirect("/Restaurant");
-            }
             //remove session if all condition ok
             HttpContext.Session.Remove("Booking_Failed");
 
-            
             //insert db
+            string name = Request.Form["name"];
             string email = Request.Form["email"];
             string status = "booked";
             int tableId = table_List[0].Id;

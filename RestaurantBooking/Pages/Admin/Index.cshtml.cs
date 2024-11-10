@@ -38,10 +38,18 @@ namespace RestaurantBooking.Pages.Admin
                 var billInfos = RestaurantContext.Ins.BillInfors.Where(x => x.BillId == bill.Id).ToList();
                 foreach (var billInfo in billInfos)
                 {
-                    sell += (float)(billInfo.Quantity * billInfo.Price);
+                    sell += (float)(billInfo.Price);
                 }
             }
-
+            float original = 0;
+            var ingredients = RestaurantContext.Ins.Ingredients
+              .Where(x => x.UpdateAt >= DateTime.Today && x.UpdateAt < DateTime.Today.AddDays(1))
+              .ToList();
+            foreach (var ingredient in ingredients)
+            {
+                original += (float)ingredient.Price;
+            }
+            sell = sell - original;
             ViewData["sell"] = sell;
         }
 
@@ -105,7 +113,7 @@ namespace RestaurantBooking.Pages.Admin
                     var billInfos = RestaurantContext.Ins.BillInfors.Where(x => x.BillId == bill.Id).ToList();
                     foreach (var billInfo in billInfos)
                     {
-                        sell += (float)(billInfo.Quantity * billInfo.Price);
+                        sell += (float)(billInfo.Price);
                     }
                 }
 

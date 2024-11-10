@@ -20,7 +20,7 @@ namespace RestaurantBooking.Pages.Admin.bill
                 float? total = 0;
                 for (int i=0;i<billInfors.Count;i++)
                 {
-                    total += billInfors[i].Quantity * (float)billInfors[i].Price;
+                    total += (float)billInfors[i].Price;
                 }
                 ViewData["total"]=total;
             }

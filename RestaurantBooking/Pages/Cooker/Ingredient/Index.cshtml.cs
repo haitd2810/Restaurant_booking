@@ -13,9 +13,8 @@ namespace RestaurantBooking.Pages.Cooker.Ingredient
         public List<DataLibrary.Models.Ingredient> ingredients { get; set; }
         public async Task OnGet(string dateFilter)
         {
-            
-            ingredients = await _context.Ingredients.ToListAsync();
-            if (dateFilter != null) ingredients = await _context.Ingredients.Where(i => i.CreateAt.Value.Date.CompareTo(DateTime.Parse(dateFilter).Date) == 0).ToListAsync();
+            ingredients = await _context.Ingredients.OrderByDescending(i => i.CreateAt).ToListAsync();
+            if (dateFilter != null) ingredients = await _context.Ingredients.Where(i => i.CreateAt.Value.Date.CompareTo(DateTime.Parse(dateFilter).Date) == 0).OrderByDescending(i => i.CreateAt).ToListAsync();
         }
     }
 }

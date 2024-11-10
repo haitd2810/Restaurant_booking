@@ -10,12 +10,12 @@
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
             <form style="margin: 20px 0 0 20px; display: flex; align-items: center;" method="get">
-              @*  <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
+                <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
                     <input type="date" class="form-control bg-light border-0 small"
-                            placeholder="Search for..."
+                            placeholder="Search for..." value="@Model.Search"
                            aria-label="Search" aria-describedby="basic-addon2" name="search"
                            style="width: 100%; padding: 5px;" min="1">
-                </div>*@
+                </div>
                 <div class="input-group" style="flex-grow: 1; max-width: 131px; margin-right: 10px;">
                     <label for="type" style="margin-right:5px; margin-bottom:0">Type</label>
                     <select id="type" onchange="handleTypeChange()" name="type">
@@ -125,6 +125,7 @@
                            asp-route-pageIndex="@(Model.CurrentPage - 1)"
                            asp-route-employee="@Model.Employee"
                            asp-route-type="@Model.Type"
+                           asp-route-search="@Model.Search"
                            asp-route-menu="@Model.Menu">Previous</a>
                     </li>
 
@@ -135,6 +136,7 @@
                             <a class="page-link" asp-page="feedbackManage"
                            asp-route-employee="@Model.Employee"
                            asp-route-type="@Model.Type"
+                           asp-route-search="@Model.Search"
                            asp-route-menu="@Model.Menu"
                            asp-route-pageIndex="@(i)
                          ">@i</a>
@@ -147,6 +149,7 @@
                            asp-route-pageIndex="@(Model.CurrentPage + 1)"
                            asp-route-employee="@Model.Employee"
                            asp-route-type="@Model.Type"
+                           asp-route-search="@Model.Search"
                            asp-route-menu="@Model.Menu">Next</a>
                     </li>
                 </ul>

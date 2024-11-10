@@ -13,16 +13,18 @@ namespace RestaurantBooking.Pages.Admin.feedbacks
         public List<Role> roles { get; set; } = new List<Role>();
         public List<Category> categories { get; set; } = new List<Category>();
         public List<Menu> menus { get; set; } = new List<Menu>();
+        public string Search { get; set; }
         public int TotalPages { get; set; }
         public int CurrentPage { get; set; }
         public string Employee { get; set; }
         public string Menu { get; set; }    
         public string Type { get; set; }
-        public void OnGet(string employee,string type, string menu, int pageIndex = 1, int pageSize = 5)
+        public void OnGet(string employee,string type, string menu, string search, int pageIndex = 1, int pageSize = 5)
         {
             Employee = employee;
             Menu = menu;
             Type = type;
+            Search= search;
             menus= RestaurantContext.Ins.Menus.ToList();
             accounts = RestaurantContext.Ins.Accounts.ToList();
             CurrentPage = pageIndex;
@@ -37,6 +39,11 @@ namespace RestaurantBooking.Pages.Admin.feedbacks
                 {
                     query = query.Where(x => x.MenuId == int.Parse(menu) && x.Type.Equals(type));
                 }
+            }
+            if (!string.IsNullOrEmpty(search))
+            {
+                DateTime date =DateTime.Parse(search);
+                query=query.Where(x => x.CreateAt.Value.Date== date.Date);
             }
             int totalItems = query.Count();
             TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize);

@@ -14,16 +14,17 @@ namespace RestaurantBooking.Pages.Admin.bill
         public string Search { get; set; }
         public string Status { get; set; }
         public string Code { get; set; }
-        public DateTime To { get; set; }
-        public DateTime From { get; set; }
+        public string To { get; set; }
+        public string From { get; set; }
         //, DateTime? to, DateTime? from
-        public IActionResult OnGet(string search, string code, string status, int pageIndex = 1, int pageSize = 5)
+        public IActionResult OnGet(string search, string code,string from, string to, string status, int pageIndex = 1, int pageSize = 5)
         {
             CurrentPage = pageIndex;
             Search = search;
             Code = code;
             Status = status;
-
+            From = from;
+            To = to;
             var query = RestaurantContext.Ins.Bills.AsQueryable();
 
             if (!string.IsNullOrEmpty(search) && int.TryParse(search, out int searchId))
@@ -39,6 +40,12 @@ namespace RestaurantBooking.Pages.Admin.bill
             if (!string.IsNullOrEmpty(status) && status != "All" && bool.TryParse(status, out bool statusValue))
             {
                 query = query.Where(x => x.Status == statusValue);
+            }
+            if(!string.IsNullOrEmpty(from) && !string.IsNullOrEmpty(to))
+            {
+                DateTime f = DateTime.Parse(from);
+                DateTime d = DateTime.Parse(to);
+                query = query.Where(x => x.CreateAt.Value.Date >= f.Date && x.CreateAt.Value.Date<= d.Date);
             }
 
             int totalItems = query.Count();

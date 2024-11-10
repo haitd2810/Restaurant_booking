@@ -17,8 +17,8 @@ namespace RestaurantBooking.Pages.Admin
 
         public IActionResult OnGet()
         {
-            //if (HttpContext.Session.GetString("role") == null ||
-            //    HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
+            if (HttpContext.Session.GetString("role") == null ||
+                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
             GetDataTrendMeal();
             getStaff();
             getDataReport();
@@ -26,8 +26,6 @@ namespace RestaurantBooking.Pages.Admin
             return Page();
 
         }
-
-
 
         public void GetTotal()
         {

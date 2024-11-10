@@ -1,0 +1,408 @@
+﻿@page
+@model RestaurantBooking.Pages.OrderMeal.DetailsModel
+@{
+    Layout = "~/Pages/Shared/_Header.cshtml";
+}
+<section id="about" class="about" style="margin-top: 2rem;">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" style="padding-bottom: 0;">
+             <div class="btns">
+                <a class="btn-menu animated fadeInUp scrollto go-back" href="/Staff/OrderMeal">
+                    Go Back
+                </a>
+             </div>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="section-title col-lg-8 col-md-6">
+                <p>Table Detail</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content" style="background-color: #3c3b3b; overflow-y: auto;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">List items</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-page="Edit">
+                <input type="hidden" name="tableId" value="@(Model.TableID?? String.Empty)"/>
+                <input type="hidden" name="billId" value="@(Model.billTable==null? "" : Model.billTable.Id)" />
+                <div class="modal-body">
+                    <div>
+                        <table class="table text-light">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">
+                                        Meal name
+                                    </th>
+                                    <th scope="col">
+                                        Price
+                                    </th>
+                                    <th scope="col">
+                                        Quantity
+                                    </th>
+                                    <th scope="col">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                @if (Model.billDetail != null)
+                                {
+                                    @foreach(var detail in Model.billDetail)
+                                    {
+                                        <input type="hidden" name="items_id" value="@detail.Id" />
+                                        <tr>
+                                            <td>
+                                                @detail.Id
+                                            </td>
+                                            <td>
+                                                @detail.Menu.Name
+                                            </td>
+                                            <td>
+                                                @detail.Price
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input class="form-control" style="width: auto;" type="number" name="quantity" value="@detail.Quantity" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                Ordering
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn close" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn edit-items">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@if (Model.billTable != null){
+    <main id="main">
+        <section id="menu" class="menu section-bg">
+            <div class="container" data-aos="fade-up">
+                <div id="" class="row" data-aos="fade-up" data-aos-delay="200">
+                    @if (Model.billDetail != null)
+                    {
+                        @foreach(var detail in Model.billDetail)
+                        {
+                            <div class="col-lg-3 menu-item">
+
+                                <img src="@detail.Menu.Img" class="menu-img" alt="">
+
+                                <div class="menu-content">
+                                    <a href="#">@detail.Menu.Name</a>
+                                </div>
+                                <div class="menu-ingredients">
+                                    <span>@detail.Price VNĐ</span>
+                                    <span>x @detail.Quantity</span>
+                                </div>
+                            </div>
+                        }
+                        <div class="btns" style="margin-top:0;">
+                            <span style="border-radius: 30px;color:white;border-color: #cda45e; margin-top: 1rem;" class="btn btn-outline-warning edit-items animated fadeInUp scrollto"
+                                  data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Items</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            @if(Model.billTable != null)
+            {
+                <section>
+                    <div class="container" data-aos="fade-up">
+                        
+                            <div class="section-title">
+                                <h2>Total</h2><span id="total-price"></span>
+                                <div class="btns" style="display: flex">
+                                    <form method="post" asp-page-handler="CloseBill">
+                                        <input type="hidden" name="billId" value="@Model.billTable.Id" />
+                                        <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                                        <button class="btn-menu animated fadeInUp scrollto close">Close This Order</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="ExportBill">
+                                        <input type="hidden" name="billId" value="@Model.billTable.Id" />
+                                        <input type="hidden" name="tableId" value="@Model.billTable.TableId" />
+                                        <button class="btn-menu animated fadeInUp scrollto close">Export Bill</button>
+                                    </form>
+                                </div>
+                                <hr />
+                            </div>
+                    </div>
+
+                </section>
+            }
+        </section>
+
+    </main>
+}
+<div class="row">
+<main id="main" class="col-lg-6" style="margin-top: 1rem;">
+    <!-- ======= About Section ======= -->
+    
+    <!-- ======= Menu Section ======= -->
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+            <div class="selected-items-box mt-4">
+                <h3>Selected Items:</h3>
+                <div id="selected-items-container" class="row"></div>
+            </div>
+            <form method="post" asp-page="New">
+                <input type="hidden" name="tableId" value="@Model.TableID"/>
+                <div id="" class="row selected-item" data-aos="fade-up" data-aos-delay="200">
+                
+                </div>
+                <hr />
+                <div class="btns">
+                    <input id="btnClick" type="submit" class="btn-menu btn-submit animated fadeInUp scrollto" value="Add Order"/>
+                </div>
+             </form>
+        </div>
+    </section>
+
+</main>
+    <main id="main" class="col-lg-6" style="margin-top: 1rem;">
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="menu-flters">
+                        <li data-filter="*" class="filter-active">All</li>
+                        @if (Model.category_list.Count != 0)
+                        {
+                            @foreach (var cate in Model.category_list)
+                            {
+                                <li data-filter=".filter-@cate.Id">@cate.Name</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                @if (Model.menu_list != null)
+                {
+                    @foreach(var menu in Model.menu_list)
+                    {
+                            <div class="col-lg-6 menu-item filter-@menu.Cate.Id">
+                                <img src="@menu.Img" class="menu-img" alt="">
+                                <input type="hidden" name="MenuId" value="@menu.Id"/>
+                            <div class="menu-content">
+                                    <a href="#">@menu.Name</a><span>@menu.Price VNĐ</span>
+                            </div>
+                            <div class="menu-ingredients">
+                                <div class="btns" style="margin-top:0;">
+                                    <button id="btnAdd" class="btn-menu animated fadeInUp scrollto add-order">Add</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </section>
+</main><!-- End #main -->
+    <div id="editModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Items</h2>
+            <table id="editTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="modalTableBody">
+                    
+                </tbody>
+            </table>
+            <button id="saveChangesButton" class="btn-menu">Save Changes</button>
+        </div>
+    </div>
+</div>
+@* <button id="retrieve-button" class="btn btn-primary">Retrieve Selected Items</button>  *@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let totalPrice = 0;
+
+        const mainElement = document.getElementById('main');
+        const menuItems = mainElement.querySelectorAll('.menu-item');
+
+        menuItems.forEach(function (menuItem) {
+            const priceElement = menuItem.querySelector('.menu-ingredients span:nth-child(1)');
+
+            const priceText = priceElement.textContent.replace('VNĐ', '').trim();
+            const price = parseInt(priceText, 10);
+
+            if (!isNaN(price)) {
+                totalPrice += price;
+            }
+        });
+
+        const totalPriceElement = document.getElementById('total-price');
+        totalPriceElement.textContent = `${totalPrice.toLocaleString()} VNĐ`;
+    });
+
+
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll('.btn-menu.add-order').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const menuItem = button.closest('.menu-item');
+                const menuId = menuItem.querySelector('input[name="MenuId"]').value;
+                const menuImg = menuItem.querySelector('img.menu-img').src;
+                const menuName = menuItem.querySelector('.menu-content a').textContent;
+                const menuPrice = menuItem.querySelector('.menu-content span').textContent;
+
+                let selectedContainer = document.querySelector('.selected-item');
+                let existingItem = selectedContainer.querySelector(`.menu-item[data-id="${menuId}"]`);
+
+                if (existingItem) {
+                    let quantitySup = existingItem.querySelector('.menu-content a sup');
+                    let quantityInput = existingItem.querySelector('.data');
+                    let quantity = parseInt(quantitySup ? quantitySup.textContent.slice(1) : '1') + 1;
+
+                    if (quantitySup) {
+                        quantitySup.textContent = `x${quantity}`;
+                    } else {
+                        existingItem.querySelector('.menu-content a').innerHTML += `<sup>x${quantity}</sup>`;
+                    }
+
+                    quantityInput.value = `${menuId}-${quantity}`;
+                } else {
+                    let quantity = 1;
+                    let newItem = document.createElement('div');
+                    newItem.className = 'col-lg-12 menu-item';
+                    newItem.setAttribute('data-id', menuId);
+                    newItem.innerHTML = `
+                        <img src="${menuImg}" class="menu-img" alt="">
+                        <input type="hidden" class="data" name="MenuId" value="${menuId}-${quantity}"/>
+                        <div class="menu-content">
+                            <a href="#">${menuName}</a><span>${menuPrice}</span>
+                        </div>
+                        <div class="menu-ingredients">
+                            <div class="btns" style="margin-top:0;">
+                                    <span style="border-radius: 30px;color:white;border-color: #cda45e;" class="btn btn-outline-warning btn-delete animated fadeInUp scrollto">Delete</span>
+                            </div>
+                        </div>
+                    `;
+                    selectedContainer.appendChild(newItem);
+                    newItem.querySelector('.btn-delete').addEventListener('click', function () {
+                        deleteItem(menuId);
+                    });
+                }
+            });
+        });
+
+        function deleteItem(menuId) {
+            let selectedContainer = document.querySelector('.selected-item');
+            let existingItem = selectedContainer.querySelector(`.menu-item[data-id="${menuId}"]`);
+
+            if (existingItem) {
+                let quantitySup = existingItem.querySelector('.menu-content a sup');
+                let quantityInput = existingItem.querySelector('.data');
+                let quantity = parseInt(quantitySup ? quantitySup.textContent.slice(1) : '1');
+
+                if (quantity > 1) {
+                    quantity -= 1;
+                    quantitySup.textContent = `x${quantity}`;
+                    quantityInput.value = `${menuId}-${quantity}`;
+                } else {
+                    selectedContainer.removeChild(existingItem);
+                }
+            }
+        }
+    });
+
+</script>
+<style>
+#about {
+    padding: 2em 0 0 0;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity-control .btn {
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 10px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.quantity-control .btn:hover {
+    background-color: #6462624d;
+}
+
+.quantity-control .quantity {
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+.btns {
+    margin-top: 2em;
+}
+
+.add-order, .btn-submit, .edit-items, .go-back, .close {
+    background-color: #ffffff00;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: 0.3s;
+    line-height: 1;
+    color: white;
+    border: 2px solid #cda45e;
+}
+
+.btns .add-order:hover {
+    background-color: #cda45e;
+}
+
+.btn-delete, .edit-items, .go-back, .close {
+    border: 2px solid #cda45e !important;
+    transition: 0.3s;
+    font-style: normal !important;
+}
+
+.btn-delete:hover, .edit-items:hover, .go-back :hover, .close:hover{
+    color: white !important;
+    background-color: #cda45e !important;
+}
+</style>

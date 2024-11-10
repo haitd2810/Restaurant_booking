@@ -1,0 +1,77 @@
+﻿@page
+@using DataLibrary.Models;
+@model RestaurantBooking.Pages.Admin.IndexModel
+@{
+    Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
+}
+
+<div  class="container-fluid">
+    <!-- Cards -->
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+        @*<div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center; width: 23%; font-weight: bold; font-size: 1.2em;">
+            178+ <br> Save Products
+        </div>*@
+        <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center; width: 23%; font-weight: bold; font-size: 1.2em;">
+            Total a day <br> @ViewData["sell"]
+        </div>
+       @* <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center; width: 23%; font-weight: bold; font-size: 1.2em;">
+            190+ <br> Sales Products
+        </div>
+        <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; text-align: center; width: 23%; font-weight: bold; font-size: 1.2em;">
+            12+ <br> Job Applications
+        </div>*@
+    </div>
+
+    <!-- Reports Section -->
+    <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 20px;">
+        <h2 style="margin-bottom: 10px;">Reports</h2>
+        <canvas id="reportsChart"></canvas>
+    </div>
+
+    <!-- Recent Orders Table -->
+    <div class="row">
+        <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; " class="col-md-8">
+            <h2 style="margin-bottom: 10px;">Product Trend</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="padding: 10px; background-color: #f0f0f0;">ID</th>
+                        <th style="padding: 10px; background-color: #f0f0f0;">Menu Name</th>
+                        <th style="padding: 10px; background-color: #f0f0f0;">Img</th>
+                        <th style="padding: 10px; background-color: #f0f0f0;">quantity</th>
+                        <th style="padding: 10px; background-color: #f0f0f0;">In Stock</th>
+                        <th style="padding: 10px; background-color: #f0f0f0;">Total bill</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in (IEnumerable<dynamic>)ViewData["trend"])
+                    {
+                        <tr>
+                            <td style="padding: 10px;">@i.Id</td>
+                            <td style="padding: 10px;">@i.Name</td>
+                            <td style="width:50px;"><img style="width:50px; object-fit:cover" src="@i.Img" /></td>
+                            <td style="padding: 10px;">@i.QuantitySold</td>
+                            <td style="padding: 10px;">@i.Instock</td>
+                            <td style="padding: 10px;">@i.TotalBills</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Top Selling Products -->
+        <div style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px;" class="col-md-4">
+            <h2 style="margin-bottom: 10px;">Staff of month</h2>
+            @foreach( var i in (IEnumerable<dynamic>)ViewData["staff"])
+            {
+                <div style="margin-bottom: 10px;">
+                    <p>@i.Code <span style="margin-left: 287px;">@i.Quantity</span></p>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+

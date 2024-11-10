@@ -1,0 +1,149 @@
+﻿@page
+@using DataLibrary.Models;
+@using Microsoft.EntityFrameworkCore;
+@model RestaurantBooking.Pages.Admin.bill.billManageModel
+@{
+    Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
+}
+
+@*filter theo ngày, status*@
+
+<div class="container-fluid" style="padding:0;">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bill Manage</h6>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <form style="margin: 20px 0 0 20px; display: flex; align-items: center;" method="get">
+                <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
+                    <input type="number" class="form-control bg-light border-0 small"
+                           value="@Model.Search" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2" name="search"
+                           style="width: 100%; padding: 5px;" min="1">
+                </div>
+                <div style="margin-right: 20px;">
+                    <select name="status">
+                        <option value="All">All</option>
+                        <option value="true">Paid</option>
+                        <option value="false">Not Paid</option>
+                    </select>
+                </div>
+                <div style="margin-right: 20px;">
+                    <select name="code">
+                        <option value="All">All</option>
+                        @foreach(var i in Model.Account)
+                        {
+                            <option value="@i.Id">@i.Code</option>
+                        }
+                    </select>
+                </div>
+                <div style="margin-right:20px;">
+                    <input type="date" name="from"  />
+                </div>
+                <div style="margin-right:20px;">
+                    <input type="date" name="to" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Table</th>
+                            <th>Payed</th>
+                            <th>CreateAt</th>
+                            <th>UpdateAt</th>
+                            <th>CreateBy</th>
+                            <th>UpdateBy</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.Bills)
+                        {
+                            <tr>
+                                <td>@i.Id</td>
+                                <td>@i.Table.Id</td>
+                                <td>@i.Payed</td>
+                                <td>@i.CreateAt</td>
+                                <td>@i.UpdateAt</td>
+                                @foreach(var item in Model.Account) 
+                                {
+                                    @if(item.Id == i.CreateBy)
+                                    {
+                                        <td>@item.Code</td>
+                                    }
+                                }
+                                @foreach (var item in Model.Account)
+                                {
+                                    @if (item.Id == i.UpdateBy)
+                                    {
+                                        <td>@item.Code</td>
+                                    }
+                                }
+                                <td>@(i.Status==true?"Paid":"Not Paid")</td>
+                                @{
+                                    var billInfors = RestaurantContext.Ins.BillInfors.Include(x => x.Menu).Include(x => x.Bill).Where(x => x.Bill.Id == i.Id).ToList();
+                                    float? total = 0;
+                                    for (int item = 0; item < billInfors.Count; item++)
+                                    {
+                                        total += billInfors[item].Quantity * (float)billInfors[item].Price;
+                                    }
+                                    <td>@total</td>
+                                }
+                                <td>
+                                    <a class="nav-link text-dark" asp-page="/Admin/bill/Detail" asp-route-id="@(i.Id)">Detail</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+                        <a class="page-link" asp-page="billManage"
+                           asp-route-pageIndex="@(Model.CurrentPage - 1)"
+                           asp-route-status="@Model.Status"
+                           asp-route-search="@Model.Search"
+                           asp-route-code="@Model.Code"
+                           asp-route-from="@Model.From"
+                           asp-route-to="@Model.To"
+                        >Previous</a>
+                    </li>
+
+                    <!-- Tạo danh sách số trang -->
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" asp-page="billManage"
+                           asp-route-search="@Model.Search"
+                           asp-route-status="@Model.Status"
+                           asp-route-code="@Model.Code"
+                           asp-route-from="@Model.From"
+                           asp-route-to="@Model.To"
+                           asp-route-pageIndex="@(i)
+                         ">@i</a>
+                        </li>
+                    }
+
+                    <!-- Nút Next -->
+                    <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-page="billManage"
+                           asp-route-pageIndex="@(Model.CurrentPage + 1)"
+                           asp-route-status="@Model.Status"
+                           asp-route-search="@Model.Search"
+                           asp-route-code="@Model.Code"
+                           asp-route-from="@Model.From"
+                           asp-route-to="@Model.To">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+﻿@page
+@model RestaurantBooking.Pages.Admin.feedbacks.feedbackManageModel
+@{
+    Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
+}
+<div class="container-fluid" style="padding:0;">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Feedback Manage</h6>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <form style="margin: 20px 0 0 20px; display: flex; align-items: center;" method="get">
+                <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
+                    <input type="date" class="form-control bg-light border-0 small"
+                            placeholder="Search for..." value="@Model.Search"
+                           aria-label="Search" aria-describedby="basic-addon2" name="search"
+                           style="width: 100%; padding: 5px;" min="1">
+                </div>
+                <div class="input-group" style="flex-grow: 1; max-width: 131px; margin-right: 10px;">
+                    <label for="type" style="margin-right:5px; margin-bottom:0">Type</label>
+                    <select id="type" onchange="handleTypeChange()" name="type">
+                        <option value="All">All</option>
+                        <option value="Employee">Employee</option>
+                        <option value="Menu">Menu</option>
+                        <option value="Table">Table</option>
+                    </select>
+                </div>
+
+                @**@
+                <div id="accountOptions" style="display: none; flex-grow: 1; margin-right: 10px; width:300px">
+                    <div class="input-group" style=" margin-right: 10px;padding-top:3px">
+                        <label for="role" style="margin-right:5px; margin-bottom:0;padding-top:3px ">Account</label>
+                        <select id="role"  style="height:27px" name="employee" >
+                            <option value="All">All</option>
+                            @foreach(var i in Model.accounts)
+                            {
+                                <option value="@i.Id">@i.Code</option>
+                            }
+                        </select>
+                    </div>
+                   @* <div id="employeeOptions" style="display: none; flex-grow: 1; width: 337px;padding-top:3px;">
+                        <label for="employee" style="margin-right:5px;padding-top:3px">Employee</label>
+                        <select id="employee" style="height:27px">
+                            <option value="All">All</option>
+                            @foreach(var i in Model.accounts)
+                            {   
+                                <option value="@i.Id">@i.Code</option>
+                            }
+                        </select>
+                    </div>*@
+                </div>
+
+                @* onchange="handleCategoryChange()"*@
+                <div id="menuOptions" style="display: none;flex-grow: 1; margin-right: 10px;  ">
+                    <div class="input-group" style=" width:190px;">
+                        <label for="category" style="margin-right:5px; margin-bottom:0; padding-top:3px;">Menu</label>
+                        <select id="category" style="height:27px" name="menu">
+                            <option value="All">All</option>
+                            @foreach (var i in Model.menus)
+                            {
+                                <option value="@i.Id">@i.Name</option>
+                            }
+                        </select>
+                    </div>
+                   @* <div id="dishOptions" style="display: none;  flex-grow: 1;">
+                        <label for="dish" style="margin-right:5px; padding-top:3px; height:27px;">Dish</label>
+                        <select id="dish" style="height:27px">
+                            <option>All</option>
+                            @foreach(var i in Model.menu)
+                            {
+                                <option value="@i.Id">@i.Name</option>
+                            }
+                        </select>
+                    </div>*@
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Feedback</th>
+                            <th>Img</th>
+                            <th>For</th>
+                            <th>CreateAt</th>
+                            <th>Feedback For Date</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.feedbacks)
+                        {
+                            <tr>
+                                <td>@i.Id</td>
+                                <td>@i.Phone</td>
+                                <td>@i.Email</td>
+                                <td>@i.Feedback1</td>
+                                <td>@i.Img</td>
+                                @if (i.AccountId == null)
+                                {
+                                    <td>@i.Menu.Name</td>
+                                }
+                                else if(i.MenuId == null)
+                                {
+                                    <td>@i.Account.Code</td>
+                                }
+                                <td>@i.CreateAt</td>
+                                <td>@i.FeedbackForDate</td>
+                                <td>@i.Type</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+                        <a class="page-link" asp-page="feedbackManage"
+                           asp-route-pageIndex="@(Model.CurrentPage - 1)"
+                           asp-route-employee="@Model.Employee"
+                           asp-route-type="@Model.Type"
+                           asp-route-search="@Model.Search"
+                           asp-route-menu="@Model.Menu">Previous</a>
+                    </li>
+
+                    <!-- Tạo danh sách số trang -->
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" asp-page="feedbackManage"
+                           asp-route-employee="@Model.Employee"
+                           asp-route-type="@Model.Type"
+                           asp-route-search="@Model.Search"
+                           asp-route-menu="@Model.Menu"
+                           asp-route-pageIndex="@(i)
+                         ">@i</a>
+                        </li>
+                    }
+
+                    <!-- Nút Next -->
+                    <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-page="feedbackManage"
+                           asp-route-pageIndex="@(Model.CurrentPage + 1)"
+                           asp-route-employee="@Model.Employee"
+                           asp-route-type="@Model.Type"
+                           asp-route-search="@Model.Search"
+                           asp-route-menu="@Model.Menu">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

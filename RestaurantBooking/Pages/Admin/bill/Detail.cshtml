@@ -1,0 +1,46 @@
+﻿@page
+@model RestaurantBooking.Pages.Admin.bill.DetailModel
+@{
+    Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
+}
+<div class="container-fluid" style="padding:0;">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bill Manage</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>CreateAt</th>
+                            <th>UpdateAt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.billInfors)
+                        {
+                            <tr>
+                                <td>@i.Id</td>
+                                <td>@i.Menu.Name</td>
+                                <td>@i.Quantity</td>
+                                <td>@i.Price</td>
+                                <td>@i.CreateAt</td>
+                                <td>@i.UpdateAt</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if(ViewData["total"] != null)
+                {
+                    <p style="font-size: 30px; font-weight: bold; color: red; text-align:right;">Total: @ViewData["total"]</p>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>

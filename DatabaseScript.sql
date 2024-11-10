@@ -6,37 +6,50 @@ go
 CREATE TABLE Role (
     id INT IDENTITY(1,1) PRIMARY KEY,
     name VARCHAR(255),
-    status BIT DEFAULT 1
+    deleteFlag BIT DEFAULT 0,
+	createAt DATETIME,
+	updateAt DATETIME,
+	deleteAt DATETIME
 );
 
 CREATE TABLE Account (
     id INT IDENTITY(1,1) PRIMARY KEY,
     username VARCHAR(255) UNIQUE,
     password VARCHAR(60),
+	code VARCHAR(20),
     roleID INT,
     isActive BIT,
+	createAt DATETIME,
+	updateAt DATETIME,
+	deleteAt DATETIME,
     FOREIGN KEY (roleID) REFERENCES Role(id)
 );
 
 CREATE TABLE Token(
     id INT IDENTITY(1,1) PRIMARY KEY,
-    token VARCHAR(30),
-    date DATETIME,
+    token VARCHAR(255),
     accountId INT,
+	createAt DATETIME,
     FOREIGN KEY (accountId) REFERENCES Account(id)
 );
 
 CREATE TABLE [Table] (
     id INT IDENTITY(1,1) PRIMARY KEY,
-    name VARCHAR(255),
     isOrder BIT,
-    status BIT
+	forBooking Bit default 0,
+    deleteFlag BIT default 0,
+	createAt DATETIME,
+	updateAt DATETIME,
+	deleteAt DATETIME
 );
 
 CREATE TABLE Category (
     id INT IDENTITY(1,1) PRIMARY KEY,
     name NVARCHAR(255),
-    isActive BIT
+    deleteFlag BIT default 0,
+	createAt DATETIME,
+	updateAt DATETIME,
+	deleteAt DATETIME
 );
 
 CREATE TABLE Menu (
@@ -45,19 +58,48 @@ CREATE TABLE Menu (
     detail NVARCHAR(255),
     price FLOAT,
     img NVARCHAR(255),
+	quantity Int,
     cateID INT,
-    isSell BIT,
+    deleteFlag BIT default 0,
+	createAt DATETIME,
+	updateAt DATETIME,
+	deleteAt DATETIME,
     FOREIGN KEY (cateID) REFERENCES Category(id)
 );
 
+CREATE TABLE Ingredient(
+id INT IDENTITY(1,1) PRIMARY KEY,
+name NVARCHAR(255),
+weight float,
+price float,
+createAt datetime,
+updateAt datetime,	
+)
+
+CREATE TABLE Feedback(
+id INT IDENTITY(1,1) PRIMARY KEY,
+phone VARCHAR(255),
+email VARCHAR(255),
+feedback nvarchar(4000),
+img nvarchar(255),
+createAt datetime,
+FeedbackForDate datetime,
+accountId INT,
+type varchar(255),
+menuId int,
+FOREIGN KEY (accountId) REFERENCES Account(id),
+FOREIGN KEY (menuId) REFERENCES Menu(id)
+)
 
 CREATE TABLE Bill (
     id INT IDENTITY(1,1) PRIMARY KEY,
     tableID INT,
     payed BIT,
-    createDate DATETIME,
-    updateDate DATETIME,
-    Status BIT,
+    createAt DATETIME,
+	createBy INT,
+    updateAt DATETIME,
+	updateBy INT,
+    status BIT,
     FOREIGN KEY (tableID) REFERENCES [Table](id)
 );
 
@@ -67,7 +109,8 @@ CREATE TABLE BillInfor (
     menuID INT,
     quantity INT,
     price FLOAT,
-    status BIT,
+	createAt DATETIME,
+    updateAt DATETIME,
     FOREIGN KEY (billID) REFERENCES Bill(id),
     FOREIGN KEY (menuID) REFERENCES Menu(id)
 );
@@ -76,59 +119,74 @@ CREATE TABLE Booking (
     id INT PRIMARY KEY IDENTITY(1,1),
     tableID INT,
     startDate DATETIME,
-    Status VARCHAR(255),
-    updateAt DATETIME,
+    status VARCHAR(255),
     email VARCHAR(255),
     phone VARCHAR(255),
-    fullName VARCHAR(255),
+    fullName NVARCHAR(255),
+	createAt DATETIME,
     FOREIGN KEY (tableID) REFERENCES [Table](id)
 );
 
-insert into Role (name) values ('staff'), ('admin');
+insert into Role (name) values ('staff'),('cooker');
 
-insert into Account (username, password, roleID, isActive) values 
-('staff01' , '123456' , 1, 1),
-('admin01' , '123456' , 2, 1);
+insert into Account (username, password, roleID, isActive, createAt) values 
+('staff01@gmail.com' , '123456' , 1, 1, GETDATE());
 
-insert into [Table] (name, isOrder, status) values
-('01', 0, 1),
-('02', 0, 1),
-('03', 0, 1),
-('04', 0, 1),
-('05', 0, 1),
-('06', 0, 1),
-('07', 0, 1),
-('08', 0, 1);
+insert into [Table] (isOrder, deleteFlag, createAt, forBooking) values
+(0, 0, GETDATE(), 0),
+(0, 0, GETDATE(), 0),
+(0, 0, GETDATE(), 0),
+(0, 0, GETDATE(), 0),
+(0, 0, GETDATE(), 1),
+(0, 0, GETDATE(), 1),
+(0, 0, GETDATE(), 1),
+(0, 0, GETDATE(), 1);
 
-INSERT INTO Category (name, isActive)
+INSERT INTO Category (name, deleteFlag, createAt)
 VALUES 
-(N'Cà phê', 1),
-(N'Trà', 1),
-(N'Sinh tố', 1),
-(N'Nước ép', 1),
-(N'Đồ ăn vặt', 1),
-(N'Đồ uống khác', 1);
+(N'Khai vị', 0, GETDATE()),
+(N'Món chính', 0, GETDATE()),
+(N'Đồ uống', 0, GETDATE()),
+(N'Tráng miệng', 0, GETDATE());
 
-INSERT INTO Menu (name, detail, price, img, cateID, isSell)
+INSERT INTO Menu (name, detail, price, img, cateID, deleteFlag, createAt, quantity)
 VALUES
--- Mục Cà phê
-(N'Cà phê đen', N'Cà phê nguyên chất, đậm đà, không sữa', 20000, 'coffee_black.jpg', 1, 1),
-(N'Cà phê sữa', N'Cà phê pha với sữa đặc, vị ngọt ngào', 25000, 'coffee_milk.jpg', 1, 1),
-(N'Cà phê đá xay', N'Cà phê đen kết hợp với đá xay', 30000, 'coffee_frappe.jpg', 1, 1),
+-- Mục Khai vị
+(N'Súp bí đỏ', N'Súp bí đỏ kem mịn', 45000, '/assets/img/pumpkin_soup.jpg', 1, 0, GETDATE(),10),
+(N'Salad Caesar', N'Salad với xà lách Romaine, sốt Caesar, và phô mai Parmesan', 50000, '/assets/img/caesar_salad.jpg', 1, 0, GETDATE(),10),
+(N'Bánh mì bơ tỏi', N'Bánh mì nướng giòn với bơ và tỏi', 20000, '/assets/img/garlic_bread.jpg', 1, 0, GETDATE(),10),
 
--- Mục Trà
-(N'Trà đào cam sả', N'Trà đen, đào, cam, và sả tươi', 35000, 'peach_tea.jpg', 2, 1),
-(N'Trà xanh Matcha', N'Trà xanh Nhật Bản kết hợp với sữa tươi', 45000, 'matcha_tea.jpg', 2, 1),
+-- Mục Món chính
+(N'Spaghetti bò bằm', N'Mì Ý sốt bò bằm', 80000, '/assets/img/spaghetti.jpg', 2, 0, GETDATE(),10),
+(N'Cơm gà xối mỡ', N'Cơm trắng với gà chiên giòn xối mỡ', 70000, '/assets/img/fried_chicken_rice.jpg', 2, 0, GETDATE(),10),
+(N'Phở bò', N'Phở Việt Nam với thịt bò', 60000, '/assets/img/beef_pho.jpg', 2, 0, GETDATE(),10),
 
--- Mục Sinh tố
-(N'Sinh tố xoài', N'Sinh tố xoài nguyên chất', 40000, 'mango_smoothie.jpg', 3, 1),
-(N'Sinh tố dâu', N'Sinh tố dâu tươi', 40000, 'strawberry_smoothie.jpg', 3, 1),
+-- Mục Đồ uống
+(N'Nước chanh', N'Nước chanh tươi', 20000, '/assets/img/lemonade.jpg', 3, 0, GETDATE(),10),
+(N'Nước ngọt', N'Nước ngọt đóng chai', 15000, '/assets/img/soft_drink.jpg', 3, 0, GETDATE(),10),
+(N'Sinh tố bơ', N'Sinh tố bơ tươi', 40000, '/assets/img/avocado_smoothie.jpg', 3, 0, GETDATE(),10),
 
--- Mục Nước ép
-(N'Nước ép cam', N'Nước ép cam tươi', 30000, 'orange_juice.jpg', 4, 1),
-(N'Nước ép dưa hấu', N'Nước ép dưa hấu tươi mát', 30000, 'watermelon_juice.jpg', 4, 1),
+-- Mục Tráng miệng
+(N'Bánh flan', N'Bánh flan mềm mịn', 25000, '/assets/img/flan.jpg', 4, 0, GETDATE(),10),
+(N'Kem dừa', N'Kem tươi vị dừa', 30000, '/assets/img/coconut_icecream.jpg', 4, 0, GETDATE(),10),
+(N'Chè khúc bạch', N'Chè trái cây với khúc bạch', 35000, '/assets/img/fruit_dessert.jpg', 4, 0, GETDATE(),10);
 
--- Mục Đồ ăn vặt
-(N'Bánh mì nướng', N'Bánh mì nướng với bơ và mật ong', 15000, 'toast.jpg', 5, 1),
-(N'Khoai tây chiên', N'Khoai tây chiên giòn', 20000, 'fries.jpg', 5, 1);
+INSERT INTO Bill (tableID, payed, createAt, createBy, updateAt, updateBy, status)
+VALUES
+(1, 0, GETDATE(), 1, GETDATE(), 1, 1),
+(2, 0, GETDATE(), 1, GETDATE(), 1, 1),
+(3, 1, GETDATE(), 1, GETDATE(), 1, 0);
 
+INSERT INTO BillInfor (billID, menuID, quantity, price, createAt, updateAt)
+VALUES
+(1, 1, 2, 20000, GETDATE(), GETDATE()),
+(1, 2, 1, 25000, GETDATE(), GETDATE()),
+(1, 3, 1, 30000, GETDATE(), GETDATE()),
+
+(2, 1, 1, 20000, GETDATE(), GETDATE()),
+(2, 2, 2, 25000, GETDATE(), GETDATE()),
+(2, 3, 1, 30000, GETDATE(), GETDATE()),
+
+(3, 1, 1, 20000, GETDATE(), GETDATE()),
+(3, 2, 1, 25000, GETDATE(), GETDATE()),
+(3, 3, 2, 30000, GETDATE(), GETDATE());

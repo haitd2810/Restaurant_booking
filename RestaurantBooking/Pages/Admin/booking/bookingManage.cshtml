@@ -1,0 +1,91 @@
+﻿@page
+@model RestaurantBooking.Pages.Admin.booking.bookingManageModel
+@{
+    Layout = "~/Pages/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid" style="padding:0;">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Booking Manage</h6>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <form style="margin: 20px 0 0 20px; display: flex; align-items: center;" method="get">
+                <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
+                    <input type="text" class="form-control bg-light border-0 small"
+                           value="@Model.Search" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2" name="search"
+                           style="width: 100%; padding: 5px;" min="1">
+                </div>
+                <div class="input-group" style="flex-grow: 1; max-width: 200px; margin-right: 20px;">
+                    <input type="datetime" class="form-control bg-light border-0 small"
+                           value="@Model.Date"
+                           aria-label="Search" aria-describedby="basic-addon2" name="date"
+                           style="width: 100%; padding: 5px;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
+            </form>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Table</th>
+                            <th>Email </th>
+                            <th>Phone</th>
+                            <th>FullName</th>
+                            <th>StartDate</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.bookings)
+                        {
+                            <tr>
+                                <td>@i.Id</td>
+                                <td>@i.Table.Id</td>
+                                <td>@i.Email</td>
+                                <td>@i.Phone</td>
+                                <td>@i.FullName</td>
+                                <td>@i.StartDate</td>
+                                <td>@i.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <ul class="pagination">
+                    <!-- Nút Previous -->
+                    <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
+                        <a class="page-link" asp-page="bookingManage"
+                           asp-route-pageIndex="@(Model.CurrentPage - 1)"
+                           asp-route-search="@Model.Search"
+                           asp-route-date="@Model.Date">Previous</a>
+                    </li>
+
+                    <!-- Tạo danh sách số trang -->
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                            <a class="page-link" asp-page="bookingManage"
+                           asp-route-search="@Model.Search"
+                           asp-route-date="@Model.Date"
+                           asp-route-pageIndex="@(i)
+                         ">@i</a>
+                        </li>
+                    }
+
+                    <!-- Nút Next -->
+                    <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link" asp-page="bookingManage"
+                           asp-route-pageIndex="@(Model.CurrentPage + 1)"
+                           asp-route-search="@Model.Search"
+                           asp-route-date="@Model.Date">Next</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

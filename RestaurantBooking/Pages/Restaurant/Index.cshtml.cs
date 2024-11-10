@@ -20,19 +20,16 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
         private Regex regexPhone = new Regex("^[0-9]+$");
         private Regex regexName = new Regex("^[a-zA-Z ]+$");
         private readonly IHubContext<HubServer> _hub;
-        public IndexModel(IHubContext<HubServer> hub)
+        private readonly RestaurantContext _context = new RestaurantContext();
+        public IndexModel(IHubContext<HubServer> hub, RestaurantContext context)
         {
             this._hub = hub;
+            _context = context;
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            LoadData();
-        }
-
-        private void LoadData()
-        {
-            menu_list = RestaurantContext.Ins.Menus.Include(m => m.Cate).Where(m => m.IsSell == true).ToList();
-            category_list = RestaurantContext.Ins.Categories.Where(ct => ct.IsActive == true).ToList();
+            category_list = await _context.Categories.Where(ct => ct.DeleteFlag == false).ToListAsync();
+            menu_list = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -50,23 +47,24 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
             string time = Request.Form["time"];
             DateTime startDate = DateTime.Parse($"{date} {time}");
             if (startDate.CompareTo(DateTime.Now.AddDays(1)) > 0
-                || startDate.CompareTo(DateTime.Now) <= 0)
+                || startDate.CompareTo(DateTime.Now.AddMinutes(30)) <= 0)
             {
                 HttpContext.Session.SetString("Booking_Failed", "Invalid Date Time Request");
                 return Redirect("/Restaurant");
             }
 
             //check if this time have full table to order
-            List<Booking> booked_List = RestaurantContext.Ins.Bookings
+            List<Booking> booked_List = await _context.Bookings
                 .Where(b => b.Status == "booked"
-                && startDate.AddHours(1) > b.StartDate
-                && startDate.Subtract(TimeSpan.FromHours(1)) < b.StartDate)
-                .ToList();
+                &&  b.StartDate <= startDate.AddHours(1)
+                && b.StartDate >= startDate.AddHours(-1)
+                && b.StartDate.Value.AddMinutes(15).CompareTo(DateTime.Now) > 0)
+                .ToListAsync();
             var bookedTableIds = booked_List.Select(b => b.TableId).ToList();
             //check if there are any table is free
-            List<Table> table_List = RestaurantContext.Ins.Tables
-                .Where(t => t.Status == true && !bookedTableIds.Contains(t.Id))
-                .ToList();
+            List<Table> table_List = await _context.Tables
+                .Where(t => t.DeleteFlag == false && !bookedTableIds.Contains(t.Id) && t.ForBooking == true)
+                .ToListAsync();
             if (table_List.Count == 0)
             {
                 HttpContext.Session.SetString("Booking_Failed", "Table is full at this time");
@@ -95,13 +93,11 @@ namespace CoffeeShopCustomer.Pages.CoffeePage
                 Status = status,
                 TableId = tableId
             };
-            RestaurantContext.Ins.Bookings.Add(bookInfo);
-            RestaurantContext.Ins.SaveChanges();
+             _context.Bookings.Add(bookInfo);
+            await _context.SaveChangesAsync();
 
             //send mail confirm user
-            SendMail(name, email, phone, date, time, table_List[0].Name?? String.Empty);
-
-            LoadData();
+            SendMail(name, email, phone, date, time, table_List[0].Id.ToString()?? String.Empty);
 
             //real time
             _hub.Clients.All.SendAsync("LoadAll");

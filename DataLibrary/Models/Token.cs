@@ -7,8 +7,8 @@ namespace DataLibrary.Models
     {
         public int Id { get; set; }
         public string? Token1 { get; set; }
-        public DateTime? Date { get; set; }
         public int? AccountId { get; set; }
+        public DateTime? CreateAt { get; set; }
 
         public virtual Account? Account { get; set; }
     }

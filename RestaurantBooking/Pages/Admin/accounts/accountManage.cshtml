@@ -27,6 +27,15 @@
                            aria-label="Search" aria-describedby="basic-addon2" name="search"
                            style="width: 100%; padding: 5px;">
                 </div>
+                <div class="input-group" style="flex-grow: 1; max-width: 200px;">
+                    <select name="searchrole">
+                        <option value="All">All</option>
+                        @foreach(var i in Model.roles)
+                        {
+                            <option value="@i.Id">@i.Name</option>
+                        }
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary" style="padding: 5px 15px;">Filter</button>
             </form>
         </div>
@@ -38,6 +47,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
+                            <th>Code</th>
                             <th>Role</th>
                             <th>CreateAt</th>
                             <th>UpdateAt</th>
@@ -51,20 +61,22 @@
                             <tr>
                                 <td>@i.Id</td>
                                 <td>@i.Username</td>
+                                <td>@i.Code</td>
                                 <td>@i.Role.Name</td>
                                 <td>@i.CreateAt</td>
                                 <td>@i.UpdateAt</td>
                                 <td>@i.DeleteAt</td>
                                 <td>
+                                    <a class="btn btn-primary update" style="background-color:darkolivegreen; margin-bottom:5px;" onclick="openUpdateAcc(@i.Id, '@i.RoleId')">Update</a>
                                     @if (i.IsActive == true)
                                     {
-                                        <a class="btn btn-primary bg-danger delete" data-id="@i.Id">Delete</a>
+                                        <a class="btn btn-primary bg-danger delete" style="margin-bottom:5px;" data-id="@i.Id">Delete</a>
                                     }
                                     else
                                     {
-                                        <a class="btn btn-primary bg-success active" data-id="@i.Id">Active</a>
+                                        <a class="btn btn-primary bg-success active" style="margin-bottom:5px;" data-id="@i.Id">Active</a>
                                     }
-                                    <a class="btn btn-primary reset" data-id="@i.Id" style="background-color:darkolivegreen">Reset Password</a>
+                                    <a class="btn btn-primary bg-body reset" data-id="@i.Id" style="margin-bottom:5px;">Reset Password</a>
                                 </td>
                             </tr>
                         }
@@ -75,7 +87,8 @@
                     <li class="page-item @(Model.CurrentPage <= 1 ? "disabled" : "")">
                         <a class="page-link" asp-page="accountManage"
                            asp-route-pageIndex="@(Model.CurrentPage - 1)"
-                           asp-route-search="@Model.Search">Previous</a>
+                           asp-route-search="@Model.Search"
+                           asp-route-searchrole="@Model.SearchRole">Previous</a>
                     </li>
 
                     <!-- Tạo danh sách số trang -->
@@ -84,7 +97,8 @@
                         <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
                             <a class="page-link" asp-page="accountManage"
                            asp-route-pageIndex="@(i)"
-                           asp-route-search="@Model.Search">@i</a>
+                           asp-route-search="@Model.Search"
+                           asp-route-searchrole="@Model.SearchRole">@i</a>
                         </li>
                     }
 
@@ -92,11 +106,10 @@
                     <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
                         <a class="page-link" asp-page="accountManage"
                            asp-route-pageIndex="@(Model.CurrentPage + 1)"
-                           asp-route-search="@Model.Search">Next</a>
+                           asp-route-search="@Model.Search"
+                           asp-route-searchrole="@Model.SearchRole">Next</a>
                     </li>
                 </ul>
-
-
             </div>
         </div>
     </div>
@@ -117,6 +130,18 @@
                     <div>
                         Username <input id="name" name="user" style="width:100%" type="email" required />
                         <span id="nameError" class="text-danger"></span>
+                    </div>
+                    <div style="margin-top:20px;">
+                        Role <br /> 
+                        <select name="role" style="padding:3px 5px;">
+                            @foreach(var i in Model.roles)
+                            {
+                                @if(i.DeleteFlag == false)
+                                {
+                                    <option value="@i.Id">@i.Name</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -188,6 +213,38 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*Modal update*@
+<div class="modal fade" id="updateAcc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Update Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page-handler="Update">
+                <input type="hidden" name="itemId" id="Idupdate" />
+                <div class="modal-body">
+                    <div>
+                        Name 
+                        <select id="role" name="role">
+                            @foreach(var i in Model.roles)
+                            {
+                                <option value="@i.Id">@i.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>

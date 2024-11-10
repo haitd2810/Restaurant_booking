@@ -1,110 +1,142 @@
-using DataLibrary.Models;
+﻿using DataLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Newtonsoft.Json;
 
 namespace RestaurantBooking.Pages.Admin
 {
     public class IndexModel : PageModel
     {
-        public List<Booking> book_infor { get; set; }
-        public double? TotalPrice { get; set; } = 0;
-        public int TotalBooking { get; set; } = 0;
-        public int? TotalOrder { get; set; } = 0;
-        public Dictionary<string, double?> dateValueMap { get; set; } = new Dictionary<string, double?>();
-        public Dictionary<Menu, int> MenuValueMap { get; set; } = new Dictionary<Menu, int>();
-        private readonly RestaurantContext _context;
+        public List<Bill> bills { get; set; } = new List<Bill>();
+        public List<BillInfor> billsInfor { get; set; } = new List<BillInfor>();
+        public List<Menu> menus { get; set; } = new List<Menu>();
+        public List<Account> accounts { get; set; } = new List<Account>();
+        public List<Ingredient> ingredients { get; set; } = new List<Ingredient>();
 
-        public IndexModel(RestaurantContext context)
+        public IActionResult OnGet()
         {
-            _context = context;
-        }
-        public async Task<IActionResult> OnGetAsync()
-        {
-            if (HttpContext.Session.GetString("role") == null ||
-                HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
-
-            List<Bill> bill_List = await _context.Bills.Where(b => b.Payed == true
-                && b.UpdateAt.Value.Date.CompareTo(DateTime.Now.Date) == 0)
-                .Include(b => b.BillInfors).ToListAsync();
-            GetStaticData(bill_List);
-
-            List<Booking> book_list = await _context.Bookings.Where(b => b.StartDate.Value.Date.CompareTo(DateTime.Now.Date) == 0)
-                .ToListAsync();
-            TotalBooking = book_list.Count;
-
-            List<Bill> all_bill = await _context.Bills.Where(b => b.Payed == true
-                && b.UpdateAt.Value.Date.CompareTo(DateTime.Now.AddDays(1).AddMonths(-1).Date) >= 0)
-                .Include(b => b.BillInfors).ToListAsync();
-
-            UpdateDataChart(all_bill);
-
-            List<Menu> menu_List = await _context.Menus.Include(m => m.Cate).Where(m => m.DeleteFlag == false).ToListAsync();
-            GetDataTrendMeal(bill_List, menu_List);
-            book_infor = await _context.Bookings.Include(b => b.Table)
-                .Where(b => b.StartDate.Value.Date.CompareTo(DateTime.Now.Date) == 0)
-                .ToListAsync();
+            //if (HttpContext.Session.GetString("role") == null ||
+            //    HttpContext.Session.GetString("role") != "Admin") return Redirect("/Restaurant");
+            GetDataTrendMeal();
+            getStaff();
+            getDataReport();
+            GetTotal();
             return Page();
 
         }
-        private void GetStaticData(List<Bill> bill_List)
-        {
-            foreach (var bill in bill_List)
-            {
-                foreach (var billInfor in bill.BillInfors)
-                {
-                    TotalPrice += billInfor.Price;
-                    TotalOrder += billInfor.Quantity;
-                }
 
-            }
-        }
-        private void UpdateDataChart(List<Bill> all_bill)
+
+
+        public void GetTotal()
         {
-            foreach (var bill in all_bill)
+            float sell = 0;
+            var bills = RestaurantContext.Ins.Bills
+                    .Where(x => x.CreateAt >= DateTime.Today && x.CreateAt < DateTime.Today.AddDays(1) && x.Payed == true)
+                    .ToList();
+            foreach (var bill in bills)
             {
-                string billDate = bill.UpdateAt.Value.Date.ToString().Split(" ")[0];
-                double? currentTotal = 0;
-                if (dateValueMap.ContainsKey(billDate))
+                var billInfos = RestaurantContext.Ins.BillInfors.Where(x => x.BillId == bill.Id).ToList();
+                foreach (var billInfo in billInfos)
                 {
-                    currentTotal = dateValueMap[billDate];
+                    sell += (float)(billInfo.Quantity * billInfo.Price);
                 }
-                foreach (BillInfor b in bill.BillInfors)
-                {
-                    currentTotal += b.Price;
-                }
-                dateValueMap[billDate] = currentTotal;
             }
-            if (!dateValueMap.ContainsKey(DateTime.Now.Date.ToString().Split(" ")[0]))
-            {
-                dateValueMap.Add(DateTime.Now.Date.ToString().Split(" ")[0], 0);
-            }
-            dateValueMap = dateValueMap
-                            .OrderBy(entry => DateTime.Parse(entry.Key))
-                            .ToDictionary(entry => entry.Key, entry => entry.Value);
+
+            ViewData["sell"] = sell;
         }
 
-        private void GetDataTrendMeal(List<Bill> bill_List, List<Menu> menu_List)
+        private void GetDataTrendMeal()
         {
-            foreach (var bill in bill_List)
-            {
-                foreach (var bill_infor in bill.BillInfors)
-                {
-                    Menu menu = menu_List.Where(m => m.Id == bill_infor.MenuId).FirstOrDefault();
-                    if (menu != null)
-                    {
-                        int count = 1;
-                        if (MenuValueMap.ContainsKey(menu))
+            bills = RestaurantContext.Ins.Bills.ToList();
+            billsInfor = RestaurantContext.Ins.BillInfors.ToList();
+            menus = RestaurantContext.Ins.Menus.ToList();
+
+            var trend = from b in bills
+                        where b.CreateAt >= DateTime.Today && b.CreateAt < DateTime.Today.AddDays(1)
+                        join bi in billsInfor on b.Id equals bi.BillId
+                        join m in menus on bi.MenuId equals m.Id
+                        group new { bi, m } by new { m.Id, m.Name, m.Img, m.Quantity } into grouped
+                        orderby grouped.Count() descending
+                        select new
                         {
-                            count = MenuValueMap[menu] + 1;
-                        }
-                        MenuValueMap[menu] = count;
+                            Id = grouped.Key.Id,
+                            Name = grouped.Key.Name,
+                            Img = grouped.Key.Img,
+                            QuantitySold = grouped.Count(),
+                            Instock = grouped.Key.Quantity - grouped.Count(),
+                            TotalBills = grouped.Select(g => g.bi.BillId).Distinct().Count()
+                        };
+
+            ViewData["trend"] = trend;
+        }
+
+        private void getDataReport()
+        {
+            var dailyData = new Dictionary<string, (float original, float sell)>();
+
+            for (int i = -6; i <= 0; i++)
+            {
+                var date = DateTime.Today.AddDays(i);
+                var formattedDate = date.ToString("dd/MM/yyyy");
+
+                Console.WriteLine($"Ngày đã định dạng: {formattedDate}");
+
+                var ingredients = RestaurantContext.Ins.Ingredients
+           .Where(x => x.UpdateAt >= date && x.UpdateAt < date.AddDays(1))
+           .ToList();
+
+                var bills = RestaurantContext.Ins.Bills
+                    .Where(x => x.CreateAt >= date && x.CreateAt < date.AddDays(1) && x.Payed == true)
+                    .ToList();
+
+                Console.WriteLine($"Số lượng Ingredients: {ingredients.Count}, Số lượng Bills: {bills.Count}");
+
+                float original = 0;
+                float sell = 0;
+
+                foreach (var ingredient in ingredients)
+                {
+                    original += (float)ingredient.Price;
+                }
+
+
+                foreach (var bill in bills)
+                {
+                    var billInfos = RestaurantContext.Ins.BillInfors.Where(x => x.BillId == bill.Id).ToList();
+                    foreach (var billInfo in billInfos)
+                    {
+                        sell += (float)(billInfo.Quantity * billInfo.Price);
                     }
                 }
+
+                dailyData[formattedDate] = (original, sell);
             }
 
-            MenuValueMap = MenuValueMap.Where(entry => entry.Value > 1).OrderByDescending(entry => entry.Value)
-                            .ToDictionary(entry => entry.Key, entry => entry.Value);
+            ViewData["dailyData"] = JsonConvert.SerializeObject(dailyData);
+        }
+
+
+        public void getStaff()
+        {
+            bills = RestaurantContext.Ins.Bills.ToList();
+            accounts = RestaurantContext.Ins.Accounts.ToList();
+
+            var startOfMonth = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var startOfNextMonth = startOfMonth.AddMonths(1);
+
+            var staff = from b in bills
+                        where b.CreateAt >= startOfMonth && b.CreateAt < startOfNextMonth
+                        join a in accounts on b.CreateBy equals a.Id
+                        group b by a.Code into grouped
+                        orderby grouped.Count() descending
+                        select new
+                        {
+                            Code = grouped.Key,
+                            Quantity = grouped.Count()
+                        };
+            ViewData["staff"] = staff;
         }
 
     }
